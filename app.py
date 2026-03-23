@@ -1,11 +1,14 @@
+from flask import Flask
+import random
+
+app = Flask(__name__)
+
 @app.route("/")
 def dashboard():
-    import random
-
     servers = [
         {"name": "Web Server"},
         {"name": "Database Server"},
-        {"name": "API Server"}
+        {"name": "API Server"},
     ]
 
     server_html = ""
@@ -39,17 +42,25 @@ def dashboard():
         <meta http-equiv="refresh" content="5">
         <style>
             body {{ font-family: Arial; background:#f4f6f8; text-align:center; }}
-            .card {{ background:white; width:600px; margin:auto; padding:25px; border-radius:12px; }}
+            .card {{
+                background:white;
+                width:600px;
+                margin:auto;
+                padding:25px;
+                border-radius:12px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }}
         </style>
     </head>
     <body>
         <div class="card">
             <h1>Cloud Monitoring Platform</h1>
-
             <h2>Servers</h2>
             {server_html}
-
         </div>
     </body>
     </html>
     """
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
