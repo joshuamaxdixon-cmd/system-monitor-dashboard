@@ -76,6 +76,21 @@ def generate_servers():
     return results
 
 
+def get_history(limit=50):
+    conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT timestamp, server_name, cpu, memory, status
+        FROM server_logs
+        ORDER BY id DESC
+        LIMIT ?
+    """, (limit,))
+    rows = cursor.fetchall()
+    conn.close()
+    return [dict(row) for row in rows]
+
+
 @app.route("/")
 def dashboard():
     servers = generate_servers()
@@ -207,8 +222,8 @@ def dashboard():
                 <p class="subtitle">Real-time monitoring of distributed cloud infrastructure</p>
 
                 <div class="note-box">
-                    <strong>Overview:</strong> This dashboard simulates a cloud monitoring platform that tracks
-                    CPU and memory usage across multiple servers, assigns health status levels, and stores
+                    <strong>Overview:</strong> This dashboard simulates a cloud monitoring platform that tracks CPU
+                    and memory usage across multiple servers, assigns health status levels, and stores
                     historical monitoring data in a SQLite database for later analysis.
                 </div>
 
@@ -228,10 +243,132 @@ def dashboard():
                 </div>
 
                 <div class="links">
+                    <a href="/history">View History Page</a>
                     <a href="/api/servers" target="_blank">View /api/servers</a>
                     <a href="/api/health" target="_blank">View /api/health</a>
                     <a href="/api/history" target="_blank">View /api/history</a>
                 </div>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+
+
+@app.route("/history")
+def history_page():
+    history = get_history(50)
+
+    rows_html = ""
+
+    for row in history:
+        status_color = "#22c55e"
+        if row["status"] == "Warning":
+            status_color = "#f59e0b"
+        elif row["status"] == "Critical":
+            status_color = "#ef4444"
+
+        rows_html += f"""
+        <tr>
+            <td>{row['timestamp']}</td>
+            <td>{row['server_name']}</td>
+            <td>{row['cpu']}%</td>
+            <td>{row['memory']}%</td>
+            <td style="color:{status_color}; font-weight:bold;">{row['status']}</td>
+        </tr>
+        """
+
+    return f"""
+    <html>
+    <head>
+        <title>Monitoring History</title>
+        <style>
+            body {{
+                font-family: Arial, sans-serif;
+                background: linear-gradient(135deg, #0f172a, #1e293b);
+                color: white;
+                margin: 0;
+                padding: 30px;
+            }}
+
+            .container {{
+                max-width: 1100px;
+                margin: auto;
+            }}
+
+            .card {{
+                background: #1e293b;
+                padding: 30px;
+                border-radius: 16px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            }}
+
+            h1 {{
+                color: #38bdf8;
+                text-align: center;
+                margin-bottom: 20px;
+            }}
+
+            .top-link {{
+                text-align: center;
+                margin-bottom: 20px;
+            }}
+
+            .top-link a {{
+                color: #38bdf8;
+                text-decoration: none;
+                font-weight: bold;
+            }}
+
+            .top-link a:hover {{
+                text-decoration: underline;
+            }}
+
+            table {{
+                width: 100%;
+                border-collapse: collapse;
+                background: #0f172a;
+                border-radius: 12px;
+                overflow: hidden;
+            }}
+
+            th, td {{
+                padding: 12px;
+                border-bottom: 1px solid #334155;
+                text-align: center;
+            }}
+
+            th {{
+                background: #111827;
+                color: #e2e8f0;
+            }}
+
+            tr:hover {{
+                background: #1f2937;
+            }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="card">
+                <h1>Monitoring History</h1>
+                <div class="top-link">
+                    <a href="/">← Back to Dashboard</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Server</th>
+                            <th>CPU</th>
+                            <th>Memory</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows_html}
+                    </tbody>
+                </table>
             </div>
         </div>
     </body>
@@ -263,20 +400,7 @@ def api_health():
 
 @app.route("/api/history")
 def api_history():
-    conn = sqlite3.connect(DB_NAME)
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-    cursor.execute("""
-        SELECT timestamp, server_name, cpu, memory, status
-        FROM server_logs
-        ORDER BY id DESC
-        LIMIT 50
-    """)
-    rows = cursor.fetchall()
-    conn.close()
-
-    history = [dict(row) for row in rows]
-    return jsonify(history)
+    return jsonify(get_history(50))
 
 
 if __name__ == "__main__":
