@@ -1,44 +1,58 @@
 from flask import Flask, jsonify, request
 import random
-import sqlite3
-from datetime import datetime
+
 import json
 
+import os
+import psycopg2
+from psycopg2.extras import RealDictCursor
+
 app = Flask(__name__)
-DB_NAME = "monitoring.db"
+
+
+def get_db_connection():
+    return psycopg2.connect(
+        os.environ.get("DATABASE_URL"),
+        cursor_factory=RealDictCursor
+    )
 
 
 def init_db():
-    conn = sqlite3.connect(DB_NAME)
-    cursor = conn.cursor()
-    cursor.execute("""
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
         CREATE TABLE IF NOT EXISTS server_logs (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp TEXT NOT NULL,
+            id SERIAL PRIMARY KEY,
+            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             server_name TEXT NOT NULL,
-            cpu REAL NOT NULL,
-            memory REAL NOT NULL,
+            cpu FLOAT NOT NULL,
+            memory FLOAT NOT NULL,
             status TEXT NOT NULL
         )
     """)
+
     conn.commit()
+    cur.close()
     conn.close()
 
 
 def save_server_log(server):
-    conn = sqlite3.connect(DB_NAME)
-    cursor = conn.cursor()
-    cursor.execute("""
-        INSERT INTO server_logs (timestamp, server_name, cpu, memory, status)
-        VALUES (?, ?, ?, ?, ?)
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        INSERT INTO server_logs (server_name, cpu, memory, status)
+        VALUES (%s, %s, %s, %s)
     """, (
-        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         server["name"],
         server["cpu"],
         server["memory"],
         server["status"]
     ))
+
     conn.commit()
+    cur.close()
     conn.close()
 
 
@@ -78,9 +92,8 @@ def generate_servers():
 
 
 def get_history(limit=50, server_name=None, status=None):
-    conn = sqlite3.connect(DB_NAME)
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
+    conn = get_db_connection()
+    cur = conn.cursor()
 
     query = """
         SELECT timestamp, server_name, cpu, memory, status
@@ -90,18 +103,20 @@ def get_history(limit=50, server_name=None, status=None):
     params = []
 
     if server_name:
-        query += " AND server_name = ?"
+        query += " AND server_name = %s"
         params.append(server_name)
 
     if status:
-        query += " AND status = ?"
+        query += " AND status = %s"
         params.append(status)
 
-    query += " ORDER BY id DESC LIMIT ?"
+    query += " ORDER BY id DESC LIMIT %s"
     params.append(limit)
 
-    cursor.execute(query, params)
-    rows = cursor.fetchall()
+    cur.execute(query, params)
+    rows = cur.fetchall()
+
+    cur.close()
     conn.close()
     return [dict(row) for row in rows]
 
