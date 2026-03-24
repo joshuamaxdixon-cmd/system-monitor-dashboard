@@ -1,55 +1,104 @@
 from flask import Flask, jsonify, request
-import random
-
-import json
-
 import os
-import psycopg2
-from psycopg2.extras import RealDictCursor
+import json
+import random
+import sqlite3
+from functools import wraps
+
+try:
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
+except ImportError:
+    psycopg2 = None
+    RealDictCursor = None
 
 app = Flask(__name__)
 
+SQLITE_DB = "monitoring.db"
+DATABASE_URL = os.environ.get("DATABASE_URL")
+USING_POSTGRES = bool(DATABASE_URL and psycopg2)
+
+_db_initialized = False
+
 
 def get_db_connection():
-    return psycopg2.connect(
-        os.environ.get("DATABASE_URL"),
-        cursor_factory=RealDictCursor
-    )
+    if USING_POSTGRES:
+        return psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+
+    conn = sqlite3.connect(SQLITE_DB)
+    conn.row_factory = sqlite3.Row
+    return conn
 
 
 def init_db():
+    global _db_initialized
+    if _db_initialized:
+        return
+
     conn = get_db_connection()
     cur = conn.cursor()
 
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS server_logs (
-            id SERIAL PRIMARY KEY,
-            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            server_name TEXT NOT NULL,
-            cpu FLOAT NOT NULL,
-            memory FLOAT NOT NULL,
-            status TEXT NOT NULL
-        )
-    """)
+    if USING_POSTGRES:
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS server_logs (
+                id SERIAL PRIMARY KEY,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                server_name TEXT NOT NULL,
+                cpu FLOAT NOT NULL,
+                memory FLOAT NOT NULL,
+                status TEXT NOT NULL
+            )
+        """)
+    else:
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS server_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp TEXT NOT NULL,
+                server_name TEXT NOT NULL,
+                cpu REAL NOT NULL,
+                memory REAL NOT NULL,
+                status TEXT NOT NULL
+            )
+        """)
 
     conn.commit()
     cur.close()
     conn.close()
+    _db_initialized = True
+
+
+def with_db_init(route_func):
+    @wraps(route_func)
+    def wrapper(*args, **kwargs):
+        init_db()
+        return route_func(*args, **kwargs)
+    return wrapper
 
 
 def save_server_log(server):
     conn = get_db_connection()
     cur = conn.cursor()
 
-    cur.execute("""
-        INSERT INTO server_logs (server_name, cpu, memory, status)
-        VALUES (%s, %s, %s, %s)
-    """, (
-        server["name"],
-        server["cpu"],
-        server["memory"],
-        server["status"]
-    ))
+    if USING_POSTGRES:
+        cur.execute("""
+            INSERT INTO server_logs (server_name, cpu, memory, status)
+            VALUES (%s, %s, %s, %s)
+        """, (
+            server["name"],
+            server["cpu"],
+            server["memory"],
+            server["status"]
+        ))
+    else:
+        cur.execute("""
+            INSERT INTO server_logs (timestamp, server_name, cpu, memory, status)
+            VALUES (datetime('now'), ?, ?, ?, ?)
+        """, (
+            server["name"],
+            server["cpu"],
+            server["memory"],
+            server["status"]
+        ))
 
     conn.commit()
     cur.close()
@@ -95,30 +144,54 @@ def get_history(limit=50, server_name=None, status=None):
     conn = get_db_connection()
     cur = conn.cursor()
 
-    query = """
-        SELECT timestamp, server_name, cpu, memory, status
-        FROM server_logs
-        WHERE 1=1
-    """
-    params = []
+    if USING_POSTGRES:
+        query = """
+            SELECT timestamp, server_name, cpu, memory, status
+            FROM server_logs
+            WHERE 1=1
+        """
+        params = []
 
-    if server_name:
-        query += " AND server_name = %s"
-        params.append(server_name)
+        if server_name:
+            query += " AND server_name = %s"
+            params.append(server_name)
 
-    if status:
-        query += " AND status = %s"
-        params.append(status)
+        if status:
+            query += " AND status = %s"
+            params.append(status)
 
-    query += " ORDER BY id DESC LIMIT %s"
-    params.append(limit)
+        query += " ORDER BY id DESC LIMIT %s"
+        params.append(limit)
 
-    cur.execute(query, params)
-    rows = cur.fetchall()
+        cur.execute(query, params)
+        rows = cur.fetchall()
+        result = [dict(row) for row in rows]
+    else:
+        query = """
+            SELECT timestamp, server_name, cpu, memory, status
+            FROM server_logs
+            WHERE 1=1
+        """
+        params = []
+
+        if server_name:
+            query += " AND server_name = ?"
+            params.append(server_name)
+
+        if status:
+            query += " AND status = ?"
+            params.append(status)
+
+        query += " ORDER BY id DESC LIMIT ?"
+        params.append(limit)
+
+        cur.execute(query, params)
+        rows = cur.fetchall()
+        result = [dict(row) for row in rows]
 
     cur.close()
     conn.close()
-    return [dict(row) for row in rows]
+    return result
 
 
 def get_summary():
@@ -380,6 +453,7 @@ def base_styles():
 
 
 @app.route("/")
+@with_db_init
 def dashboard():
     servers = generate_servers()
 
@@ -407,6 +481,8 @@ def dashboard():
     else:
         alerts_html = "<p class='muted'>No active alerts right now.</p>"
 
+    db_label = "PostgreSQL" if USING_POSTGRES else "SQLite"
+
     return f"""
     <html>
     <head>
@@ -432,7 +508,7 @@ def dashboard():
                 <div class="note-box">
                     <strong>Overview:</strong> This dashboard simulates a cloud monitoring platform that tracks CPU
                     and memory usage across multiple servers, assigns health status levels, stores historical
-                    monitoring records in SQLite, and exposes API endpoints for system data retrieval.
+                    monitoring records in {db_label}, and exposes API endpoints for system data retrieval.
                 </div>
 
                 <div class="summary-grid">
@@ -481,6 +557,7 @@ def dashboard():
 
 
 @app.route("/history")
+@with_db_init
 def history_page():
     server_name = request.args.get("server")
     status = request.args.get("status")
@@ -522,7 +599,7 @@ def history_page():
                 </div>
 
                 <h1>Monitoring History</h1>
-                <p class="subtitle">Stored monitoring records from SQLite database</p>
+                <p class="subtitle">Stored monitoring records from the database</p>
 
                 <div class="filter-box">
                     <form method="GET" action="/history">
@@ -571,11 +648,12 @@ def history_page():
 
 
 @app.route("/charts")
+@with_db_init
 def charts_page():
     history = get_history(60)
     history = list(reversed(history))
 
-    labels = [row["timestamp"] for row in history]
+    labels = [str(row["timestamp"]) for row in history]
     cpu_values = [row["cpu"] for row in history]
     memory_values = [row["memory"] for row in history]
 
@@ -588,9 +666,9 @@ def charts_page():
     api_cpu = [row["cpu"] for row in history if row["server_name"] == "API Server"]
     api_mem = [row["memory"] for row in history if row["server_name"] == "API Server"]
 
-    web_labels = [row["timestamp"] for row in history if row["server_name"] == "Web Server"]
-    db_labels = [row["timestamp"] for row in history if row["server_name"] == "Database Server"]
-    api_labels = [row["timestamp"] for row in history if row["server_name"] == "API Server"]
+    web_labels = [str(row["timestamp"]) for row in history if row["server_name"] == "Web Server"]
+    db_labels = [str(row["timestamp"]) for row in history if row["server_name"] == "Database Server"]
+    api_labels = [str(row["timestamp"]) for row in history if row["server_name"] == "API Server"]
 
     return f"""
     <html>
@@ -789,11 +867,13 @@ def charts_page():
 
 
 @app.route("/api/servers")
+@with_db_init
 def api_servers():
     return jsonify(generate_servers())
 
 
 @app.route("/api/health")
+@with_db_init
 def api_health():
     servers = generate_servers()
 
@@ -803,6 +883,7 @@ def api_health():
     critical = sum(1 for s in servers if s["status"] == "Critical")
 
     return jsonify({
+        "database": "postgres" if USING_POSTGRES else "sqlite",
         "total_servers": total_servers,
         "healthy": healthy,
         "warning": warning,
@@ -811,6 +892,7 @@ def api_health():
 
 
 @app.route("/api/history")
+@with_db_init
 def api_history():
     server_name = request.args.get("server")
     status = request.args.get("status")
@@ -821,4 +903,5 @@ def api_history():
 
 if __name__ == "__main__":
     init_db()
-    app.run(host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
