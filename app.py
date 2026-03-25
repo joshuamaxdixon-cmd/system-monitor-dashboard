@@ -3,6 +3,7 @@ import os
 import json
 import random
 import sqlite3
+import psutil
 from functools import wraps
 
 try:
@@ -19,7 +20,11 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 USING_POSTGRES = bool(DATABASE_URL and psycopg2)
 
 _db_initialized = False
-
+def get_system_metrics():
+    return {
+        "cpu": round(psutil.cpu_percent(interval=1), 1),
+        "memory": round(psutil.virtual_memory().percent, 1)
+    }
 
 def get_db_connection():
     if USING_POSTGRES:
@@ -115,8 +120,10 @@ def generate_servers():
     results = []
 
     for server in servers:
-        cpu = round(random.uniform(10, 95), 1)
-        memory = round(random.uniform(20, 95), 1)
+        metrics = get_system_metrics()
+
+        cpu = metrics["cpu"]
+        memory = metrics["memory"]
 
         status = "Healthy"
         color = "#22c55e"
@@ -124,6 +131,7 @@ def generate_servers():
         if cpu > 80 or memory > 80:
             status = "Warning"
             color = "#f59e0b"
+
         if cpu > 90 or memory > 90:
             status = "Critical"
             color = "#ef4444"
