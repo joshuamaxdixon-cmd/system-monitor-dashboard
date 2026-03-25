@@ -2,16 +2,16 @@
 
 A Flask-based system monitoring dashboard that displays live CPU, memory, and disk usage with dynamic color alerts and automatic refresh.
 
-## Features
+Features:
+- Real-time system monitoring (CPU, Memory)
+- CloudWatch integration (custom metrics + EC2 metrics)
+- Dashboard UI (Flask + Chart.js)
+- Historical logging (SQLite/Postgres)
+- Production deployment with Gunicorn + systemd
+- AWS CloudWatch dashboards + alarms
 
-- Live CPU usage monitoring
-- Live memory usage monitoring
-- Live disk usage monitoring
-- Color-based alerts:
-  - Green = healthy
-  - Orange = warning
-  - Red = critical
-- Auto-refresh every 5 seconds
+Tech:
+Python, Flask, AWS EC2, CloudWatch, Gunicorn, SQLite/Postgres
 
 ## Tech Stack
 
