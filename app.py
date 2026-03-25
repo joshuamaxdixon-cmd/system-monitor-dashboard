@@ -494,8 +494,8 @@ def dashboard():
     return f"""
     <html>
     <head>
+    <meta http-equiv="refresh" content="2">
         <title>Cloud Monitoring Platform</title>
-        <meta http-equiv="refresh" content="5">
         {base_styles()}
     </head>
     <body>
