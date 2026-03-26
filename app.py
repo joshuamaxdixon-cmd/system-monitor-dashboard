@@ -1,10 +1,14 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, redirect
+import boto3
+import time
 import os
 import json
 import random
 import sqlite3
 import psutil
 from functools import wraps
+
+cloudwatch = boto3.client("cloudwatch", region_name="us-east-2")
 
 try:
     import psycopg2
@@ -20,11 +24,46 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 USING_POSTGRES = bool(DATABASE_URL and psycopg2)
 
 _db_initialized = False
+
+
 def get_system_metrics():
     return {
         "cpu": round(psutil.cpu_percent(interval=1), 1),
         "memory": round(psutil.virtual_memory().percent, 1)
     }
+
+
+@app.before_request
+def start_timer():
+    request.start_time = time.time()
+
+
+@app.after_request
+def log_metrics(response):
+    try:
+        if hasattr(request, "start_time"):
+            latency = time.time() - request.start_time
+
+            cloudwatch.put_metric_data(
+                Namespace="MyApp",
+                MetricData=[
+                    {
+                        "MetricName": "RequestCount",
+                        "Value": 1,
+                        "Unit": "Count"
+                    },
+                    {
+                        "MetricName": "ResponseTime",
+                        "Value": latency,
+                        "Unit": "Seconds"
+                    }
+                ]
+            )
+    except Exception as e:
+        print(f"CloudWatch metric error: {e}")
+
+    return response
+
 
 def get_db_connection():
     if USING_POSTGRES:
@@ -445,6 +484,127 @@ def base_styles():
             color: #94a3b8;
         }
 
+        .hero {
+            text-align: center;
+            padding: 20px 0 10px 0;
+        }
+
+        .hero h1 {
+            font-size: 44px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #cbd5e1;
+            font-size: 18px;
+            max-width: 760px;
+            margin: 0 auto 24px auto;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons a {
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #0f172a;
+            color: #38bdf8;
+            border: 1px solid #334155;
+        }
+
+        .btn-secondary:hover {
+            background: #111827;
+        }
+
+        .section {
+            margin-top: 28px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #e2e8f0;
+            margin-bottom: 16px;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .project-card {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .project-card h3 {
+            margin-top: 0;
+            color: #f8fafc;
+        }
+
+        .project-card p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .project-card a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .project-card a:hover {
+            text-decoration: underline;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .skill-box {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            color: #e2e8f0;
+            font-weight: bold;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #94a3b8;
+            margin-top: 28px;
+            line-height: 1.7;
+        }
+
         @media (max-width: 900px) {
             .summary-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -455,12 +615,132 @@ def base_styles():
             .summary-grid {
                 grid-template-columns: 1fr;
             }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
         }
     </style>
     """
 
 
 @app.route("/")
+def home():
+    return f"""
+    <html>
+    <head>
+        <title>Cloud With Josh | AWS Cloud & DevOps Portfolio</title>
+        {base_styles()}
+    </head>
+    <body>
+        <div class="container">
+            <div class="card">
+                <div class="top-nav">
+                    <a href="/">Home</a>
+                    <a href="/projects/cloud-monitor">Cloud Monitor</a>
+                    <a href="/history">History</a>
+                    <a href="/charts">Charts</a>
+                </div>
+
+                <div class="hero">
+                    <h1>Josh | Cloud & DevOps Engineer</h1>
+                    <p>
+                        I build production-style cloud systems on AWS with scalable infrastructure,
+                        monitoring, automation, and secure public deployments.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a class="btn-primary" href="/projects/cloud-monitor">View Live Project</a>
+                        <a class="btn-secondary" href="https://github.com" target="_blank">GitHub</a>
+                        <a class="btn-secondary" href="https://www.linkedin.com" target="_blank">LinkedIn</a>
+                    </div>
+                </div>
+
+                <div class="note-box">
+                    <strong>About this site:</strong> This domain is my personal portfolio hub. Each project
+                    lives under one main brand so recruiters and hiring managers can explore my work from a
+                    single place.
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Featured Project</h2>
+
+                    <div class="project-grid">
+                        <div class="project-card">
+                            <h3>Cloud Monitoring Platform on AWS</h3>
+                            <p>
+                                A production-style AWS deployment using EC2, Application Load Balancer,
+                                Auto Scaling, CloudWatch metrics and alarms, custom domain routing, HTTPS,
+                                and CI/CD automation.
+                            </p>
+                            <p><strong>Tech:</strong> AWS, Flask, Gunicorn, CloudWatch, ALB, Auto Scaling, GitHub Actions</p>
+                            <a href="/projects/cloud-monitor">Open Project →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Upcoming Projects</h2>
+
+                    <div class="project-grid">
+                        <div class="project-card">
+                            <h3>DevSecOps Pipeline</h3>
+                            <p>
+                                CI/CD pipeline with infrastructure automation, containerization, and security checks.
+                            </p>
+                            <a href="#">Coming soon</a>
+                        </div>
+
+                        <div class="project-card">
+                            <h3>Terraform Infrastructure</h3>
+                            <p>
+                                Infrastructure as Code project for repeatable AWS environments and deployment workflows.
+                            </p>
+                            <a href="#">Coming soon</a>
+                        </div>
+
+                        <div class="project-card">
+                            <h3>Cloud Operations Toolkit</h3>
+                            <p>
+                                Monitoring, troubleshooting, and operational automation tools for AWS workloads.
+                            </p>
+                            <a href="#">Coming soon</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Core Skills</h2>
+
+                    <div class="skills-grid">
+                        <div class="skill-box">AWS EC2</div>
+                        <div class="skill-box">Load Balancing</div>
+                        <div class="skill-box">Auto Scaling</div>
+                        <div class="skill-box">CloudWatch</div>
+                        <div class="skill-box">CI/CD</div>
+                        <div class="skill-box">Python / Flask</div>
+                        <div class="skill-box">Linux</div>
+                        <div class="skill-box">DNS / HTTPS</div>
+                    </div>
+                </div>
+
+                <div class="footer-note">
+                    Built to showcase real-world cloud engineering work, hands-on AWS architecture,
+                    and deployment skills in a single portfolio hub.
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+
+
+@app.route("/projects/cloud-monitor")
+@app.route("/app")
 @with_db_init
 def dashboard():
     servers = generate_servers()
@@ -494,7 +774,7 @@ def dashboard():
     return f"""
     <html>
     <head>
-    <meta http-equiv="refresh" content="2">
+        <meta http-equiv="refresh" content="2">
         <title>Cloud Monitoring Platform</title>
         {base_styles()}
     </head>
@@ -502,7 +782,8 @@ def dashboard():
         <div class="container">
             <div class="card">
                 <div class="top-nav">
-                    <a href="/">Dashboard</a>
+                    <a href="/">Home</a>
+                    <a href="/projects/cloud-monitor">Dashboard</a>
                     <a href="/history">History</a>
                     <a href="/charts">Charts</a>
                     <a href="/api/servers" target="_blank">API Servers</a>
@@ -601,7 +882,8 @@ def history_page():
         <div class="container">
             <div class="card">
                 <div class="top-nav">
-                    <a href="/">Dashboard</a>
+                    <a href="/">Home</a>
+                    <a href="/projects/cloud-monitor">Dashboard</a>
                     <a href="/history">History</a>
                     <a href="/charts">Charts</a>
                 </div>
@@ -689,7 +971,8 @@ def charts_page():
         <div class="container">
             <div class="card">
                 <div class="top-nav">
-                    <a href="/">Dashboard</a>
+                    <a href="/">Home</a>
+                    <a href="/projects/cloud-monitor">Dashboard</a>
                     <a href="/history">History</a>
                     <a href="/charts">Charts</a>
                 </div>
