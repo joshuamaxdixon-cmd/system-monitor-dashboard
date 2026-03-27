@@ -3,7 +3,6 @@ import boto3
 import time
 import os
 import json
-import random
 import sqlite3
 import psutil
 from functools import wraps
@@ -23,7 +22,82 @@ SQLITE_DB = "monitoring.db"
 DATABASE_URL = os.environ.get("DATABASE_URL")
 USING_POSTGRES = bool(DATABASE_URL and psycopg2)
 
+SITE_NAME = "Cloud With Josh"
+OWNER_NAME = "Joshua Max-Dixon"
+OWNER_TITLE = "Cloud & DevOps Engineer"
+OWNER_EMAIL = "Joshuamaxdixon@gmail.com"
+GITHUB_PROFILE = "https://github.com/joshuamaxdixon-cmd"
+LINKEDIN_PROFILE = "https://www.linkedin.com/in/joshua-max-dixon-6861b01b3"
+SYSTEM_MONITOR_REPO = "https://github.com/joshuamaxdixon-cmd/system-monitor-dashboard"
+SYSTEM_HEALTH_REPO = "https://github.com/joshuamaxdixon-cmd/system-health-checker.git"
+CLOUD_LOG_ANALYZER_REPO = "https://github.com/joshuamaxdixon-cmd/cloud-log-analyzer-python.git"
+LOG_FILE_ANALYZER_REPO = "https://github.com/joshuamaxdixon-cmd/log-file-analyzer.git"
+
 _db_initialized = False
+
+
+def get_projects():
+    return [
+        {
+            "slug": "cloud-monitor",
+            "title": "Cloud Monitoring Platform on AWS",
+            "status": "Live",
+            "status_color": "#22c55e",
+            "description": "Production-style AWS deployment using EC2, Application Load Balancer, Auto Scaling, CloudWatch, HTTPS, DNS routing, and CI/CD automation.",
+            "tech_stack": "AWS, Flask, Gunicorn, CloudWatch, ALB, Auto Scaling, GitHub Actions, Linux, DNS, SSL/TLS",
+            "github": SYSTEM_MONITOR_REPO,
+            "project_url": "/projects/cloud-monitor",
+            "live_url": "/live/cloud-monitor",
+            "what_it_does": "Collects and visualizes real-time system metrics, tracks server health states, stores historical logs, exposes API endpoints, and simulates cloud monitoring across multiple server roles.",
+            "why_it_matters": "Demonstrates production-style cloud architecture, monitoring, automation, secure deployment, and operational visibility using AWS services and Python."
+        },
+        {
+            "slug": "system-health-checker",
+            "title": "System Health Checker",
+            "status": "Domain upgrade in progress",
+            "status_color": "#f59e0b",
+            "description": "Python-based monitoring tool that checks CPU, memory, and disk usage and generates a system health summary.",
+            "tech_stack": "Python, System Monitoring, Scripting",
+            "github": SYSTEM_HEALTH_REPO,
+            "project_url": "/projects/system-health-checker",
+            "live_url": None,
+            "what_it_does": "Checks core system resources and produces a lightweight health report for troubleshooting and infrastructure awareness.",
+            "why_it_matters": "Shows practical scripting skills for monitoring and foundational operations workflows used in cloud and DevOps roles."
+        },
+        {
+            "slug": "cloud-log-analyzer",
+            "title": "Cloud Log Analyzer",
+            "status": "Domain upgrade in progress",
+            "status_color": "#f59e0b",
+            "description": "Python tool for analyzing server logs, detecting warnings and errors, and generating structured cloud operations insights.",
+            "tech_stack": "Python, Log Parsing, Infrastructure Analysis",
+            "github": CLOUD_LOG_ANALYZER_REPO,
+            "project_url": "/projects/cloud-log-analyzer",
+            "live_url": None,
+            "what_it_does": "Parses cloud or server-style logs, extracts useful signal, identifies issues, and summarizes operational events in a readable way.",
+            "why_it_matters": "Highlights log analysis and troubleshooting skills that matter in DevOps, cloud operations, and reliability engineering."
+        },
+        {
+            "slug": "log-file-analyzer",
+            "title": "Log File Analyzer",
+            "status": "Domain upgrade in progress",
+            "status_color": "#f59e0b",
+            "description": "Foundational Python project for scanning log files, identifying errors, and extracting useful operational information.",
+            "tech_stack": "Python, Log Analysis",
+            "github": LOG_FILE_ANALYZER_REPO,
+            "project_url": "/projects/log-file-analyzer",
+            "live_url": None,
+            "what_it_does": "Analyzes application and system log files to surface errors, warnings, and useful patterns for debugging.",
+            "why_it_matters": "Demonstrates strong Python fundamentals and the operational mindset needed for cloud support and DevOps work."
+        }
+    ]
+
+
+def get_project_by_slug(slug):
+    for project in get_projects():
+        if project["slug"] == slug:
+            return project
+    return None
 
 
 def get_system_metrics():
@@ -286,14 +360,14 @@ def base_styles():
         }
 
         .container {
-            max-width: 1150px;
+            max-width: 1180px;
             margin: auto;
         }
 
         .card {
             background: #1e293b;
             padding: 30px;
-            border-radius: 16px;
+            border-radius: 18px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.35);
         }
 
@@ -307,6 +381,10 @@ def base_styles():
             margin-top: 30px;
             color: #e2e8f0;
             text-align: center;
+        }
+
+        h3 {
+            color: #f8fafc;
         }
 
         .subtitle {
@@ -339,7 +417,167 @@ def base_styles():
             padding: 18px;
             margin-bottom: 24px;
             color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 16px 0 4px 0;
+        }
+
+        .hero h1 {
+            font-size: 46px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #cbd5e1;
+            font-size: 18px;
+            max-width: 780px;
+            margin: 0 auto 24px auto;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .hero-buttons a,
+        .button-link {
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #0f172a;
+            color: #38bdf8;
+            border: 1px solid #334155;
+        }
+
+        .btn-secondary:hover {
+            background: #111827;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: #38bdf8;
+            border: 1px solid #334155;
+        }
+
+        .btn-ghost:hover {
+            background: #111827;
+        }
+
+        .section {
+            margin-top: 28px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #e2e8f0;
+            margin-bottom: 16px;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .project-card {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .project-card h3 {
+            margin-top: 0;
+            color: #f8fafc;
+        }
+
+        .project-card p {
+            color: #cbd5e1;
             line-height: 1.6;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 14px;
+            color: white;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .skill-box {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            color: #e2e8f0;
+            font-weight: bold;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #94a3b8;
+            margin-top: 28px;
+            line-height: 1.7;
+        }
+
+        .project-detail-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin-top: 22px;
+            margin-bottom: 24px;
+        }
+
+        .meta-box {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .meta-box strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #e2e8f0;
         }
 
         .summary-grid {
@@ -484,130 +722,23 @@ def base_styles():
             color: #94a3b8;
         }
 
-        .hero {
-            text-align: center;
-            padding: 20px 0 10px 0;
-        }
-
-        .hero h1 {
-            font-size: 44px;
-            margin-bottom: 12px;
-        }
-
-        .hero p {
-            color: #cbd5e1;
-            font-size: 18px;
-            max-width: 760px;
-            margin: 0 auto 24px auto;
-            line-height: 1.7;
-        }
-
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-
-        .hero-buttons a {
-            text-decoration: none;
-            padding: 12px 18px;
-            border-radius: 10px;
-            font-weight: bold;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-
-        .btn-secondary {
-            background: #0f172a;
-            color: #38bdf8;
-            border: 1px solid #334155;
-        }
-
-        .btn-secondary:hover {
-            background: #111827;
-        }
-
-        .section {
-            margin-top: 28px;
-        }
-
-        .section-title {
-            text-align: center;
-            color: #e2e8f0;
-            margin-bottom: 16px;
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 18px;
-            margin-top: 18px;
-        }
-
-        .project-card {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 14px;
-            padding: 20px;
-        }
-
-        .project-card h3 {
-            margin-top: 0;
-            color: #f8fafc;
-        }
-
-        .project-card p {
-            color: #cbd5e1;
-            line-height: 1.6;
-        }
-
-        .project-card a {
+        a.inline-link {
             color: #38bdf8;
             text-decoration: none;
             font-weight: bold;
         }
 
-        .project-card a:hover {
+        a.inline-link:hover {
             text-decoration: underline;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 14px;
-            margin-top: 18px;
-        }
-
-        .skill-box {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-            color: #e2e8f0;
-            font-weight: bold;
-        }
-
-        .footer-note {
-            text-align: center;
-            color: #94a3b8;
-            margin-top: 28px;
-            line-height: 1.7;
         }
 
         @media (max-width: 900px) {
             .summary-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 38px;
             }
         }
 
@@ -617,7 +748,7 @@ def base_styles():
             }
 
             .hero h1 {
-                font-size: 34px;
+                font-size: 32px;
             }
 
             .hero p {
@@ -628,110 +759,61 @@ def base_styles():
     """
 
 
-@app.route("/")
-def home():
+def render_nav():
+    return f"""
+    <div class="top-nav">
+        <a href="/">Home</a>
+        <a href="/projects">Projects</a>
+        <a href="/contact">Contact</a>
+        <a href="{GITHUB_PROFILE}" target="_blank">GitHub</a>
+        <a href="{LINKEDIN_PROFILE}" target="_blank">LinkedIn</a>
+    </div>
+    """
+
+
+def render_live_nav():
+    return """
+    <div class="top-nav">
+        <a href="/">Home</a>
+        <a href="/projects/cloud-monitor">Project Page</a>
+        <a href="/live/cloud-monitor">Live Dashboard</a>
+        <a href="/history">History</a>
+        <a href="/charts">Charts</a>
+    </div>
+    """
+
+
+def render_project_card(project, show_live_button=True):
+    live_button = ""
+    if show_live_button and project["live_url"]:
+        live_button = f'<a class="button-link btn-primary" href="{project["live_url"]}">Live Demo</a>'
+
+    return f"""
+    <div class="project-card">
+        <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
+        <h3>{project['title']}</h3>
+        <p>{project['description']}</p>
+        <p><strong>Tech Stack:</strong> {project['tech_stack']}</p>
+        <div class="project-links">
+            <a class="button-link btn-secondary" href="{project['project_url']}">View Project</a>
+            {live_button}
+            <a class="button-link btn-ghost" href="{project['github']}" target="_blank">GitHub</a>
+        </div>
+    </div>
+    """
+
+
+def render_page(title, body_html):
     return f"""
     <html>
     <head>
-        <title>Cloud With Josh | AWS Cloud & DevOps Portfolio</title>
+        <title>{title}</title>
         {base_styles()}
     </head>
     <body>
         <div class="container">
             <div class="card">
-                <div class="top-nav">
-                    <a href="/">Home</a>
-                    <a href="/projects/cloud-monitor">Cloud Monitor</a>
-                    <a href="/history">History</a>
-                    <a href="/charts">Charts</a>
-                </div>
-
-                <div class="hero">
-                    <h1>Josh | Cloud & DevOps Engineer</h1>
-                    <p>
-                        I build production-style cloud systems on AWS with scalable infrastructure,
-                        monitoring, automation, and secure public deployments.
-                    </p>
-
-                    <div class="hero-buttons">
-                        <a class="btn-primary" href="/projects/cloud-monitor">View Live Project</a>
-                        <a class="btn-secondary" href="https://github.com" target="_blank">GitHub</a>
-                        <a class="btn-secondary" href="https://www.linkedin.com" target="_blank">LinkedIn</a>
-                    </div>
-                </div>
-
-                <div class="note-box">
-                    <strong>About this site:</strong> This domain is my personal portfolio hub. Each project
-                    lives under one main brand so recruiters and hiring managers can explore my work from a
-                    single place.
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Featured Project</h2>
-
-                    <div class="project-grid">
-                        <div class="project-card">
-                            <h3>Cloud Monitoring Platform on AWS</h3>
-                            <p>
-                                A production-style AWS deployment using EC2, Application Load Balancer,
-                                Auto Scaling, CloudWatch metrics and alarms, custom domain routing, HTTPS,
-                                and CI/CD automation.
-                            </p>
-                            <p><strong>Tech:</strong> AWS, Flask, Gunicorn, CloudWatch, ALB, Auto Scaling, GitHub Actions</p>
-                            <a href="/projects/cloud-monitor">Open Project →</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Upcoming Projects</h2>
-
-                    <div class="project-grid">
-                        <div class="project-card">
-                            <h3>DevSecOps Pipeline</h3>
-                            <p>
-                                CI/CD pipeline with infrastructure automation, containerization, and security checks.
-                            </p>
-                            <a href="#">Coming soon</a>
-                        </div>
-
-                        <div class="project-card">
-                            <h3>Terraform Infrastructure</h3>
-                            <p>
-                                Infrastructure as Code project for repeatable AWS environments and deployment workflows.
-                            </p>
-                            <a href="#">Coming soon</a>
-                        </div>
-
-                        <div class="project-card">
-                            <h3>Cloud Operations Toolkit</h3>
-                            <p>
-                                Monitoring, troubleshooting, and operational automation tools for AWS workloads.
-                            </p>
-                            <a href="#">Coming soon</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Core Skills</h2>
-
-                    <div class="skills-grid">
-                        <div class="skill-box">AWS EC2</div>
-                        <div class="skill-box">Load Balancing</div>
-                        <div class="skill-box">Auto Scaling</div>
-                        <div class="skill-box">CloudWatch</div>
-                        <div class="skill-box">CI/CD</div>
-                        <div class="skill-box">Python / Flask</div>
-                        <div class="skill-box">Linux</div>
-                        <div class="skill-box">DNS / HTTPS</div>
-                    </div>
-                </div>
-
-                <div class="footer-note">
-                    Built to showcase real-world cloud engineering work, hands-on AWS architecture,
-                    and deployment skills in a single portfolio hub.
-                </div>
+                {body_html}
             </div>
         </div>
     </body>
@@ -739,10 +821,349 @@ def home():
     """
 
 
+@app.route("/")
+def home():
+    projects = get_projects()
+    featured = projects[0]
+    project_cards = "".join(render_project_card(project) for project in projects)
+
+    body = f"""
+    {render_nav()}
+
+    <div class="hero">
+        <h1>{OWNER_NAME}</h1>
+        <p class="subtitle">{OWNER_TITLE}</p>
+        <p>
+            I build cloud and DevOps projects on AWS focused on automation,
+            monitoring, secure deployment, and real-world infrastructure.
+        </p>
+
+        <div class="hero-buttons">
+            <a class="btn-primary" href="/projects">View Projects</a>
+            <a class="btn-secondary" href="{GITHUB_PROFILE}" target="_blank">GitHub</a>
+            <a class="btn-secondary" href="{LINKEDIN_PROFILE}" target="_blank">LinkedIn</a>
+            <a class="btn-ghost" href="/contact">Contact</a>
+        </div>
+    </div>
+
+    <div class="note-box">
+        <strong>Welcome to my portfolio hub.</strong> This domain is where I organize my cloud,
+        DevOps, and infrastructure projects under one main brand. Each project includes a clean overview,
+        GitHub access, and live deployment links where available.
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Featured Project</h2>
+        <div class="project-grid">
+            {render_project_card(featured)}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">All Projects</h2>
+        <div class="project-grid">
+            {project_cards}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Core Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-box">AWS EC2</div>
+            <div class="skill-box">Load Balancing</div>
+            <div class="skill-box">Auto Scaling</div>
+            <div class="skill-box">CloudWatch</div>
+            <div class="skill-box">CI/CD</div>
+            <div class="skill-box">Python / Flask</div>
+            <div class="skill-box">Linux</div>
+            <div class="skill-box">DNS / HTTPS</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Contact</h2>
+        <div class="note-box">
+            Reach me at <a class="inline-link" href="mailto:{OWNER_EMAIL}">{OWNER_EMAIL}</a><br><br>
+            <a class="inline-link" href="{GITHUB_PROFILE}" target="_blank">GitHub</a> &nbsp;|&nbsp;
+            <a class="inline-link" href="{LINKEDIN_PROFILE}" target="_blank">LinkedIn</a>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Built to showcase hands-on AWS architecture, secure deployment, monitoring,
+        and automation projects in one organized portfolio system.
+    </div>
+    """
+
+    return render_page(f"{SITE_NAME} | {OWNER_NAME}", body)
+
+
+@app.route("/projects")
+def projects_page():
+    project_cards = "".join(render_project_card(project) for project in get_projects())
+
+    body = f"""
+    {render_nav()}
+
+    <h1>Projects</h1>
+    <p class="subtitle">A collection of cloud, monitoring, and automation projects organized under one domain.</p>
+
+    <div class="project-grid">
+        {project_cards}
+    </div>
+    """
+
+    return render_page(f"{SITE_NAME} | Projects", body)
+
+
 @app.route("/projects/cloud-monitor")
+def project_cloud_monitor():
+    project = get_project_by_slug("cloud-monitor")
+
+    body = f"""
+    {render_nav()}
+
+    <h1>{project['title']}</h1>
+    <p class="subtitle">Production-ready AWS monitoring project</p>
+
+    <div style="text-align:center;">
+        <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
+    </div>
+
+    <div class="project-detail-meta">
+        <div class="meta-box">
+            <strong>Tech Stack</strong>
+            {project['tech_stack']}
+        </div>
+        <div class="meta-box">
+            <strong>Status</strong>
+            {project['status']}
+        </div>
+        <div class="meta-box">
+            <strong>Repository</strong>
+            <a class="inline-link" href="{project['github']}" target="_blank">Open GitHub Repo</a>
+        </div>
+    </div>
+
+    <div class="note-box">
+        <strong>Overview:</strong> {project['description']}
+    </div>
+
+    <div class="note-box">
+        <strong>What it does:</strong> {project['what_it_does']}
+    </div>
+
+    <div class="note-box">
+        <strong>Why it matters:</strong> {project['why_it_matters']}
+    </div>
+
+    <div class="hero-buttons">
+        <a class="btn-primary" href="{project['live_url']}">Launch Live Demo</a>
+        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
+        <a class="btn-ghost" href="/projects">Back to Projects</a>
+    </div>
+    """
+
+    return render_page(f"{SITE_NAME} | {project['title']}", body)
+
+
+@app.route("/projects/system-health-checker")
+def project_system_health_checker():
+    project = get_project_by_slug("system-health-checker")
+
+    body = f"""
+    {render_nav()}
+
+    <h1>{project['title']}</h1>
+    <p class="subtitle">Monitoring utility project</p>
+
+    <div style="text-align:center;">
+        <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
+    </div>
+
+    <div class="project-detail-meta">
+        <div class="meta-box">
+            <strong>Tech Stack</strong>
+            {project['tech_stack']}
+        </div>
+        <div class="meta-box">
+            <strong>Status</strong>
+            {project['status']}
+        </div>
+        <div class="meta-box">
+            <strong>Repository</strong>
+            <a class="inline-link" href="{project['github']}" target="_blank">Open GitHub Repo</a>
+        </div>
+    </div>
+
+    <div class="note-box">
+        <strong>Overview:</strong> {project['description']}
+    </div>
+
+    <div class="note-box">
+        <strong>What it does:</strong> {project['what_it_does']}
+    </div>
+
+    <div class="note-box">
+        <strong>Why it matters:</strong> {project['why_it_matters']}
+    </div>
+
+    <div class="hero-buttons">
+        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
+        <a class="btn-ghost" href="/projects">Back to Projects</a>
+    </div>
+    """
+
+    return render_page(f"{SITE_NAME} | {project['title']}", body)
+
+
+@app.route("/projects/cloud-log-analyzer")
+def project_cloud_log_analyzer():
+    project = get_project_by_slug("cloud-log-analyzer")
+
+    body = f"""
+    {render_nav()}
+
+    <h1>{project['title']}</h1>
+    <p class="subtitle">Log analysis and cloud operations project</p>
+
+    <div style="text-align:center;">
+        <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
+    </div>
+
+    <div class="project-detail-meta">
+        <div class="meta-box">
+            <strong>Tech Stack</strong>
+            {project['tech_stack']}
+        </div>
+        <div class="meta-box">
+            <strong>Status</strong>
+            {project['status']}
+        </div>
+        <div class="meta-box">
+            <strong>Repository</strong>
+            <a class="inline-link" href="{project['github']}" target="_blank">Open GitHub Repo</a>
+        </div>
+    </div>
+
+    <div class="note-box">
+        <strong>Overview:</strong> {project['description']}
+    </div>
+
+    <div class="note-box">
+        <strong>What it does:</strong> {project['what_it_does']}
+    </div>
+
+    <div class="note-box">
+        <strong>Why it matters:</strong> {project['why_it_matters']}
+    </div>
+
+    <div class="hero-buttons">
+        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
+        <a class="btn-ghost" href="/projects">Back to Projects</a>
+    </div>
+    """
+
+    return render_page(f"{SITE_NAME} | {project['title']}", body)
+
+
+@app.route("/projects/log-file-analyzer")
+def project_log_file_analyzer():
+    project = get_project_by_slug("log-file-analyzer")
+
+    body = f"""
+    {render_nav()}
+
+    <h1>{project['title']}</h1>
+    <p class="subtitle">Foundational log analysis project</p>
+
+    <div style="text-align:center;">
+        <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
+    </div>
+
+    <div class="project-detail-meta">
+        <div class="meta-box">
+            <strong>Tech Stack</strong>
+            {project['tech_stack']}
+        </div>
+        <div class="meta-box">
+            <strong>Status</strong>
+            {project['status']}
+        </div>
+        <div class="meta-box">
+            <strong>Repository</strong>
+            <a class="inline-link" href="{project['github']}" target="_blank">Open GitHub Repo</a>
+        </div>
+    </div>
+
+    <div class="note-box">
+        <strong>Overview:</strong> {project['description']}
+    </div>
+
+    <div class="note-box">
+        <strong>What it does:</strong> {project['what_it_does']}
+    </div>
+
+    <div class="note-box">
+        <strong>Why it matters:</strong> {project['why_it_matters']}
+    </div>
+
+    <div class="hero-buttons">
+        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
+        <a class="btn-ghost" href="/projects">Back to Projects</a>
+    </div>
+    """
+
+    return render_page(f"{SITE_NAME} | {project['title']}", body)
+
+
+@app.route("/contact")
+def contact_page():
+    body = f"""
+    {render_nav()}
+
+    <h1>Contact</h1>
+    <p class="subtitle">Let’s connect</p>
+
+    <div class="note-box">
+        I’m building cloud and DevOps projects focused on AWS, automation, monitoring,
+        secure deployment, and real-world infrastructure. The best way to reach me is by email.
+    </div>
+
+    <div class="project-grid">
+        <div class="project-card">
+            <h3>Email</h3>
+            <p><a class="inline-link" href="mailto:{OWNER_EMAIL}">{OWNER_EMAIL}</a></p>
+        </div>
+
+        <div class="project-card">
+            <h3>GitHub</h3>
+            <p><a class="inline-link" href="{GITHUB_PROFILE}" target="_blank">{GITHUB_PROFILE}</a></p>
+        </div>
+
+        <div class="project-card">
+            <h3>LinkedIn</h3>
+            <p><a class="inline-link" href="{LINKEDIN_PROFILE}" target="_blank">{LINKEDIN_PROFILE}</a></p>
+        </div>
+    </div>
+    """
+
+    return render_page(f"{SITE_NAME} | Contact", body)
+
+
 @app.route("/app")
+def app_redirect():
+    return redirect("/live/cloud-monitor")
+
+
+@app.route("/dashboard")
+def dashboard_redirect():
+    return redirect("/live/cloud-monitor")
+
+
+@app.route("/live/cloud-monitor")
 @with_db_init
-def dashboard():
+def live_cloud_monitor():
     servers = generate_servers()
 
     for server in servers:
@@ -781,15 +1202,7 @@ def dashboard():
     <body>
         <div class="container">
             <div class="card">
-                <div class="top-nav">
-                    <a href="/">Home</a>
-                    <a href="/projects/cloud-monitor">Dashboard</a>
-                    <a href="/history">History</a>
-                    <a href="/charts">Charts</a>
-                    <a href="/api/servers" target="_blank">API Servers</a>
-                    <a href="/api/health" target="_blank">API Health</a>
-                    <a href="/api/history" target="_blank">API History</a>
-                </div>
+                {render_live_nav()}
 
                 <h1>Cloud Monitoring Platform</h1>
                 <p class="subtitle">Real-time monitoring of distributed cloud infrastructure</p>
@@ -872,69 +1285,54 @@ def history_page():
         </tr>
         """
 
-    return f"""
-    <html>
-    <head>
-        <title>Monitoring History</title>
-        {base_styles()}
-    </head>
-    <body>
-        <div class="container">
-            <div class="card">
-                <div class="top-nav">
-                    <a href="/">Home</a>
-                    <a href="/projects/cloud-monitor">Dashboard</a>
-                    <a href="/history">History</a>
-                    <a href="/charts">Charts</a>
-                </div>
+    body = f"""
+    {render_live_nav()}
 
-                <h1>Monitoring History</h1>
-                <p class="subtitle">Stored monitoring records from the database</p>
+    <h1>Monitoring History</h1>
+    <p class="subtitle">Stored monitoring records from the database</p>
 
-                <div class="filter-box">
-                    <form method="GET" action="/history">
-                        <label for="server">Server</label>
-                        <select name="server" id="server">
-                            <option value="">All</option>
-                            <option value="Web Server" {"selected" if server_name == "Web Server" else ""}>Web Server</option>
-                            <option value="Database Server" {"selected" if server_name == "Database Server" else ""}>Database Server</option>
-                            <option value="API Server" {"selected" if server_name == "API Server" else ""}>API Server</option>
-                        </select>
+    <div class="filter-box">
+        <form method="GET" action="/history">
+            <label for="server">Server</label>
+            <select name="server" id="server">
+                <option value="">All</option>
+                <option value="Web Server" {"selected" if server_name == "Web Server" else ""}>Web Server</option>
+                <option value="Database Server" {"selected" if server_name == "Database Server" else ""}>Database Server</option>
+                <option value="API Server" {"selected" if server_name == "API Server" else ""}>API Server</option>
+            </select>
 
-                        <label for="status">Status</label>
-                        <select name="status" id="status">
-                            <option value="">All</option>
-                            <option value="Healthy" {"selected" if status == "Healthy" else ""}>Healthy</option>
-                            <option value="Warning" {"selected" if status == "Warning" else ""}>Warning</option>
-                            <option value="Critical" {"selected" if status == "Critical" else ""}>Critical</option>
-                        </select>
+            <label for="status">Status</label>
+            <select name="status" id="status">
+                <option value="">All</option>
+                <option value="Healthy" {"selected" if status == "Healthy" else ""}>Healthy</option>
+                <option value="Warning" {"selected" if status == "Warning" else ""}>Warning</option>
+                <option value="Critical" {"selected" if status == "Critical" else ""}>Critical</option>
+            </select>
 
-                        <label for="limit">Limit</label>
-                        <input type="number" name="limit" id="limit" value="{limit}" min="1" max="200">
+            <label for="limit">Limit</label>
+            <input type="number" name="limit" id="limit" value="{limit}" min="1" max="200">
 
-                        <button type="submit">Apply Filters</button>
-                    </form>
-                </div>
+            <button type="submit">Apply Filters</button>
+        </form>
+    </div>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Timestamp</th>
-                            <th>Server</th>
-                            <th>CPU</th>
-                            <th>Memory</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rows_html}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </body>
-    </html>
+    <table>
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Server</th>
+                <th>CPU</th>
+                <th>Memory</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {rows_html}
+        </tbody>
+    </table>
     """
+
+    return render_page("Monitoring History", body)
 
 
 @app.route("/charts")
@@ -960,201 +1358,186 @@ def charts_page():
     db_labels = [str(row["timestamp"]) for row in history if row["server_name"] == "Database Server"]
     api_labels = [str(row["timestamp"]) for row in history if row["server_name"] == "API Server"]
 
-    return f"""
-    <html>
-    <head>
-        <title>Monitoring Charts</title>
-        {base_styles()}
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    </head>
-    <body>
-        <div class="container">
-            <div class="card">
-                <div class="top-nav">
-                    <a href="/">Home</a>
-                    <a href="/projects/cloud-monitor">Dashboard</a>
-                    <a href="/history">History</a>
-                    <a href="/charts">Charts</a>
-                </div>
+    body = f"""
+    {render_live_nav()}
 
-                <h1>Monitoring Charts</h1>
-                <p class="subtitle">CPU and Memory trends from stored monitoring records</p>
+    <h1>Monitoring Charts</h1>
+    <p class="subtitle">CPU and Memory trends from stored monitoring records</p>
 
-                <div class="chart-box">
-                    <h2>Overall CPU Usage</h2>
-                    <canvas id="cpuChart"></canvas>
-                </div>
+    <div class="chart-box">
+        <h2>Overall CPU Usage</h2>
+        <canvas id="cpuChart"></canvas>
+    </div>
 
-                <div class="chart-box">
-                    <h2>Overall Memory Usage</h2>
-                    <canvas id="memoryChart"></canvas>
-                </div>
+    <div class="chart-box">
+        <h2>Overall Memory Usage</h2>
+        <canvas id="memoryChart"></canvas>
+    </div>
 
-                <div class="chart-box">
-                    <h2>Web Server Trends</h2>
-                    <canvas id="webChart"></canvas>
-                </div>
+    <div class="chart-box">
+        <h2>Web Server Trends</h2>
+        <canvas id="webChart"></canvas>
+    </div>
 
-                <div class="chart-box">
-                    <h2>Database Server Trends</h2>
-                    <canvas id="dbChart"></canvas>
-                </div>
+    <div class="chart-box">
+        <h2>Database Server Trends</h2>
+        <canvas id="dbChart"></canvas>
+    </div>
 
-                <div class="chart-box">
-                    <h2>API Server Trends</h2>
-                    <canvas id="apiChart"></canvas>
-                </div>
-            </div>
-        </div>
+    <div class="chart-box">
+        <h2>API Server Trends</h2>
+        <canvas id="apiChart"></canvas>
+    </div>
 
-        <script>
-            const labels = {json.dumps(labels)};
-            const cpuData = {json.dumps(cpu_values)};
-            const memoryData = {json.dumps(memory_values)};
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const labels = {json.dumps(labels)};
+        const cpuData = {json.dumps(cpu_values)};
+        const memoryData = {json.dumps(memory_values)};
 
-            const webLabels = {json.dumps(web_labels)};
-            const webCpu = {json.dumps(web_cpu)};
-            const webMem = {json.dumps(web_mem)};
+        const webLabels = {json.dumps(web_labels)};
+        const webCpu = {json.dumps(web_cpu)};
+        const webMem = {json.dumps(web_mem)};
 
-            const dbLabels = {json.dumps(db_labels)};
-            const dbCpu = {json.dumps(db_cpu)};
-            const dbMem = {json.dumps(db_mem)};
+        const dbLabels = {json.dumps(db_labels)};
+        const dbCpu = {json.dumps(db_cpu)};
+        const dbMem = {json.dumps(db_mem)};
 
-            const apiLabels = {json.dumps(api_labels)};
-            const apiCpu = {json.dumps(api_cpu)};
-            const apiMem = {json.dumps(api_mem)};
+        const apiLabels = {json.dumps(api_labels)};
+        const apiCpu = {json.dumps(api_cpu)};
+        const apiMem = {json.dumps(api_mem)};
 
-            const sharedOptions = {{
-                responsive: true,
-                plugins: {{
-                    legend: {{
-                        labels: {{ color: 'white' }}
-                    }}
-                }},
-                scales: {{
-                    x: {{
-                        ticks: {{ color: 'white' }}
-                    }},
-                    y: {{
-                        ticks: {{ color: 'white' }},
-                        beginAtZero: true
-                    }}
+        const sharedOptions = {{
+            responsive: true,
+            plugins: {{
+                legend: {{
+                    labels: {{ color: 'white' }}
                 }}
-            }};
+            }},
+            scales: {{
+                x: {{
+                    ticks: {{ color: 'white' }}
+                }},
+                y: {{
+                    ticks: {{ color: 'white' }},
+                    beginAtZero: true
+                }}
+            }}
+        }};
 
-            new Chart(document.getElementById('cpuChart'), {{
-                type: 'line',
-                data: {{
-                    labels: labels,
-                    datasets: [{{
-                        label: 'CPU %',
-                        data: cpuData,
-                        borderColor: '#38bdf8',
-                        backgroundColor: 'rgba(56, 189, 248, 0.2)',
+        new Chart(document.getElementById('cpuChart'), {{
+            type: 'line',
+            data: {{
+                labels: labels,
+                datasets: [{{
+                    label: 'CPU %',
+                    data: cpuData,
+                    borderColor: '#38bdf8',
+                    backgroundColor: 'rgba(56, 189, 248, 0.2)',
+                    tension: 0.3,
+                    fill: true
+                }}]
+            }},
+            options: sharedOptions
+        }});
+
+        new Chart(document.getElementById('memoryChart'), {{
+            type: 'line',
+            data: {{
+                labels: labels,
+                datasets: [{{
+                    label: 'Memory %',
+                    data: memoryData,
+                    borderColor: '#22c55e',
+                    backgroundColor: 'rgba(34, 197, 94, 0.2)',
+                    tension: 0.3,
+                    fill: true
+                }}]
+            }},
+            options: sharedOptions
+        }});
+
+        new Chart(document.getElementById('webChart'), {{
+            type: 'line',
+            data: {{
+                labels: webLabels,
+                datasets: [
+                    {{
+                        label: 'Web CPU %',
+                        data: webCpu,
+                        borderColor: '#60a5fa',
+                        backgroundColor: 'rgba(96, 165, 250, 0.15)',
                         tension: 0.3,
                         fill: true
-                    }}]
-                }},
-                options: sharedOptions
-            }});
-
-            new Chart(document.getElementById('memoryChart'), {{
-                type: 'line',
-                data: {{
-                    labels: labels,
-                    datasets: [{{
-                        label: 'Memory %',
-                        data: memoryData,
-                        borderColor: '#22c55e',
-                        backgroundColor: 'rgba(34, 197, 94, 0.2)',
+                    }},
+                    {{
+                        label: 'Web Memory %',
+                        data: webMem,
+                        borderColor: '#34d399',
+                        backgroundColor: 'rgba(52, 211, 153, 0.15)',
                         tension: 0.3,
                         fill: true
-                    }}]
-                }},
-                options: sharedOptions
-            }});
+                    }}
+                ]
+            }},
+            options: sharedOptions
+        }});
 
-            new Chart(document.getElementById('webChart'), {{
-                type: 'line',
-                data: {{
-                    labels: webLabels,
-                    datasets: [
-                        {{
-                            label: 'Web CPU %',
-                            data: webCpu,
-                            borderColor: '#60a5fa',
-                            backgroundColor: 'rgba(96, 165, 250, 0.15)',
-                            tension: 0.3,
-                            fill: true
-                        }},
-                        {{
-                            label: 'Web Memory %',
-                            data: webMem,
-                            borderColor: '#34d399',
-                            backgroundColor: 'rgba(52, 211, 153, 0.15)',
-                            tension: 0.3,
-                            fill: true
-                        }}
-                    ]
-                }},
-                options: sharedOptions
-            }});
+        new Chart(document.getElementById('dbChart'), {{
+            type: 'line',
+            data: {{
+                labels: dbLabels,
+                datasets: [
+                    {{
+                        label: 'DB CPU %',
+                        data: dbCpu,
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.15)',
+                        tension: 0.3,
+                        fill: true
+                    }},
+                    {{
+                        label: 'DB Memory %',
+                        data: dbMem,
+                        borderColor: '#f472b6',
+                        backgroundColor: 'rgba(244, 114, 182, 0.15)',
+                        tension: 0.3,
+                        fill: true
+                    }}
+                ]
+            }},
+            options: sharedOptions
+        }});
 
-            new Chart(document.getElementById('dbChart'), {{
-                type: 'line',
-                data: {{
-                    labels: dbLabels,
-                    datasets: [
-                        {{
-                            label: 'DB CPU %',
-                            data: dbCpu,
-                            borderColor: '#f59e0b',
-                            backgroundColor: 'rgba(245, 158, 11, 0.15)',
-                            tension: 0.3,
-                            fill: true
-                        }},
-                        {{
-                            label: 'DB Memory %',
-                            data: dbMem,
-                            borderColor: '#f472b6',
-                            backgroundColor: 'rgba(244, 114, 182, 0.15)',
-                            tension: 0.3,
-                            fill: true
-                        }}
-                    ]
-                }},
-                options: sharedOptions
-            }});
-
-            new Chart(document.getElementById('apiChart'), {{
-                type: 'line',
-                data: {{
-                    labels: apiLabels,
-                    datasets: [
-                        {{
-                            label: 'API CPU %',
-                            data: apiCpu,
-                            borderColor: '#a78bfa',
-                            backgroundColor: 'rgba(167, 139, 250, 0.15)',
-                            tension: 0.3,
-                            fill: true
-                        }},
-                        {{
-                            label: 'API Memory %',
-                            data: apiMem,
-                            borderColor: '#fb7185',
-                            backgroundColor: 'rgba(251, 113, 133, 0.15)',
-                            tension: 0.3,
-                            fill: true
-                        }}
-                    ]
-                }},
-                options: sharedOptions
-            }});
-        </script>
-    </body>
-    </html>
+        new Chart(document.getElementById('apiChart'), {{
+            type: 'line',
+            data: {{
+                labels: apiLabels,
+                datasets: [
+                    {{
+                        label: 'API CPU %',
+                        data: apiCpu,
+                        borderColor: '#a78bfa',
+                        backgroundColor: 'rgba(167, 139, 250, 0.15)',
+                        tension: 0.3,
+                        fill: true
+                    }},
+                    {{
+                        label: 'API Memory %',
+                        data: apiMem,
+                        borderColor: '#fb7185',
+                        backgroundColor: 'rgba(251, 113, 133, 0.15)',
+                        tension: 0.3,
+                        fill: true
+                    }}
+                ]
+            }},
+            options: sharedOptions
+        }});
+    </script>
     """
+
+    return render_page("Monitoring Charts", body)
 
 
 @app.route("/api/servers")
@@ -1196,3 +1579,4 @@ if __name__ == "__main__":
     init_db()
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
