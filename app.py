@@ -28,6 +28,7 @@ OWNER_TITLE = "Cloud & DevOps Engineer"
 OWNER_EMAIL = "Joshuamaxdixon@gmail.com"
 GITHUB_PROFILE = "https://github.com/joshuamaxdixon-cmd"
 LINKEDIN_PROFILE = "https://www.linkedin.com/in/joshua-max-dixon-6861b01b3"
+
 SYSTEM_MONITOR_REPO = "https://github.com/joshuamaxdixon-cmd/system-monitor-dashboard"
 SYSTEM_HEALTH_REPO = "https://github.com/joshuamaxdixon-cmd/system-health-checker.git"
 CLOUD_LOG_ANALYZER_REPO = "https://github.com/joshuamaxdixon-cmd/cloud-log-analyzer-python.git"
@@ -46,7 +47,7 @@ def get_projects():
             "description": "Production-style AWS deployment using EC2, Application Load Balancer, Auto Scaling, CloudWatch, HTTPS, DNS routing, and CI/CD automation.",
             "tech_stack": "AWS, Flask, Gunicorn, CloudWatch, ALB, Auto Scaling, GitHub Actions, Linux, DNS, SSL/TLS",
             "github": SYSTEM_MONITOR_REPO,
-            "project_url": "/projects/cloud-monitor",
+            "project_url": "/live/cloud-monitor",
             "live_url": "/live/cloud-monitor",
             "what_it_does": "Collects and visualizes real-time system metrics, tracks server health states, stores historical logs, exposes API endpoints, and simulates cloud monitoring across multiple server roles.",
             "why_it_matters": "Demonstrates production-style cloud architecture, monitoring, automation, secure deployment, and operational visibility using AWS services and Python."
@@ -775,19 +776,15 @@ def render_live_nav():
     return """
     <div class="top-nav">
         <a href="/">Home</a>
-        <a href="/projects/cloud-monitor">Project Page</a>
-        <a href="/live/cloud-monitor">Live Dashboard</a>
+        <a href="/projects">Projects</a>
+        <a href="/live/cloud-monitor">Cloud Monitor</a>
         <a href="/history">History</a>
         <a href="/charts">Charts</a>
     </div>
     """
 
 
-def render_project_card(project, show_live_button=True):
-    live_button = ""
-    if show_live_button and project["live_url"]:
-        live_button = f'<a class="button-link btn-primary" href="{project["live_url"]}">Live Demo</a>'
-
+def render_project_card(project):
     return f"""
     <div class="project-card">
         <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
@@ -796,7 +793,6 @@ def render_project_card(project, show_live_button=True):
         <p><strong>Tech Stack:</strong> {project['tech_stack']}</p>
         <div class="project-links">
             <a class="button-link btn-secondary" href="{project['project_url']}">View Project</a>
-            {live_button}
             <a class="button-link btn-ghost" href="{project['github']}" target="_blank">GitHub</a>
         </div>
     </div>
@@ -914,57 +910,6 @@ def projects_page():
     """
 
     return render_page(f"{SITE_NAME} | Projects", body)
-
-
-@app.route("/projects/cloud-monitor")
-def project_cloud_monitor():
-    project = get_project_by_slug("cloud-monitor")
-
-    body = f"""
-    {render_nav()}
-
-    <h1>{project['title']}</h1>
-    <p class="subtitle">Production-ready AWS monitoring project</p>
-
-    <div style="text-align:center;">
-        <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
-    </div>
-
-    <div class="project-detail-meta">
-        <div class="meta-box">
-            <strong>Tech Stack</strong>
-            {project['tech_stack']}
-        </div>
-        <div class="meta-box">
-            <strong>Status</strong>
-            {project['status']}
-        </div>
-        <div class="meta-box">
-            <strong>Repository</strong>
-            <a class="inline-link" href="{project['github']}" target="_blank">Open GitHub Repo</a>
-        </div>
-    </div>
-
-    <div class="note-box">
-        <strong>Overview:</strong> {project['description']}
-    </div>
-
-    <div class="note-box">
-        <strong>What it does:</strong> {project['what_it_does']}
-    </div>
-
-    <div class="note-box">
-        <strong>Why it matters:</strong> {project['why_it_matters']}
-    </div>
-
-    <div class="hero-buttons">
-        <a class="btn-primary" href="{project['live_url']}">Launch Live Demo</a>
-        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
-        <a class="btn-ghost" href="/projects">Back to Projects</a>
-    </div>
-    """
-
-    return render_page(f"{SITE_NAME} | {project['title']}", body)
 
 
 @app.route("/projects/system-health-checker")
@@ -1579,4 +1524,3 @@ if __name__ == "__main__":
     init_db()
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-
