@@ -54,16 +54,16 @@ def get_projects():
         },
         {
             "slug": "system-health-checker",
-            "title": "System Health Checker",
-            "status": "Domain upgrade in progress",
-            "status_color": "#f59e0b",
-            "description": "Python-based monitoring tool that checks CPU, memory, and disk usage and generates a system health summary.",
-            "tech_stack": "Python, System Monitoring, Scripting",
-            "github": SYSTEM_HEALTH_REPO,
-            "project_url": "/projects/system-health-checker",
-            "live_url": None,
-            "what_it_does": "Checks core system resources and produces a lightweight health report for troubleshooting and infrastructure awareness.",
-            "why_it_matters": "Shows practical scripting skills for monitoring and foundational operations workflows used in cloud and DevOps roles."
+"title": "System Health Checker",
+"status": "Live",
+"status_color": "#22c55e",
+"description": "Python-based monitoring tool that checks CPU, memory, and disk usage and generates a system health summary.",
+"tech_stack": "Python, System Monitoring, Scripting",
+"github": SYSTEM_HEALTH_REPO,
+"project_url": "/projects/system-health",
+"live_url": "/projects/system-health",
+"what_it_does": "Checks core system resources and produces a lightweight health report for troubleshooting and infrastructure awareness.",
+"why_it_matters": "Shows practical scripting skills for monitoring and foundational operations workflows used in cloud and DevOps roles."lows used in cloud and DevOps roles."
         },
         {
             "slug": "cloud-log-analyzer",
