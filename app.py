@@ -81,13 +81,13 @@ def get_projects():
         {
             "slug": "log-file-analyzer",
             "title": "Log File Analyzer",
-            "status": "Domain upgrade in progress",
-            "status_color": "#f59e0b",
+            "status": "Live",
+            "status_color": "#22c55e",
             "description": "Foundational Python project for scanning log files, identifying errors, and extracting useful operational information.",
             "tech_stack": "Python, Log Analysis",
             "github": LOG_FILE_ANALYZER_REPO,
             "project_url": "/projects/log-file-analyzer",
-            "live_url": None,
+            "live_url": "/projects/log-file-analyzer",
             "what_it_does": "Analyzes application and system log files to surface errors, warnings, and useful patterns for debugging.",
             "why_it_matters": "Demonstrates strong Python fundamentals and the operational mindset needed for cloud support and DevOps work."
         }
