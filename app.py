@@ -68,13 +68,13 @@ def get_projects():
         {
             "slug": "cloud-log-analyzer",
             "title": "Cloud Log Analyzer",
-            "status": "Domain upgrade in progress",
-            "status_color": "#f59e0b",
+            "status": "Live",
+            "status_color": "#22c55e",
             "description": "Python tool for analyzing server logs, detecting warnings and errors, and generating structured cloud operations insights.",
             "tech_stack": "Python, Log Parsing, Infrastructure Analysis",
             "github": CLOUD_LOG_ANALYZER_REPO,
             "project_url": "/projects/cloud-log-analyzer",
-            "live_url": None,
+            "live_url":  "/cloud-log-analyzer",
             "what_it_does": "Parses cloud or server-style logs, extracts useful signal, identifies issues, and summarizes operational events in a readable way.",
             "why_it_matters": "Highlights log analysis and troubleshooting skills that matter in DevOps, cloud operations, and reliability engineering."
         },
