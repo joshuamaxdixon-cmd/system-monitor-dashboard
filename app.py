@@ -42,8 +42,8 @@ def get_projects():
         {
             "slug": "nexgen-healthcare",
             "title": "NexGEN Healthcare",
-            "status": "In Progress",
-            "status_color": "#3b82f6",
+            "status": "LIVE",
+            "status_color": "#3bf679",
             "description": "AI-assisted clinical intake and workflow system designed to improve patient check-in and provider efficiency.",
             "tech_stack": "AWS, EC2, CloudWatch, Python, Flask, SQLAlchemy, Gunicorn",
             "github": "https://github.com/joshuamaxdixon-cmd/nexgen-healthcare",
