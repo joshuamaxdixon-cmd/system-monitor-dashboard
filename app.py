@@ -40,6 +40,19 @@ _db_initialized = False
 def get_projects():
     return [
         {
+            "slug": "nexgen-healthcare",
+            "title": "NexGEN Healthcare",
+            "status": "In Progress",
+            "status_color": "#3b82f6",
+            "description": "AI-assisted clinical intake and workflow system designed to improve patient check-in and provider efficiency.",
+            "tech_stack": "AWS, EC2, CloudWatch, Python, Flask, SQLAlchemy, Gunicorn",
+            "github": "https://github.com/joshuamaxdixon-cmd/nexgen-healthcare",
+            "project_url": "/projects/nexgen-healthcare",
+            "live_url": "/projects/nexgen-healthcare",
+            "what_it_does": "Supports QR-based patient intake, returning patient recognition, structured visit-level data capture, and a provider dashboard for workflow management.",
+            "why_it_matters": "Demonstrates real-world workflow design, backend engineering, AWS deployment, and practical AI-assisted system building in a healthcare context."
+        },
+        {
             "slug": "cloud-monitor",
             "title": "Cloud Monitoring Platform on AWS",
             "status": "Live",
