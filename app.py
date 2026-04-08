@@ -42,6 +42,7 @@ def get_projects():
         {
             "slug": "nexgen-healthcare",
             "title": "NexGEN Healthcare",
+            "subtitle": "AI-assisted clinical intake and workflow platform",
             "status": "LIVE",
             "status_color": "#22c55e",
             "description": "AI-assisted clinical intake and workflow system designed to improve patient check-in and provider efficiency.",
@@ -49,60 +50,104 @@ def get_projects():
             "github": "https://github.com/joshuamaxdixon-cmd/nexgen-healthcare",
             "project_url": "/projects/nexgen-healthcare",
             "live_url": "https://nexgenhealthapp.com",
+            "primary_button_text": "View Live Application",
             "what_it_does": "Supports QR-based patient intake, returning patient recognition, structured visit-level data capture, and a provider dashboard for workflow management.",
-            "why_it_matters": "Demonstrates real-world workflow design, backend engineering, AWS deployment, and practical AI-assisted system building in a healthcare context."
+            "why_it_matters": "Demonstrates real-world workflow design, backend engineering, AWS deployment, and practical AI-assisted system building in a healthcare context.",
+            "architecture": "AWS EC2, Application Load Balancer, HTTPS routing, Flask backend, structured intake workflow, and production-style deployment with Gunicorn and systemd.",
+            "key_features": [
+                "QR-based patient intake",
+                "Returning patient recognition",
+                "Provider workflow support",
+                "Visit-level structured data capture"
+            ]
         },
         {
             "slug": "cloud-monitor",
             "title": "Cloud Monitoring Platform on AWS",
+            "subtitle": "Production-style AWS monitoring and infrastructure visibility platform",
             "status": "Live",
             "status_color": "#22c55e",
             "description": "Production-style AWS deployment using EC2, Application Load Balancer, Auto Scaling, CloudWatch, HTTPS, DNS routing, and CI/CD automation.",
             "tech_stack": "AWS, Flask, Gunicorn, CloudWatch, ALB, Auto Scaling, GitHub Actions, Linux, DNS, SSL/TLS",
             "github": SYSTEM_MONITOR_REPO,
-            "project_url": "/live/cloud-monitor",
+            "project_url": "/projects/cloud-monitor",
             "live_url": "/live/cloud-monitor",
+            "primary_button_text": "Open Live Dashboard",
             "what_it_does": "Collects and visualizes real-time system metrics, tracks server health states, stores historical logs, exposes API endpoints, and simulates cloud monitoring across multiple server roles.",
-            "why_it_matters": "Demonstrates production-style cloud architecture, monitoring, automation, secure deployment, and operational visibility using AWS services and Python."
+            "why_it_matters": "Demonstrates production-style cloud architecture, monitoring, automation, secure deployment, and operational visibility using AWS services and Python.",
+            "architecture": "AWS EC2 with Flask and Gunicorn behind an Application Load Balancer, HTTPS-enabled routing, health checks, CloudWatch monitoring, and scaling-ready infrastructure.",
+            "key_features": [
+                "Live infrastructure monitoring",
+                "Historical health records",
+                "CloudWatch integration",
+                "ALB and HTTPS routing"
+            ]
         },
         {
-    "slug": "system-health-checker",
-    "title": "System Health Checker",
-    "status": "Live",
-    "status_color": "#22c55e",
-    "description": "Python-based monitoring tool that checks CPU, memory, and disk usage and generates a system health summary.",
-    "tech_stack": "Python, System Monitoring, Scripting",
-    "github": SYSTEM_HEALTH_REPO,
-    "project_url": "/projects/system-health",
-    "live_url": "/projects/system-health",
-    "what_it_does": "Checks core system resources and produces a lightweight health report for troubleshooting and infrastructure awareness.",
-    "why_it_matters": "Shows practical scripting skills for monitoring and foundational operations workflows used in cloud and DevOps roles."
-},
+            "slug": "system-health-checker",
+            "title": "System Health Checker",
+            "subtitle": "Monitoring utility project",
+            "status": "Live",
+            "status_color": "#22c55e",
+            "description": "Python-based monitoring tool that checks CPU, memory, and disk usage and generates a system health summary.",
+            "tech_stack": "Python, System Monitoring, Scripting",
+            "github": SYSTEM_HEALTH_REPO,
+            "project_url": "/projects/system-health-checker",
+            "live_url": "https://github.com/joshuamaxdixon-cmd/system-health-checker",
+            "primary_button_text": "View Repository",
+            "what_it_does": "Checks core system resources and produces a lightweight health report for troubleshooting and infrastructure awareness.",
+            "why_it_matters": "Shows practical scripting skills for monitoring and foundational operations workflows used in cloud and DevOps roles.",
+            "architecture": "Lightweight Python utility focused on local system inspection, resource analysis, and clear health reporting logic.",
+            "key_features": [
+                "CPU usage checks",
+                "Memory usage checks",
+                "Disk usage checks",
+                "Simple health summary output"
+            ]
+        },
         {
             "slug": "cloud-log-analyzer",
             "title": "Cloud Log Analyzer",
+            "subtitle": "Log analysis and cloud operations project",
             "status": "Live",
             "status_color": "#22c55e",
             "description": "Python tool for analyzing server logs, detecting warnings and errors, and generating structured cloud operations insights.",
             "tech_stack": "Python, Log Parsing, Infrastructure Analysis",
             "github": CLOUD_LOG_ANALYZER_REPO,
             "project_url": "/projects/cloud-log-analyzer",
-            "live_url":  "/cloud-log-analyzer",
+            "live_url": "/cloud-log-analyzer",
+            "primary_button_text": "View Project",
             "what_it_does": "Parses cloud or server-style logs, extracts useful signal, identifies issues, and summarizes operational events in a readable way.",
-            "why_it_matters": "Highlights log analysis and troubleshooting skills that matter in DevOps, cloud operations, and reliability engineering."
+            "why_it_matters": "Highlights log analysis and troubleshooting skills that matter in DevOps, cloud operations, and reliability engineering.",
+            "architecture": "Python-based log parsing workflow designed to extract operational insights from application and infrastructure logs.",
+            "key_features": [
+                "Warning and error extraction",
+                "Operational event summaries",
+                "Readable output for troubleshooting",
+                "Log-driven infrastructure insight"
+            ]
         },
         {
             "slug": "log-file-analyzer",
             "title": "Log File Analyzer",
+            "subtitle": "Foundational log analysis project",
             "status": "Live",
             "status_color": "#22c55e",
             "description": "Foundational Python project for scanning log files, identifying errors, and extracting useful operational information.",
             "tech_stack": "Python, Log Analysis",
             "github": LOG_FILE_ANALYZER_REPO,
             "project_url": "/projects/log-file-analyzer",
-            "live_url": "/projects/log-file-analyzer",
+            "live_url": "https://github.com/joshuamaxdixon-cmd/log-file-analyzer",
+            "primary_button_text": "View Repository",
             "what_it_does": "Analyzes application and system log files to surface errors, warnings, and useful patterns for debugging.",
-            "why_it_matters": "Demonstrates strong Python fundamentals and the operational mindset needed for cloud support and DevOps work."
+            "why_it_matters": "Demonstrates strong Python fundamentals and the operational mindset needed for cloud support and DevOps work.",
+            "architecture": "Small Python-based log inspection tool focused on parsing files, identifying signal, and surfacing operational patterns.",
+            "key_features": [
+                "Application log scanning",
+                "Error and warning detection",
+                "Useful pattern extraction",
+                "Foundational Python parsing logic"
+            ]
         }
     ]
 
@@ -374,7 +419,7 @@ def base_styles():
         }
 
         .container {
-            max-width: 1180px;
+            max-width: 1000px;
             margin: auto;
         }
 
@@ -382,7 +427,7 @@ def base_styles():
             background: #1e293b;
             padding: 30px;
             border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.35);
         }
 
         h1 {
@@ -425,18 +470,19 @@ def base_styles():
         }
 
         .note-box {
-           background: #0f172a;
-           padding: 18px 22px;
-           border-radius: 12px;
-           margin-bottom: 16px;
-           border: 1px solid rgba(255,255,255,0.06);
-           line-height: 1.6;
-           font-size: 15px;
-           color: #cbd5e1;
+            background: #0f172a;
+            padding: 18px 22px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.06);
+            line-height: 1.6;
+            font-size: 15px;
+            color: #cbd5e1;
         }
+
         .skill-chip-row {
-          margin: 28px 0 24px 0;
-          text-align: center;
+            margin: 28px 0 24px 0;
+            text-align: center;
         }
 
         .hero {
@@ -460,9 +506,9 @@ def base_styles():
         .hero-buttons {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 14px;
             flex-wrap: wrap;
-            margin-top: 24px;
+            margin-top: 32px;
         }
 
         .hero-buttons a,
@@ -479,6 +525,7 @@ def base_styles():
             border-radius: 10px;
             padding: 10px 18px;
             font-weight: 600;
+            color: white;
         }
 
         .btn-primary:hover {
@@ -564,10 +611,12 @@ def base_styles():
         }
 
         .skill-box {
+            display: inline-block;
+            margin: 6px 6px;
+            padding: 8px 14px;
             background: #0f172a;
             border: 1px solid #334155;
             border-radius: 12px;
-            padding: 16px;
             text-align: center;
             color: #e2e8f0;
             font-weight: bold;
@@ -819,6 +868,71 @@ def render_project_card(project):
     """
 
 
+def render_project_detail_page(project):
+    feature_lines = "".join(f"• {feature}<br>" for feature in project.get("key_features", []))
+    skill_chips = "".join(
+        f'<span class="skill-box">{skill.strip()}</span>'
+        for skill in project["tech_stack"].split(",")
+    )
+
+    body = f"""
+    {render_nav()}
+
+    <h1>{project['title']}</h1>
+    <p class="subtitle">{project.get('subtitle', 'Project detail page')}</p>
+
+    <div style="text-align:center; margin: 18px 0 26px 0;">
+        <span class="status-badge" style="background:{project['status_color']};">
+            {project['status']}
+        </span>
+    </div>
+
+    <div class="project-detail-meta">
+        <div class="meta-box">
+            <strong>Tech Stack</strong>
+            {project['tech_stack']}
+        </div>
+    </div>
+
+    <div class="note-box">
+        <strong>Overview:</strong><br>
+        {project['description']}
+    </div>
+
+    <div class="note-box">
+        <strong>What it does:</strong><br>
+        {project['what_it_does']}
+    </div>
+
+    <div class="note-box">
+        <strong>Why it matters:</strong><br>
+        {project['why_it_matters']}
+    </div>
+
+    <div class="note-box">
+        <strong>Architecture:</strong><br>
+        {project.get('architecture', 'Architecture details coming soon.')}
+    </div>
+
+    <div class="note-box">
+        <strong>Key Features:</strong><br>
+        {feature_lines}
+    </div>
+
+    <div class="skill-chip-row">
+        {skill_chips}
+    </div>
+
+    <div class="hero-buttons">
+        <a class="btn-primary" href="{project['live_url']}" target="_blank">{project.get('primary_button_text', 'View Live Application')}</a>
+        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
+        <a class="btn-ghost" href="/projects">Back to Projects</a>
+    </div>
+    """
+
+    return render_page(f"{SITE_NAME} | {project['title']}", body)
+
+
 def render_page(title, body_html):
     return f"""
     <html>
@@ -841,7 +955,7 @@ def render_page(title, body_html):
 def home():
     projects = get_projects()
     featured = projects[0]
-    project_cards = "".join(render_project_card(project) for project in projects)
+    project_cards = "".join(render_project_card(project) for project in projects[1:])
 
     body = f"""
     {render_nav()}
@@ -932,224 +1046,34 @@ def projects_page():
     return render_page(f"{SITE_NAME} | Projects", body)
 
 
-@app.route("/projects/system-health-checker")
-def project_system_health_checker():
-    project = get_project_by_slug("system-health-checker")
-
-    body = f"""
-    {render_nav()}
-
-    <h1>{project['title']}</h1>
-    <p class="subtitle">Monitoring utility project</p>
-
-    <div style="text-align:center;">
-        <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
-    </div>
-
-    <div class="project-detail-meta">
-        <div class="meta-box">
-            <strong>Tech Stack</strong>
-            {project['tech_stack']}
-        </div>
-        <div class="meta-box">
-            <strong>Status</strong>
-            {project['status']}
-        </div>
-        <div class="meta-box">
-            <strong>Repository</strong>
-            <a class="inline-link" href="{project['github']}" target="_blank">Open GitHub Repo</a>
-        </div>
-    </div>
-
-    <div class="note-box">
-        <strong>Overview:</strong> {project['description']}
-    </div>
-
-    <div class="note-box">
-        <strong>What it does:</strong> {project['what_it_does']}
-    </div>
-
-    <div class="note-box">
-        <strong>Why it matters:</strong> {project['why_it_matters']}
-    </div>
-
-    <div class="hero-buttons">
-        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
-        <a class="btn-ghost" href="/projects">Back to Projects</a>
-    </div>
-    """
-
-    return render_page(f"{SITE_NAME} | {project['title']}", body)
-
 @app.route("/projects/nexgen-healthcare")
 def nexgen_project():
     project = get_project_by_slug("nexgen-healthcare")
+    return render_project_detail_page(project)
 
-    body = f"""
-    {render_nav()}
 
-    <h1>{project['title']}</h1>
-    <p class="subtitle">AI-assisted clinical intake and workflow platform</p>
+@app.route("/projects/cloud-monitor")
+def project_cloud_monitor():
+    project = get_project_by_slug("cloud-monitor")
+    return render_project_detail_page(project)
 
-    <div style="text-align:center; margin: 18px 0 26px 0;">
-        <span class="status-badge" style="background:{project['status_color']};">
-            {project['status']}
-        </span>
-    </div>
 
-    <div class="project-detail-meta">
-        <div class="meta-box">
-            <strong>Tech Stack</strong>
-            {project['tech_stack']}
-        </div>
-    </div>
-
-    <div class="note-box">
-        <strong>Overview:</strong><br>
-        {project['description']}
-    </div>
-
-    <div class="note-box">
-        <strong>What it does:</strong><br>
-        {project['what_it_does']}
-    </div>
-
-    <div class="note-box">
-        <strong>Why it matters:</strong><br>
-        {project['why_it_matters']}
-    </div>
-
-    <div class="note-box">
-        <strong>Architecture:</strong><br>
-        AWS EC2, Application Load Balancer, HTTPS routing, Flask backend, structured intake workflow, and production-style deployment with Gunicorn and systemd.
-    </div>
-
-    <div class="note-box">
-        <strong>Key Features:</strong><br>
-        • QR-based patient intake<br>
-        • Returning patient recognition<br>
-        • Provider workflow support<br>
-        • Visit-level structured data capture
-    </div>
-
-    <div class="skill-chip-row">
-        <span class="skill-box">AWS</span>
-        <span class="skill-box">EC2</span>
-        <span class="skill-box">ALB</span>
-        <span class="skill-box">HTTPS</span>
-        <span class="skill-box">Flask</span>
-        <span class="skill-box">Gunicorn</span>
-        <span class="skill-box">Systemd</span>
-    </div>
-
-    <div class="hero-buttons">
-        <a class="btn-primary" href="{project['live_url']}" target="_blank">View Live Application</a>
-        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
-        <a class="btn-ghost" href="/projects">Back to Projects</a>
-    </div>
-    """
-
-    return render_page(f"{SITE_NAME} | {project['title']}", body)
+@app.route("/projects/system-health-checker")
+def project_system_health_checker():
+    project = get_project_by_slug("system-health-checker")
+    return render_project_detail_page(project)
 
 
 @app.route("/projects/cloud-log-analyzer")
 def project_cloud_log_analyzer():
     project = get_project_by_slug("cloud-log-analyzer")
-
-    body = f"""
-    {render_nav()}
-
-    <h1>{project['title']}</h1>
-    <p class="subtitle">Log analysis and cloud operations project</p>
-
-    <div style="text-align:center;">
-        <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
-    </div>
-
-    <div class="project-detail-meta">
-        <div class="meta-box">
-            <strong>Tech Stack</strong>
-            {project['tech_stack']}
-        </div>
-        <div class="meta-box">
-            <strong>Status</strong>
-            {project['status']}
-        </div>
-        <div class="meta-box">
-            <strong>Repository</strong>
-            <a class="inline-link" href="{project['github']}" target="_blank">Open GitHub Repo</a>
-        </div>
-    </div>
-
-    <div class="note-box">
-        <strong>Overview:</strong> {project['description']}
-    </div>
-
-    <div class="note-box">
-        <strong>What it does:</strong> {project['what_it_does']}
-    </div>
-
-    <div class="note-box">
-        <strong>Why it matters:</strong> {project['why_it_matters']}
-    </div>
-
-    <div class="hero-buttons">
-        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
-        <a class="btn-ghost" href="/projects">Back to Projects</a>
-    </div>
-    """
-
-    return render_page(f"{SITE_NAME} | {project['title']}", body)
+    return render_project_detail_page(project)
 
 
 @app.route("/projects/log-file-analyzer")
 def project_log_file_analyzer():
     project = get_project_by_slug("log-file-analyzer")
-
-    body = f"""
-    {render_nav()}
-
-    <h1>{project['title']}</h1>
-    <p class="subtitle">Foundational log analysis project</p>
-
-    <div style="text-align:center;">
-        <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
-    </div>
-
-    <div class="project-detail-meta">
-        <div class="meta-box">
-            <strong>Tech Stack</strong>
-            {project['tech_stack']}
-        </div>
-        <div class="meta-box">
-            <strong>Status</strong>
-            {project['status']}
-        </div>
-        <div class="meta-box">
-            <strong>Repository</strong>
-            <a class="inline-link" href="{project['github']}" target="_blank">Open GitHub Repo</a>
-        </div>
-    </div>
-
-    <div class="note-box">
-        <strong>Overview:</strong> {project['description']}
-    </div>
-
-    <div class="note-box">
-        <strong>What it does:</strong> {project['what_it_does']}
-    </div>
-
-    <div class="note-box">
-        <strong>Why it matters:</strong> {project['why_it_matters']}
-    </div>
-
-    <div class="hero-buttons">
-        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
-        <a class="btn-ghost" href="/projects">Back to Projects</a>
-    </div>
-    """
-
-    return render_page(f"{SITE_NAME} | {project['title']}", body)
+    return render_project_detail_page(project)
 
 
 @app.route("/contact")
@@ -1442,133 +1366,133 @@ def charts_page():
         const apiCpu = {json.dumps(api_cpu)};
         const apiMem = {json.dumps(api_mem)};
 
-        const sharedOptions = {{
+        const sharedOptions = {
             responsive: true,
-            plugins: {{
-                legend: {{
-                    labels: {{ color: 'white' }}
-                }}
-            }},
-            scales: {{
-                x: {{
-                    ticks: {{ color: 'white' }}
-                }},
-                y: {{
-                    ticks: {{ color: 'white' }},
+            plugins: {
+                legend: {
+                    labels: { color: 'white' }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: 'white' }
+                },
+                y: {
+                    ticks: { color: 'white' },
                     beginAtZero: true
-                }}
-            }}
-        }};
+                }
+            }
+        };
 
-        new Chart(document.getElementById('cpuChart'), {{
+        new Chart(document.getElementById('cpuChart'), {
             type: 'line',
-            data: {{
+            data: {
                 labels: labels,
-                datasets: [{{
+                datasets: [{
                     label: 'CPU %',
                     data: cpuData,
                     borderColor: '#38bdf8',
                     backgroundColor: 'rgba(56, 189, 248, 0.2)',
                     tension: 0.3,
                     fill: true
-                }}]
-            }},
+                }]
+            },
             options: sharedOptions
-        }});
+        });
 
-        new Chart(document.getElementById('memoryChart'), {{
+        new Chart(document.getElementById('memoryChart'), {
             type: 'line',
-            data: {{
+            data: {
                 labels: labels,
-                datasets: [{{
+                datasets: [{
                     label: 'Memory %',
                     data: memoryData,
                     borderColor: '#22c55e',
                     backgroundColor: 'rgba(34, 197, 94, 0.2)',
                     tension: 0.3,
                     fill: true
-                }}]
-            }},
+                }]
+            },
             options: sharedOptions
-        }});
+        });
 
-        new Chart(document.getElementById('webChart'), {{
+        new Chart(document.getElementById('webChart'), {
             type: 'line',
-            data: {{
+            data: {
                 labels: webLabels,
                 datasets: [
-                    {{
+                    {
                         label: 'Web CPU %',
                         data: webCpu,
                         borderColor: '#60a5fa',
                         backgroundColor: 'rgba(96, 165, 250, 0.15)',
                         tension: 0.3,
                         fill: true
-                    }},
-                    {{
+                    },
+                    {
                         label: 'Web Memory %',
                         data: webMem,
                         borderColor: '#34d399',
                         backgroundColor: 'rgba(52, 211, 153, 0.15)',
                         tension: 0.3,
                         fill: true
-                    }}
+                    }
                 ]
-            }},
+            },
             options: sharedOptions
-        }});
+        });
 
-        new Chart(document.getElementById('dbChart'), {{
+        new Chart(document.getElementById('dbChart'), {
             type: 'line',
-            data: {{
+            data: {
                 labels: dbLabels,
                 datasets: [
-                    {{
+                    {
                         label: 'DB CPU %',
                         data: dbCpu,
                         borderColor: '#f59e0b',
                         backgroundColor: 'rgba(245, 158, 11, 0.15)',
                         tension: 0.3,
                         fill: true
-                    }},
-                    {{
+                    },
+                    {
                         label: 'DB Memory %',
                         data: dbMem,
                         borderColor: '#f472b6',
                         backgroundColor: 'rgba(244, 114, 182, 0.15)',
                         tension: 0.3,
                         fill: true
-                    }}
+                    }
                 ]
-            }},
+            },
             options: sharedOptions
-        }});
+        });
 
-        new Chart(document.getElementById('apiChart'), {{
+        new Chart(document.getElementById('apiChart'), {
             type: 'line',
-            data: {{
+            data: {
                 labels: apiLabels,
                 datasets: [
-                    {{
+                    {
                         label: 'API CPU %',
                         data: apiCpu,
                         borderColor: '#a78bfa',
                         backgroundColor: 'rgba(167, 139, 250, 0.15)',
                         tension: 0.3,
                         fill: true
-                    }},
-                    {{
+                    },
+                    {
                         label: 'API Memory %',
                         data: apiMem,
                         borderColor: '#fb7185',
                         backgroundColor: 'rgba(251, 113, 133, 0.15)',
                         tension: 0.3,
                         fill: true
-                    }}
+                    }
                 ]
-            }},
+            },
             options: sharedOptions
-        }});
+        });
     </script>
     """
 
