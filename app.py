@@ -43,11 +43,11 @@ def get_projects():
             "slug": "nexgen-healthcare",
             "title": "NexGEN Healthcare",
             "status": "LIVE",
-            "status_color": "#3bf679",
+            "status_color": "#22c55e",
             "description": "AI-assisted clinical intake and workflow system designed to improve patient check-in and provider efficiency.",
             "tech_stack": "AWS, EC2, CloudWatch, Python, Flask, SQLAlchemy, Gunicorn",
             "github": "https://github.com/joshuamaxdixon-cmd/nexgen-healthcare",
-            "project_url": "https://nexgenhealthapp.com",
+            "project_url": "/projects/nexgen-healthcare",
             "live_url": "https://nexgenhealthapp.com",
             "what_it_does": "Supports QR-based patient intake, returning patient recognition, structured visit-level data capture, and a provider dashboard for workflow management.",
             "why_it_matters": "Demonstrates real-world workflow design, backend engineering, AWS deployment, and practical AI-assisted system building in a healthcare context."
@@ -967,6 +967,50 @@ def project_system_health_checker():
     </div>
 
     <div class="hero-buttons">
+        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
+        <a class="btn-ghost" href="/projects">Back to Projects</a>
+    </div>
+    """
+
+    return render_page(f"{SITE_NAME} | {project['title']}", body)
+
+@app.route("/projects/nexgen-healthcare")
+def nexgen_project():
+    project = get_project_by_slug("nexgen-healthcare")
+
+    body = f"""
+    {render_nav()}
+
+    <h1>{project['title']}</h1>
+    <p class="subtitle">AI-assisted clinical intake and workflow platform</p>
+
+    <div style="text-align:center;">
+        <span class="status-badge" style="background:{project['status_color']};">
+            {project['status']}
+        </span>
+    </div>
+
+    <div class="project-detail-meta">
+        <div class="meta-box">
+            <strong>Tech Stack</strong>
+            {project['tech_stack']}
+        </div>
+    </div>
+
+    <div class="note-box">
+        <strong>Overview:</strong> {project['description']}
+    </div>
+
+    <div class="note-box">
+        <strong>What it does:</strong> {project['what_it_does']}
+    </div>
+
+    <div class="note-box">
+        <strong>Why it matters:</strong> {project['why_it_matters']}
+    </div>
+
+    <div class="hero-buttons">
+        <a class="btn-primary" href="{project['live_url']}" target="_blank">Open NexGEN</a>
         <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
         <a class="btn-ghost" href="/projects">Back to Projects</a>
     </div>
