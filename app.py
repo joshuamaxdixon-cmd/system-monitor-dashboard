@@ -1366,133 +1366,133 @@ def charts_page():
         const apiCpu = {json.dumps(api_cpu)};
         const apiMem = {json.dumps(api_mem)};
 
-        const sharedOptions = {
+        const sharedOptions = {{
             responsive: true,
-            plugins: {
-                legend: {
-                    labels: { color: 'white' }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: { color: 'white' }
-                },
-                y: {
-                    ticks: { color: 'white' },
+            plugins: {{
+                legend: {{
+                    labels: {{ color: 'white' }}
+                }}
+            }},
+            scales: {{
+                x: {{
+                    ticks: {{ color: 'white' }}
+                }},
+                y: {{
+                    ticks: {{ color: 'white' }},
                     beginAtZero: true
-                }
-            }
-        };
+                }}
+            }}
+        }};
 
-        new Chart(document.getElementById('cpuChart'), {
+        new Chart(document.getElementById('cpuChart'), {{
             type: 'line',
-            data: {
+            data: {{
                 labels: labels,
-                datasets: [{
+                datasets: [{{
                     label: 'CPU %',
                     data: cpuData,
                     borderColor: '#38bdf8',
                     backgroundColor: 'rgba(56, 189, 248, 0.2)',
                     tension: 0.3,
                     fill: true
-                }]
-            },
+                }}]
+            }},
             options: sharedOptions
-        });
+        }});
 
-        new Chart(document.getElementById('memoryChart'), {
+        new Chart(document.getElementById('memoryChart'), {{
             type: 'line',
-            data: {
+            data: {{
                 labels: labels,
-                datasets: [{
+                datasets: [{{
                     label: 'Memory %',
                     data: memoryData,
                     borderColor: '#22c55e',
                     backgroundColor: 'rgba(34, 197, 94, 0.2)',
                     tension: 0.3,
                     fill: true
-                }]
-            },
+                }}]
+            }},
             options: sharedOptions
-        });
+        }});
 
-        new Chart(document.getElementById('webChart'), {
+        new Chart(document.getElementById('webChart'), {{
             type: 'line',
-            data: {
+            data: {{
                 labels: webLabels,
                 datasets: [
-                    {
+                    {{
                         label: 'Web CPU %',
                         data: webCpu,
                         borderColor: '#60a5fa',
                         backgroundColor: 'rgba(96, 165, 250, 0.15)',
                         tension: 0.3,
                         fill: true
-                    },
-                    {
+                    }},
+                    {{
                         label: 'Web Memory %',
                         data: webMem,
                         borderColor: '#34d399',
                         backgroundColor: 'rgba(52, 211, 153, 0.15)',
                         tension: 0.3,
                         fill: true
-                    }
+                    }}
                 ]
-            },
+            }},
             options: sharedOptions
-        });
+        }});
 
-        new Chart(document.getElementById('dbChart'), {
+        new Chart(document.getElementById('dbChart'), {{
             type: 'line',
-            data: {
+            data: {{
                 labels: dbLabels,
                 datasets: [
-                    {
+                    {{
                         label: 'DB CPU %',
                         data: dbCpu,
                         borderColor: '#f59e0b',
                         backgroundColor: 'rgba(245, 158, 11, 0.15)',
                         tension: 0.3,
                         fill: true
-                    },
-                    {
+                    }},
+                    {{
                         label: 'DB Memory %',
                         data: dbMem,
                         borderColor: '#f472b6',
                         backgroundColor: 'rgba(244, 114, 182, 0.15)',
                         tension: 0.3,
                         fill: true
-                    }
+                    }}
                 ]
-            },
+            }},
             options: sharedOptions
-        });
+        }});
 
-        new Chart(document.getElementById('apiChart'), {
+        new Chart(document.getElementById('apiChart'), {{
             type: 'line',
-            data: {
+            data: {{
                 labels: apiLabels,
                 datasets: [
-                    {
+                    {{
                         label: 'API CPU %',
                         data: apiCpu,
                         borderColor: '#a78bfa',
                         backgroundColor: 'rgba(167, 139, 250, 0.15)',
                         tension: 0.3,
                         fill: true
-                    },
-                    {
+                    }},
+                    {{
                         label: 'API Memory %',
                         data: apiMem,
                         borderColor: '#fb7185',
                         backgroundColor: 'rgba(251, 113, 133, 0.15)',
                         tension: 0.3,
                         fill: true
-                    }
+                    }}
                 ]
-            },
+            }},
             options: sharedOptions
-        });
+        }});
     </script>
     """
 
