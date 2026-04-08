@@ -425,13 +425,18 @@ def base_styles():
         }
 
         .note-box {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 24px;
-            color: #cbd5e1;
-            line-height: 1.7;
+           background: #0f172a;
+           padding: 18px 22px;
+           border-radius: 12px;
+           margin-bottom: 16px;
+           border: 1px solid rgba(255,255,255,0.06);
+           line-height: 1.6;
+           font-size: 15px;
+           color: #cbd5e1;
+        }
+        .skill-chip-row {
+          margin: 28px 0 24px 0;
+          text-align: center;
         }
 
         .hero {
@@ -455,9 +460,9 @@ def base_styles():
         .hero-buttons {
             display: flex;
             justify-content: center;
-            gap: 14px;
+            gap: 12px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-top: 24px;
         }
 
         .hero-buttons a,
@@ -470,8 +475,10 @@ def base_styles():
         }
 
         .btn-primary {
-            background: #2563eb;
-            color: white;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: 10px;
+            padding: 10px 18px;
+            font-weight: 600;
         }
 
         .btn-primary:hover {
@@ -979,68 +986,68 @@ def nexgen_project():
     project = get_project_by_slug("nexgen-healthcare")
 
     body = f"""
-{render_nav()}
+    {render_nav()}
 
-<h1>{project['title']}</h1>
-<p class="subtitle">AI-assisted clinical intake and workflow platform</p>
+    <h1>{project['title']}</h1>
+    <p class="subtitle">AI-assisted clinical intake and workflow platform</p>
 
-<div style="text-align:center; margin: 18px 0 26px 0;">
-    <span class="status-badge" style="background:{project['status_color']};">
-        {project['status']}
-    </span>
-</div>
-
-<div class="project-detail-meta">
-    <div class="meta-box">
-        <strong>Tech Stack</strong>
-        {project['tech_stack']}
+    <div style="text-align:center; margin: 18px 0 26px 0;">
+        <span class="status-badge" style="background:{project['status_color']};">
+            {project['status']}
+        </span>
     </div>
-</div>
 
-<div class="note-box">
-    <strong>Overview:</strong><br>
-    {project['description']}
-</div>
+    <div class="project-detail-meta">
+        <div class="meta-box">
+            <strong>Tech Stack</strong>
+            {project['tech_stack']}
+        </div>
+    </div>
 
-<div class="note-box">
-    <strong>What it does:</strong><br>
-    {project['what_it_does']}
-</div>
+    <div class="note-box">
+        <strong>Overview:</strong><br>
+        {project['description']}
+    </div>
 
-<div class="note-box">
-    <strong>Why it matters:</strong><br>
-    {project['why_it_matters']}
-</div>
+    <div class="note-box">
+        <strong>What it does:</strong><br>
+        {project['what_it_does']}
+    </div>
 
-<div class="note-box">
-    <strong>Architecture:</strong><br>
-    AWS EC2, Application Load Balancer, HTTPS routing, Flask backend, structured intake workflow, and production-style deployment with Gunicorn and systemd.
-</div>
+    <div class="note-box">
+        <strong>Why it matters:</strong><br>
+        {project['why_it_matters']}
+    </div>
 
-<div class="note-box">
-    <strong>Key Features:</strong><br>
-    • QR-based patient intake<br>
-    • Returning patient recognition<br>
-    • Provider workflow support<br>
-    • Visit-level structured data capture
-</div>
+    <div class="note-box">
+        <strong>Architecture:</strong><br>
+        AWS EC2, Application Load Balancer, HTTPS routing, Flask backend, structured intake workflow, and production-style deployment with Gunicorn and systemd.
+    </div>
 
-<div style="margin: 28px 0 10px 0; text-align:center;">
-    <span class="skill-box">AWS</span>
-    <span class="skill-box">EC2</span>
-    <span class="skill-box">ALB</span>
-    <span class="skill-box">HTTPS</span>
-    <span class="skill-box">Flask</span>
-    <span class="skill-box">Gunicorn</span>
-    <span class="skill-box">Systemd</span>
-</div>
+    <div class="note-box">
+        <strong>Key Features:</strong><br>
+        • QR-based patient intake<br>
+        • Returning patient recognition<br>
+        • Provider workflow support<br>
+        • Visit-level structured data capture
+    </div>
 
-<div class="hero-buttons">
-    <a class="btn-primary" href="{project['live_url']}" target="_blank">View Live Application</a>
-    <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
-    <a class="btn-ghost" href="/projects">Back to Projects</a>
-</div>
-"""
+    <div class="skill-chip-row">
+        <span class="skill-box">AWS</span>
+        <span class="skill-box">EC2</span>
+        <span class="skill-box">ALB</span>
+        <span class="skill-box">HTTPS</span>
+        <span class="skill-box">Flask</span>
+        <span class="skill-box">Gunicorn</span>
+        <span class="skill-box">Systemd</span>
+    </div>
+
+    <div class="hero-buttons">
+        <a class="btn-primary" href="{project['live_url']}" target="_blank">View Live Application</a>
+        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
+        <a class="btn-ghost" href="/projects">Back to Projects</a>
+    </div>
+    """
 
     return render_page(f"{SITE_NAME} | {project['title']}", body)
 
