@@ -42,23 +42,57 @@ def get_projects():
         {
             "slug": "nexgen-healthcare",
             "title": "NexGEN Healthcare",
-            "subtitle": "AI-assisted clinical intake and workflow platform",
+            "subtitle": "A multi-role clinical workflow system built to manage patient intake, staff coordination, provider handoffs, and modular product control.",
             "status": "LIVE",
             "status_color": "#22c55e",
-            "description": "AI-assisted clinical intake and workflow system designed to improve patient check-in and provider efficiency.",
-            "tech_stack": "AWS, EC2, CloudWatch, Python, Flask, SQLAlchemy, Gunicorn",
+            "description": "Workflow-first clinical operations platform built to improve patient intake, staff coordination, and provider handoffs through a structured, state-driven system.",
+            "tech_stack": "AWS, EC2, CloudWatch, Python, Flask, SQLAlchemy, Gunicorn, HTML, CSS, JavaScript",
             "github": "https://github.com/joshuamaxdixon-cmd/nexgen-healthcare",
             "project_url": "/projects/nexgen-healthcare",
             "live_url": "https://nexgenhealthapp.com",
             "primary_button_text": "View Live Application",
-            "what_it_does": "Supports QR-based patient intake, returning patient recognition, structured visit-level data capture, and a provider dashboard for workflow management.",
-            "why_it_matters": "Demonstrates real-world workflow design, backend engineering, AWS deployment, and practical AI-assisted system building in a healthcare context.",
-            "architecture": "AWS EC2, Application Load Balancer, HTTPS routing, Flask backend, structured intake workflow, and production-style deployment with Gunicorn and systemd.",
+            "project_highlights": [
+                "Canonical Workflow Engine",
+                "Multi-Role Dashboards",
+                "Internal Visit Messaging",
+                "Feature Toggle Control",
+                "AWS Deployment",
+            ],
+            "overview": "NexGEN Healthcare is a workflow-first clinical operations platform built to improve patient intake, staff coordination, and provider handoffs through a structured, state-driven system.",
+            "what_makes_it_different": "Unlike a typical CRUD healthcare demo, NexGEN is built around a canonical visit lifecycle and dedicated role-based workspaces for front desk, nurse, provider, admin, and patient portal flows. The system is designed to behave like an operational workflow product, not just a form-based application.",
+            "core_systems": [
+                {
+                    "title": "Canonical Workflow Engine",
+                    "body": "A single source of truth for patient movement across the visit lifecycle, ensuring consistent transitions and reliable behavior across all roles.",
+                },
+                {
+                    "title": "Role-Based Workspaces",
+                    "body": "Dedicated operational views for front desk, nurse, provider, admin, and patient portal interactions, each tailored to the responsibilities of that role.",
+                },
+                {
+                    "title": "Visit-Linked Messaging",
+                    "body": "Internal care coordination tied directly to visit context, combining workflow events and staff communication in a structured visit thread.",
+                },
+                {
+                    "title": "Workflow Hardening",
+                    "body": "Protection against stale actions, duplicate submissions, invalid transitions, assignment conflicts, and cross-role misuse.",
+                },
+                {
+                    "title": "Modular Feature Control",
+                    "body": "A database-backed feature toggle foundation that allows selected capabilities to be enabled or disabled safely without destabilizing the workflow core.",
+                },
+            ],
+            "demo_flow": "Patient Check-In → Front Desk → Nurse → Provider → Completion",
+            "demo_flow_description": "The system is built around a state-driven visit lifecycle that validates handoffs and keeps each role aligned to the correct stage of care.",
+            "why_it_matters": "This project demonstrates backend engineering, workflow/system design, cloud deployment, product hardening, and real-world operational thinking. It reflects the kind of architectural work required to build reliable systems, not just isolated app features.",
+            "architecture": "NexGEN uses a Flask backend with SQLAlchemy data models and a canonical state-driven workflow layer to manage patient movement across the system. The platform includes hardened route and action validation, internal visit messaging, and database-backed feature governance. It is deployed on AWS EC2 using Gunicorn and production-style service management.",
+            "final_status": "NexGEN reached a stable and complete stage for this phase of the product. The workflow was hardened, internal messaging was integrated, modular feature toggles were implemented, and the system was deployed and validated for repeated use.",
             "key_features": [
-                "QR-based patient intake",
-                "Returning patient recognition",
-                "Provider workflow support",
-                "Visit-level structured data capture"
+                "Canonical visit lifecycle management",
+                "Role-based operational dashboards",
+                "Visit-linked internal messaging",
+                "Database-backed feature toggle control",
+                "AWS-hosted production-style deployment",
             ]
         },
         {
@@ -650,6 +684,123 @@ def base_styles():
             color: #e2e8f0;
         }
 
+        .detail-hero {
+            text-align: center;
+            padding: 10px 0 4px 0;
+        }
+
+        .detail-hero h1 {
+            font-size: 44px;
+            margin-bottom: 14px;
+        }
+
+        .detail-hero .subtitle {
+            max-width: 760px;
+            margin: 0 auto 26px auto;
+            line-height: 1.7;
+        }
+
+        .highlight-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 8px 0 28px 0;
+        }
+
+        .highlight-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #dbeafe;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .section-panel {
+            background: #0f172a;
+            padding: 22px 24px;
+            border-radius: 14px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .section-panel h2 {
+            text-align: left;
+            margin: 0 0 10px 0;
+        }
+
+        .section-panel p {
+            margin: 0;
+            line-height: 1.75;
+            color: #cbd5e1;
+        }
+
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin: 18px 0 6px 0;
+        }
+
+        .system-card {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .system-card h3 {
+            margin: 0 0 10px 0;
+            color: #e2e8f0;
+        }
+
+        .system-card p {
+            margin: 0;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .flow-panel {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .flow-box {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 22px 24px;
+        }
+
+        .flow-label {
+            display: block;
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .flow-sequence {
+            color: #f8fafc;
+            font-size: 20px;
+            line-height: 1.6;
+            font-weight: 700;
+        }
+
+        .flow-description {
+            color: #cbd5e1;
+            line-height: 1.75;
+            margin: 0;
+        }
+
         .summary-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -807,7 +958,15 @@ def base_styles():
                 grid-template-columns: repeat(2, 1fr);
             }
 
+            .flow-panel {
+                grid-template-columns: 1fr;
+            }
+
             .hero h1 {
+                font-size: 38px;
+            }
+
+            .detail-hero h1 {
                 font-size: 38px;
             }
         }
@@ -823,6 +982,10 @@ def base_styles():
 
             .hero p {
                 font-size: 16px;
+            }
+
+            .flow-sequence {
+                font-size: 18px;
             }
         }
     </style>
@@ -874,6 +1037,100 @@ def render_project_detail_page(project):
         f'<span class="skill-box">{skill.strip()}</span>'
         for skill in project["tech_stack"].split(",")
     )
+    highlight_chips = "".join(
+        f'<span class="highlight-chip">{item}</span>'
+        for item in project.get("project_highlights", [])
+    )
+    core_system_cards = "".join(
+        f"""
+        <div class="system-card">
+            <h3>{system['title']}</h3>
+            <p>{system['body']}</p>
+        </div>
+        """
+        for system in project.get("core_systems", [])
+    )
+
+    if project.get("core_systems"):
+        body = f"""
+        {render_nav()}
+
+        <div class="detail-hero">
+            <h1>{project['title']}</h1>
+            <p class="subtitle">{project.get('subtitle', 'Project detail page')}</p>
+
+            <div style="text-align:center; margin: 18px 0 12px 0;">
+                <span class="status-badge" style="background:{project['status_color']};">
+                    {project['status']}
+                </span>
+            </div>
+
+            <div class="highlight-row">
+                {highlight_chips}
+            </div>
+        </div>
+
+        <div class="project-detail-meta">
+            <div class="meta-box">
+                <strong>Tech Stack</strong>
+                {project['tech_stack']}
+            </div>
+        </div>
+
+        <div class="section-panel">
+            <h2>Project Overview</h2>
+            <p>{project.get('overview', project['description'])}</p>
+        </div>
+
+        <div class="section-panel">
+            <h2>What Makes It Different</h2>
+            <p>{project.get('what_makes_it_different', project['description'])}</p>
+        </div>
+
+        <div class="section-panel">
+            <h2>Core Systems</h2>
+            <div class="systems-grid">
+                {core_system_cards}
+            </div>
+        </div>
+
+        <div class="flow-panel">
+            <div class="flow-box">
+                <span class="flow-label">Demo Flow</span>
+                <div class="flow-sequence">{project.get('demo_flow', '')}</div>
+            </div>
+            <div class="flow-box">
+                <span class="flow-label">Flow Behavior</span>
+                <p class="flow-description">{project.get('demo_flow_description', '')}</p>
+            </div>
+        </div>
+
+        <div class="section-panel">
+            <h2>Architecture / Engineering</h2>
+            <p>{project.get('architecture', 'Architecture details coming soon.')}</p>
+        </div>
+
+        <div class="section-panel">
+            <h2>Why It Matters</h2>
+            <p>{project['why_it_matters']}</p>
+        </div>
+
+        <div class="section-panel">
+            <h2>Final Status</h2>
+            <p>{project.get('final_status', '')}</p>
+        </div>
+
+        <div class="skill-chip-row">
+            {skill_chips}
+        </div>
+
+        <div class="hero-buttons">
+            <a class="btn-primary" href="{project['live_url']}" target="_blank">{project.get('primary_button_text', 'View Live Application')}</a>
+            <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
+            <a class="btn-ghost" href="/projects">Back to Projects</a>
+        </div>
+        """
+        return render_page(f"{SITE_NAME} | {project['title']}", body)
 
     body = f"""
     {render_nav()}
