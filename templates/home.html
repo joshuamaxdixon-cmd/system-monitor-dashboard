@@ -24,6 +24,10 @@
 
 <div class="section">
     <h2 class="section-title">Featured Project</h2>
+    <p class="section-lead">
+        A workflow-driven healthcare platform built to demonstrate system architecture, operational reliability,
+        and production-style deployment ownership.
+    </p>
     <div class="project-grid">
         <div class="project-card featured-card">
             <span class="featured-eyebrow">Featured System</span>
@@ -76,6 +80,7 @@
 
             <div class="project-links">
                 <a class="button-link btn-secondary" href="{{ featured.project_url }}">View Project</a>
+                <a class="button-link btn-primary" href="{{ featured.live_url }}" target="_blank">Live Demo</a>
                 <a class="button-link btn-ghost" href="{{ featured.github }}" target="_blank">Source Code</a>
             </div>
         </div>
@@ -97,6 +102,10 @@
 
 <div class="section">
     <h2 class="section-title">All Projects</h2>
+    <p class="section-lead">
+        Portfolio projects focused on deployment, service reliability, workflow-driven backend behavior,
+        and practical cloud operations.
+    </p>
     <div class="project-grid">
         {% for project in projects %}
             <div class="project-card">
@@ -115,6 +124,10 @@
 
 <div class="section">
     <h2 class="section-title">Core Skills</h2>
+    <p class="section-lead">
+        Experience areas built through direct deployment, failure recovery, backend implementation,
+        and hands-on server-side debugging.
+    </p>
     <div class="skills-category-grid">
         {% for group in skill_groups %}
             <div class="skill-category">

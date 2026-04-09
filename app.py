@@ -617,6 +617,14 @@ def base_styles():
             font-size: 28px;
         }
 
+        .section-lead {
+            max-width: 760px;
+            margin: -4px auto 0 auto;
+            text-align: center;
+            color: #94a3b8;
+            line-height: 1.75;
+        }
+
         .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1136,18 +1144,6 @@ def base_styles():
     """
 
 
-def render_nav():
-    return f"""
-    <div class="top-nav">
-        <a href="/">Home</a>
-        <a href="/projects">Projects</a>
-        <a href="/contact">Contact</a>
-        <a href="{GITHUB_PROFILE}" target="_blank">GitHub</a>
-        <a href="{LINKEDIN_PROFILE}" target="_blank">LinkedIn</a>
-    </div>
-    """
-
-
 def render_live_nav():
     return """
     <div class="top-nav">
@@ -1158,49 +1154,6 @@ def render_live_nav():
         <a href="/charts">Charts</a>
     </div>
     """
-
-
-def render_project_card(project):
-    return f"""
-    <div class="project-card">
-        <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
-        <h3>{project['title']}</h3>
-        <p>{project['description']}</p>
-        <p><strong>Tech Stack:</strong> {project['tech_stack']}</p>
-        <div class="project-links">
-            <a class="button-link btn-secondary" href="{project['project_url']}">View Project</a>
-            <a class="button-link btn-ghost" href="{project['github']}" target="_blank">GitHub</a>
-        </div>
-    </div>
-    """
-
-
-def render_featured_project(project):
-    return f"""
-    <div class="project-card featured-card">
-        <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
-        <h3>NexGEN Healthcare</h3>
-        <p>A multi-role healthcare workflow system with a canonical state engine, internal care coordination, and modular feature control.</p>
-        <p class="project-support">Built with a state-driven workflow, role-based dashboards, and a feature-toggle system for controlled expansion.</p>
-
-        <div class="project-highlights">
-            <strong>System Highlights</strong>
-            <ul class="project-highlight-list">
-                <li>Canonical Workflow Engine</li>
-                <li>Multi-Role Workspaces (Front Desk / Nurse / Provider)</li>
-                <li>Internal Visit Messaging</li>
-                <li>Feature Toggle Control Layer</li>
-            </ul>
-        </div>
-
-        <div class="project-links">
-            <a class="button-link btn-secondary" href="{project['project_url']}">View Project</a>
-            <a class="button-link btn-ghost" href="{project['github']}" target="_blank">GitHub</a>
-        </div>
-    </div>
-    """
-
-
 def render_project_detail_page(project):
     return render_template(
         "project_detail.html",
