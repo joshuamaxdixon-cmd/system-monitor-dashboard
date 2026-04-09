@@ -24,12 +24,11 @@ jobs:
           host: ${{ env.PORTFOLIO_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          script: |
-            set -e
-            cd ${{ env.PORTFOLIO_APP_DIR }}
-            git fetch origin main
-            git checkout main
-            git pull --ff-only origin main
-            sudo systemctl restart ${{ env.PORTFOLIO_SERVICE }}
-            sudo systemctl is-active ${{ env.PORTFOLIO_SERVICE }}
-            sudo systemctl status ${{ env.PORTFOLIO_SERVICE }} --no-pager -n 20
+      script: |
+          set -e
+          cd ${{ env.PORTFOLIO_APP_DIR }}
+          git fetch origin main
+          git reset --hard origin/main
+          sudo systemctl restart ${{ env.PORTFOLIO_SERVICE }}
+          sudo systemctl is-active ${{ env.PORTFOLIO_SERVICE }}
+          sudo systemctl status ${{ env.PORTFOLIO_SERVICE }} --no-pager -n 20
