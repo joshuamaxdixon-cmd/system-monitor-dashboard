@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  PORTFOLIO_HOST: 3.143.207.219
+  PORTFOLIO_HOST: 3.143.207.232
   PORTFOLIO_APP_DIR: /home/ec2-user/system-monitor-dashboard
   PORTFOLIO_SERVICE: portfolio.service
 
