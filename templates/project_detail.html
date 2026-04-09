@@ -46,6 +46,25 @@
         </div>
     </div>
 
+    {% if project.architecture_layers %}
+        <div class="section-panel">
+            <h2>System Architecture</h2>
+            <p class="architecture-intro">{{ project.architecture_intro }}</p>
+            <div class="architecture-grid">
+                {% for layer in project.architecture_layers %}
+                    <div class="architecture-card">
+                        <h3>{{ layer.title }}</h3>
+                        <ul>
+                            {% for item in layer.items %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
     <div class="flow-panel">
         <div class="flow-box">
             <span class="flow-label">Demo Flow</span>

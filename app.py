@@ -104,6 +104,45 @@ def get_projects():
             ],
             "demo_flow": "Patient Check-In → Front Desk → Nurse → Provider → Completion",
             "demo_flow_description": "The system is built around a state-driven visit lifecycle that validates handoffs and keeps each role aligned to the correct stage of care.",
+            "architecture_intro": "NexGEN is structured as a workflow-first application stack where the Flask backend, canonical visit lifecycle, role-based workspaces, and deployment controls operate as one coordinated system.",
+            "architecture_layers": [
+                {
+                    "title": "Application Layer",
+                    "items": [
+                        "Flask application backend",
+                        "Gunicorn application server",
+                        "Role-based UI/workspace flows",
+                        "Patient, provider, and staff profile views",
+                    ],
+                },
+                {
+                    "title": "Workflow Layer",
+                    "items": [
+                        "Canonical visit lifecycle / state engine",
+                        "Front desk, nurse, provider, admin, and patient portal workspace routing",
+                        "Internal visit-linked care coordination messaging",
+                        "Feature-toggle / product control layer",
+                    ],
+                },
+                {
+                    "title": "Deployment Layer",
+                    "items": [
+                        "AWS EC2 hosting",
+                        "GitHub Actions deployment pipeline",
+                        "systemd-managed service lifecycle",
+                        "Flask + Gunicorn production-style serving stack",
+                    ],
+                },
+                {
+                    "title": "Operational Controls",
+                    "items": [
+                        "Deployment verification",
+                        "Restart and recovery handling",
+                        "Controlled release changes",
+                        "Troubleshooting-oriented workflow",
+                    ],
+                },
+            ],
             "why_it_matters": "This project demonstrates backend engineering, workflow/system design, cloud deployment, product hardening, and real-world operational thinking. It reflects the kind of architectural work required to build reliable systems, not just isolated app features.",
             "architecture": "NexGEN uses a Flask backend with SQLAlchemy data models and a canonical state-driven workflow layer to manage patient movement across the system. The platform includes hardened route and action validation, internal visit messaging, and database-backed feature governance. It is deployed on AWS EC2 using Gunicorn and production-style service management.",
             "final_status": "NexGEN reached a stable and complete stage for this phase of the product. The workflow was hardened, internal messaging was integrated, modular feature toggles were implemented, and the system was deployed and validated for repeated use.",
@@ -914,6 +953,39 @@ def base_styles():
             margin: 0;
             color: #cbd5e1;
             line-height: 1.7;
+        }
+
+        .architecture-intro {
+            margin: 0 0 18px 0;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .architecture-card {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.88), rgba(15, 23, 42, 0.95));
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .architecture-card h3 {
+            margin: 0 0 12px 0;
+            color: #e2e8f0;
+            font-size: 18px;
+        }
+
+        .architecture-card ul {
+            margin: 0;
+            padding-left: 18px;
+            color: #cbd5e1;
+            line-height: 1.75;
         }
 
         .flow-panel {
