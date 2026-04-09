@@ -638,6 +638,16 @@ def base_styles():
             padding: 24px;
         }
 
+        .featured-eyebrow {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #7dd3fc;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
         .project-card h3 {
             margin-top: 0;
             color: #f8fafc;
@@ -666,6 +676,33 @@ def base_styles():
             margin-top: 18px;
             padding-top: 16px;
             border-top: 1px solid rgba(148, 163, 184, 0.24);
+        }
+
+        .project-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .project-meta-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(51, 65, 85, 0.9);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .project-meta-card h4 {
+            margin: 0 0 10px 0;
+            color: #e2e8f0;
+            font-size: 15px;
+        }
+
+        .project-meta-card ul {
+            margin: 0;
+            padding-left: 18px;
+            color: #cbd5e1;
+            line-height: 1.75;
         }
 
         .project-highlights strong {
@@ -742,6 +779,13 @@ def base_styles():
             margin: 0;
             color: #cbd5e1;
             line-height: 1.7;
+        }
+
+        .skill-category ul {
+            margin: 0;
+            padding-left: 18px;
+            color: #cbd5e1;
+            line-height: 1.75;
         }
 
         .skill-box {
@@ -1200,11 +1244,72 @@ def home():
             "Creating reliable, production-style applications",
         ],
         skill_groups=[
-            {"title": "Cloud Infrastructure", "items": "AWS EC2, Load Balancing, Auto Scaling"},
-            {"title": "Monitoring & Observability", "items": "CloudWatch"},
-            {"title": "Backend Development", "items": "Python, Flask"},
-            {"title": "Systems & Networking", "items": "Linux, DNS, HTTPS"},
-            {"title": "DevOps Practices", "items": "CI/CD, Deployment Automation"},
+            {
+                "title": "Cloud Infrastructure",
+                "skills": [
+                    "AWS EC2",
+                    "Linux server setup",
+                    "Security groups",
+                    "Public/private networking basics",
+                    "SSH access management",
+                    "Systemd service management",
+                ],
+            },
+            {
+                "title": "Deployment & DevOps",
+                "skills": [
+                    "GitHub Actions CI/CD",
+                    "Automated EC2 deployment",
+                    "Git/GitHub workflow management",
+                    "Environment setup and recovery",
+                    "Release/debug workflow",
+                    "Production deploy troubleshooting",
+                ],
+            },
+            {
+                "title": "Monitoring & Reliability",
+                "skills": [
+                    "Amazon CloudWatch",
+                    "Log inspection",
+                    "Service health checks",
+                    "Failure diagnosis",
+                    "Runtime troubleshooting",
+                    "Deployment verification",
+                ],
+            },
+            {
+                "title": "Backend Development",
+                "skills": [
+                    "Python",
+                    "Flask",
+                    "REST-style backend patterns",
+                    "Gunicorn",
+                    "SQLAlchemy",
+                    "Workflow-driven application logic",
+                ],
+            },
+            {
+                "title": "Systems & Networking",
+                "skills": [
+                    "Reverse-proxy/app path awareness",
+                    "Port/service troubleshooting",
+                    "502/debug workflow",
+                    "Process/service restart flow",
+                    "Server-side dependency repair",
+                    "CLI-based troubleshooting",
+                ],
+            },
+            {
+                "title": "Operational Product Thinking",
+                "skills": [
+                    "Role-based workflow design",
+                    "State-driven systems",
+                    "Internal tooling mindset",
+                    "Reliability-first changes",
+                    "Controlled feature rollout",
+                    "Real-world debugging discipline",
+                ],
+            },
         ],
     )
 

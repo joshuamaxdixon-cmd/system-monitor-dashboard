@@ -5,8 +5,8 @@
     <h1>{{ owner_name }}</h1>
     <p class="subtitle">Cloud & DevOps Engineer</p>
     <p>
-        I design and deploy production-style systems on AWS, focused on workflow automation,
-        system reliability, and real-world infrastructure.
+        I build and operate production-style systems on AWS with a focus on backend reliability,
+        workflow automation, deployment discipline, and hands-on infrastructure debugging.
     </p>
 
     <div class="hero-buttons">
@@ -18,18 +18,51 @@
 </div>
 
 <div class="note-box">
-    This portfolio showcases hands-on cloud and systems engineering projects built with real-world
-    architecture, deployment practices, and operational design in mind.
+    This portfolio showcases systems-focused cloud and backend engineering work built around real deployment paths,
+    service recovery, operational debugging, and production-style architecture decisions.
 </div>
 
 <div class="section">
     <h2 class="section-title">Featured Project</h2>
     <div class="project-grid">
         <div class="project-card featured-card">
+            <span class="featured-eyebrow">Featured System</span>
             <span class="status-badge" style="background:{{ featured.status_color }};">{{ featured.status }}</span>
             <h3>NexGEN Healthcare</h3>
             <p>A multi-role healthcare workflow system with a canonical state engine, internal care coordination, and modular feature control.</p>
-            <p class="project-support">Built with a state-driven workflow, role-based dashboards, and a feature-toggle system for controlled expansion.</p>
+            <p class="project-support">Built and hardened as a workflow-first product using Flask, Gunicorn, AWS EC2 deployment, systemd-managed service control, and a GitHub Actions deployment pipeline.</p>
+
+            <div class="project-meta-grid">
+                <div class="project-meta-card">
+                    <h4>System Architecture</h4>
+                    <ul>
+                        <li>Canonical workflow engine</li>
+                        <li>Flask + Gunicorn stack</li>
+                        <li>AWS EC2 deployment</li>
+                        <li>systemd-managed service</li>
+                    </ul>
+                </div>
+
+                <div class="project-meta-card">
+                    <h4>Production Features</h4>
+                    <ul>
+                        <li>Feature toggle control</li>
+                        <li>GitHub Actions deployment pipeline</li>
+                        <li>Workflow hardening</li>
+                        <li>Operational recovery/debugging</li>
+                    </ul>
+                </div>
+
+                <div class="project-meta-card">
+                    <h4>Workflow Highlights</h4>
+                    <ul>
+                        <li>Multi-role workspaces</li>
+                        <li>Internal visit messaging</li>
+                        <li>State-driven transitions</li>
+                        <li>Role-aware workflow behavior</li>
+                    </ul>
+                </div>
+            </div>
 
             <div class="project-highlights">
                 <strong>System Highlights</strong>
@@ -43,7 +76,7 @@
 
             <div class="project-links">
                 <a class="button-link btn-secondary" href="{{ featured.project_url }}">View Project</a>
-                <a class="button-link btn-ghost" href="{{ featured.github }}" target="_blank">GitHub</a>
+                <a class="button-link btn-ghost" href="{{ featured.github }}" target="_blank">Source Code</a>
             </div>
         </div>
     </div>
@@ -73,7 +106,7 @@
                 <p><strong>Tech Stack:</strong> {{ project.tech_stack }}</p>
                 <div class="project-links">
                     <a class="button-link btn-secondary" href="{{ project.project_url }}">View Project</a>
-                    <a class="button-link btn-ghost" href="{{ project.github }}" target="_blank">GitHub</a>
+                    <a class="button-link btn-ghost" href="{{ project.github }}" target="_blank">Source Code</a>
                 </div>
             </div>
         {% endfor %}
@@ -86,7 +119,11 @@
         {% for group in skill_groups %}
             <div class="skill-category">
                 <h3>{{ group.title }}</h3>
-                <p>{{ group.items }}</p>
+                <ul>
+                    {% for skill in group.skills %}
+                        <li>{{ skill }}</li>
+                    {% endfor %}
+                </ul>
             </div>
         {% endfor %}
     </div>
