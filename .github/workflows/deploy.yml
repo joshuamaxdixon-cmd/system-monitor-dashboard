@@ -6,9 +6,9 @@ on:
       - main
 
 env:
-  PORTFOLIO_HOST: 3.143.207.232
-  PORTFOLIO_APP_DIR: /home/ec2-user/system-monitor-dashboard
-  PORTFOLIO_SERVICE: portfolio.service
+  PORTFOLIO_HOST: "3.143.207.232"
+  PORTFOLIO_APP_DIR: "/home/ec2-user/system-monitor-dashboard"
+  PORTFOLIO_SERVICE: "portfolio.service"
 
 jobs:
   deploy:
@@ -26,10 +26,9 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             set -e
-            cd ${{ env.PORTFOLIO_APP_DIR }}
+            cd "${{ env.PORTFOLIO_APP_DIR }}"
             git fetch origin main
             git reset --hard origin/main
-            sudo systemctl restart ${{ env.PORTFOLIO_SERVICE }}
-            sudo systemctl is-active ${{ env.PORTFOLIO_SERVICE }}
-            sudo systemctl status ${{ env.PORTFOLIO_SERVICE }} --no-pager -n 20IO_SERVICE }}
-          sudo systemctl status ${{ env.PORTFOLIO_SERVICE }} --no-pager -n 20
+            sudo systemctl restart "${{ env.PORTFOLIO_SERVICE }}"
+            sudo systemctl is-active "${{ env.PORTFOLIO_SERVICE }}"
+            sudo systemctl status "${{ env.PORTFOLIO_SERVICE }}" --no-pager -n 20
