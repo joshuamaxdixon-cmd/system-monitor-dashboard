@@ -25,20 +25,36 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            set -e
+            set -euxo pipefail
             cd "${{ env.PORTFOLIO_APP_DIR }}"
+
             git fetch origin main
             git reset --hard origin/main
-            sudo systemctl restart "portfolio.service"
+
+            if [ ! -x "venv/bin/python" ] || [ ! -x "venv/bin/gunicorn" ]; then
+              rm -rf venv
+              python3 -m venv venv
+            fi
+
+            . venv/bin/activate
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+            pip install gunicorn
+            deactivate
+
+            sudo systemctl restart "${{ env.PORTFOLIO_SERVICE }}"
 
             for i in 1 2 3 4 5 6; do
-              state=$(sudo systemctl is-active "portfolio.service" || true)
-              echo "portfolio.service state: $state"
+              state=$(sudo systemctl is-active "${{ env.PORTFOLIO_SERVICE }}" || true)
+              echo "${{ env.PORTFOLIO_SERVICE }} state: $state"
               if [ "$state" = "active" ]; then
                 break
               fi
               sleep 2
             done
 
-            sudo systemctl status "portfolio.service" --no-pager -n 20
-            sudo systemctl is-active "portfolio.service"
+            sudo systemctl status "${{ env.PORTFOLIO_SERVICE }}" --no-pager -n 20
+            sudo systemctl is-active "${{ env.PORTFOLIO_SERVICE }}"
+            sudo journalctl -u "${{ env.PORTFOLIO_SERVICE }}" --no-pager -n 50
+
+            curl --fail --silent --show-error http://localhost:5001 > /dev/null
