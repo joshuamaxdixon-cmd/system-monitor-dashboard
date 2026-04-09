@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% if project.core_systems %}
+    <div class="detail-hero">
+        <h1>{{ project.title }}</h1>
+        <p class="subtitle">{{ project.subtitle }}</p>
+
+        <div style="text-align:center; margin: 18px 0 12px 0;">
+            <span class="status-badge" style="background:{{ project.status_color }};">{{ project.status }}</span>
+        </div>
+
+        <div class="highlight-row">
+            {% for item in project.project_highlights %}
+                <span class="highlight-chip">{{ item }}</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="project-detail-meta">
+        <div class="meta-box">
+            <strong>Tech Stack</strong>
+            {{ project.tech_stack }}
+        </div>
+    </div>
+
+    <div class="section-panel">
+        <h2>Project Overview</h2>
+        <p>{{ project.overview or project.description }}</p>
+    </div>
+
+    <div class="section-panel">
+        <h2>What Makes It Different</h2>
+        <p>{{ project.what_makes_it_different or project.description }}</p>
+    </div>
+
+    <div class="section-panel">
+        <h2>Core Systems</h2>
+        <div class="systems-grid">
+            {% for system in project.core_systems %}
+                <div class="system-card">
+                    <h3>{{ system.title }}</h3>
+                    <p>{{ system.body }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="flow-panel">
+        <div class="flow-box">
+            <span class="flow-label">Demo Flow</span>
+            <div class="flow-sequence">{{ project.demo_flow }}</div>
+        </div>
+        <div class="flow-box">
+            <span class="flow-label">Flow Behavior</span>
+            <p class="flow-description">{{ project.demo_flow_description }}</p>
+        </div>
+    </div>
+
+    <div class="section-panel">
+        <h2>Architecture / Engineering</h2>
+        <p>{{ project.architecture }}</p>
+    </div>
+
+    <div class="section-panel">
+        <h2>Why It Matters</h2>
+        <p>{{ project.why_it_matters }}</p>
+    </div>
+
+    <div class="section-panel">
+        <h2>Final Status</h2>
+        <p>{{ project.final_status }}</p>
+    </div>
+{% else %}
+    <h1>{{ project.title }}</h1>
+    <p class="subtitle">{{ project.subtitle }}</p>
+
+    <div style="text-align:center; margin: 18px 0 26px 0;">
+        <span class="status-badge" style="background:{{ project.status_color }};">{{ project.status }}</span>
+    </div>
+
+    <div class="project-detail-meta">
+        <div class="meta-box">
+            <strong>Tech Stack</strong>
+            {{ project.tech_stack }}
+        </div>
+    </div>
+
+    <div class="note-box">
+        <strong>Overview:</strong><br>
+        {{ project.description }}
+    </div>
+
+    <div class="note-box">
+        <strong>What it does:</strong><br>
+        {{ project.what_it_does }}
+    </div>
+
+    <div class="note-box">
+        <strong>Why it matters:</strong><br>
+        {{ project.why_it_matters }}
+    </div>
+
+    <div class="note-box">
+        <strong>Architecture:</strong><br>
+        {{ project.architecture }}
+    </div>
+
+    <div class="note-box">
+        <strong>Key Features:</strong><br>
+        {% for feature in project.key_features %}
+            • {{ feature }}<br>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="skill-chip-row">
+    {% for item in tech_stack_items %}
+        <span class="skill-box">{{ item }}</span>
+    {% endfor %}
+</div>
+
+<div class="hero-buttons">
+    <a class="btn-primary" href="{{ project.live_url }}" target="_blank">{{ project.primary_button_text or 'View Live Application' }}</a>
+    <a class="btn-secondary" href="{{ project.github }}" target="_blank">GitHub</a>
+    <a class="btn-ghost" href="/projects">Back to Projects</a>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Contact</h1>
+<p class="subtitle">Let’s connect</p>
+
+<div class="note-box">
+    I’m building cloud and DevOps projects focused on AWS, automation, monitoring,
+    secure deployment, and real-world infrastructure. The best way to reach me is by email.
+</div>
+
+<div class="project-grid">
+    <div class="project-card">
+        <h3>Email</h3>
+        <p><a class="inline-link" href="mailto:{{ owner_email }}">{{ owner_email }}</a></p>
+    </div>
+
+    <div class="project-card">
+        <h3>GitHub</h3>
+        <p><a class="inline-link" href="{{ github_profile }}" target="_blank">{{ github_profile }}</a></p>
+    </div>
+
+    <div class="project-card">
+        <h3>LinkedIn</h3>
+        <p><a class="inline-link" href="{{ linkedin_profile }}" target="_blank">{{ linkedin_profile }}</a></p>
+    </div>
+</div>
+{% endblock %}

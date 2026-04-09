@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Projects</h1>
+<p class="subtitle">A collection of cloud, monitoring, and automation projects organized under one domain.</p>
+
+<div class="project-grid">
+    {% for project in projects %}
+        <div class="project-card">
+            <span class="status-badge" style="background:{{ project.status_color }};">{{ project.status }}</span>
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.description }}</p>
+            <p><strong>Tech Stack:</strong> {{ project.tech_stack }}</p>
+            <div class="project-links">
+                <a class="button-link btn-secondary" href="{{ project.project_url }}">View Project</a>
+                <a class="button-link btn-ghost" href="{{ project.github }}" target="_blank">GitHub</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

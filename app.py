@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, redirect
+from flask import Flask, jsonify, request, redirect, render_template
 import boto3
 import time
 import os
@@ -35,6 +35,26 @@ CLOUD_LOG_ANALYZER_REPO = "https://github.com/joshuamaxdixon-cmd/cloud-log-analy
 LOG_FILE_ANALYZER_REPO = "https://github.com/joshuamaxdixon-cmd/log-file-analyzer.git"
 
 _db_initialized = False
+
+
+def portfolio_template_context(page_title):
+    return {
+        "page_title": page_title,
+        "base_styles": base_styles(),
+        "site_name": SITE_NAME,
+        "owner_name": OWNER_NAME,
+        "owner_title": OWNER_TITLE,
+        "owner_email": OWNER_EMAIL,
+        "github_profile": GITHUB_PROFILE,
+        "linkedin_profile": LINKEDIN_PROFILE,
+        "nav_links": [
+            {"href": "/", "label": "Home"},
+            {"href": "/projects", "label": "Projects"},
+            {"href": "/contact", "label": "Contact"},
+            {"href": GITHUB_PROFILE, "label": "GitHub", "target": "_blank"},
+            {"href": LINKEDIN_PROFILE, "label": "LinkedIn", "target": "_blank"},
+        ],
+    }
 
 
 def get_projects():
@@ -101,7 +121,7 @@ def get_projects():
             "subtitle": "Production-style AWS monitoring and infrastructure visibility platform",
             "status": "Live",
             "status_color": "#22c55e",
-            "description": "Production-style AWS deployment using EC2, Application Load Balancer, Auto Scaling, CloudWatch, HTTPS, DNS routing, and CI/CD automation.",
+            "description": "Production-style monitoring system deployed on AWS that tracks system health, logs, and infrastructure metrics.",
             "tech_stack": "AWS, Flask, Gunicorn, CloudWatch, ALB, Auto Scaling, GitHub Actions, Linux, DNS, SSL/TLS",
             "github": SYSTEM_MONITOR_REPO,
             "project_url": "/projects/cloud-monitor",
@@ -123,7 +143,7 @@ def get_projects():
             "subtitle": "Monitoring utility project",
             "status": "Live",
             "status_color": "#22c55e",
-            "description": "Python-based monitoring tool that checks CPU, memory, and disk usage and generates a system health summary.",
+            "description": "Tool for analyzing CPU, memory, and disk usage to provide real-time system visibility.",
             "tech_stack": "Python, System Monitoring, Scripting",
             "github": SYSTEM_HEALTH_REPO,
             "project_url": "/projects/system-health-checker",
@@ -145,7 +165,7 @@ def get_projects():
             "subtitle": "Log analysis and cloud operations project",
             "status": "Live",
             "status_color": "#22c55e",
-            "description": "Python tool for analyzing server logs, detecting warnings and errors, and generating structured cloud operations insights.",
+            "description": "Log analysis tool for detecting errors, warnings, and generating structured operational insights.",
             "tech_stack": "Python, Log Parsing, Infrastructure Analysis",
             "github": CLOUD_LOG_ANALYZER_REPO,
             "project_url": "/projects/cloud-log-analyzer",
@@ -167,7 +187,7 @@ def get_projects():
             "subtitle": "Foundational log analysis project",
             "status": "Live",
             "status_color": "#22c55e",
-            "description": "Foundational Python project for scanning log files, identifying errors, and extracting useful operational information.",
+            "description": "Tool for scanning and extracting meaningful operational data from raw log files.",
             "tech_stack": "Python, Log Analysis",
             "github": LOG_FILE_ANALYZER_REPO,
             "project_url": "/projects/log-file-analyzer",
@@ -587,13 +607,14 @@ def base_styles():
         }
 
         .section {
-            margin-top: 28px;
+            margin-top: 40px;
         }
 
         .section-title {
             text-align: center;
             color: #e2e8f0;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+            font-size: 28px;
         }
 
         .project-grid {
@@ -608,6 +629,13 @@ def base_styles():
             border: 1px solid #334155;
             border-radius: 14px;
             padding: 20px;
+        }
+
+        .featured-card {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.92));
+            border: 1px solid #3b82f6;
+            box-shadow: 0 14px 36px rgba(15, 23, 42, 0.28);
+            padding: 24px;
         }
 
         .project-card h3 {
@@ -627,6 +655,43 @@ def base_styles():
             margin-top: 16px;
         }
 
+        .project-support {
+            color: #94a3b8;
+            line-height: 1.7;
+            margin-top: -6px;
+            margin-bottom: 16px;
+        }
+
+        .project-highlights {
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(148, 163, 184, 0.24);
+        }
+
+        .project-highlights strong {
+            display: block;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+        }
+
+        .project-highlight-list {
+            margin: 0;
+            padding-left: 18px;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        .credibility-line {
+            text-align: center;
+            color: #cbd5e1;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-top: 16px;
+            line-height: 1.7;
+        }
+
         .status-badge {
             display: inline-block;
             padding: 6px 10px;
@@ -642,6 +707,41 @@ def base_styles():
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 14px;
             margin-top: 18px;
+        }
+
+        .focus-grid,
+        .skills-category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .focus-card,
+        .skill-category {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 20px;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .focus-card {
+            font-weight: 600;
+            color: #dbeafe;
+        }
+
+        .skill-category h3 {
+            margin: 0 0 12px 0;
+            color: #e2e8f0;
+            font-size: 18px;
+        }
+
+        .skill-category p {
+            margin: 0;
+            color: #cbd5e1;
+            line-height: 1.7;
         }
 
         .skill-box {
@@ -1031,163 +1131,39 @@ def render_project_card(project):
     """
 
 
-def render_project_detail_page(project):
-    feature_lines = "".join(f"• {feature}<br>" for feature in project.get("key_features", []))
-    skill_chips = "".join(
-        f'<span class="skill-box">{skill.strip()}</span>'
-        for skill in project["tech_stack"].split(",")
-    )
-    highlight_chips = "".join(
-        f'<span class="highlight-chip">{item}</span>'
-        for item in project.get("project_highlights", [])
-    )
-    core_system_cards = "".join(
-        f"""
-        <div class="system-card">
-            <h3>{system['title']}</h3>
-            <p>{system['body']}</p>
-        </div>
-        """
-        for system in project.get("core_systems", [])
-    )
+def render_featured_project(project):
+    return f"""
+    <div class="project-card featured-card">
+        <span class="status-badge" style="background:{project['status_color']};">{project['status']}</span>
+        <h3>NexGEN Healthcare</h3>
+        <p>A multi-role healthcare workflow system with a canonical state engine, internal care coordination, and modular feature control.</p>
+        <p class="project-support">Built with a state-driven workflow, role-based dashboards, and a feature-toggle system for controlled expansion.</p>
 
-    if project.get("core_systems"):
-        body = f"""
-        {render_nav()}
-
-        <div class="detail-hero">
-            <h1>{project['title']}</h1>
-            <p class="subtitle">{project.get('subtitle', 'Project detail page')}</p>
-
-            <div style="text-align:center; margin: 18px 0 12px 0;">
-                <span class="status-badge" style="background:{project['status_color']};">
-                    {project['status']}
-                </span>
-            </div>
-
-            <div class="highlight-row">
-                {highlight_chips}
-            </div>
+        <div class="project-highlights">
+            <strong>System Highlights</strong>
+            <ul class="project-highlight-list">
+                <li>Canonical Workflow Engine</li>
+                <li>Multi-Role Workspaces (Front Desk / Nurse / Provider)</li>
+                <li>Internal Visit Messaging</li>
+                <li>Feature Toggle Control Layer</li>
+            </ul>
         </div>
 
-        <div class="project-detail-meta">
-            <div class="meta-box">
-                <strong>Tech Stack</strong>
-                {project['tech_stack']}
-            </div>
+        <div class="project-links">
+            <a class="button-link btn-secondary" href="{project['project_url']}">View Project</a>
+            <a class="button-link btn-ghost" href="{project['github']}" target="_blank">GitHub</a>
         </div>
-
-        <div class="section-panel">
-            <h2>Project Overview</h2>
-            <p>{project.get('overview', project['description'])}</p>
-        </div>
-
-        <div class="section-panel">
-            <h2>What Makes It Different</h2>
-            <p>{project.get('what_makes_it_different', project['description'])}</p>
-        </div>
-
-        <div class="section-panel">
-            <h2>Core Systems</h2>
-            <div class="systems-grid">
-                {core_system_cards}
-            </div>
-        </div>
-
-        <div class="flow-panel">
-            <div class="flow-box">
-                <span class="flow-label">Demo Flow</span>
-                <div class="flow-sequence">{project.get('demo_flow', '')}</div>
-            </div>
-            <div class="flow-box">
-                <span class="flow-label">Flow Behavior</span>
-                <p class="flow-description">{project.get('demo_flow_description', '')}</p>
-            </div>
-        </div>
-
-        <div class="section-panel">
-            <h2>Architecture / Engineering</h2>
-            <p>{project.get('architecture', 'Architecture details coming soon.')}</p>
-        </div>
-
-        <div class="section-panel">
-            <h2>Why It Matters</h2>
-            <p>{project['why_it_matters']}</p>
-        </div>
-
-        <div class="section-panel">
-            <h2>Final Status</h2>
-            <p>{project.get('final_status', '')}</p>
-        </div>
-
-        <div class="skill-chip-row">
-            {skill_chips}
-        </div>
-
-        <div class="hero-buttons">
-            <a class="btn-primary" href="{project['live_url']}" target="_blank">{project.get('primary_button_text', 'View Live Application')}</a>
-            <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
-            <a class="btn-ghost" href="/projects">Back to Projects</a>
-        </div>
-        """
-        return render_page(f"{SITE_NAME} | {project['title']}", body)
-
-    body = f"""
-    {render_nav()}
-
-    <h1>{project['title']}</h1>
-    <p class="subtitle">{project.get('subtitle', 'Project detail page')}</p>
-
-    <div style="text-align:center; margin: 18px 0 26px 0;">
-        <span class="status-badge" style="background:{project['status_color']};">
-            {project['status']}
-        </span>
-    </div>
-
-    <div class="project-detail-meta">
-        <div class="meta-box">
-            <strong>Tech Stack</strong>
-            {project['tech_stack']}
-        </div>
-    </div>
-
-    <div class="note-box">
-        <strong>Overview:</strong><br>
-        {project['description']}
-    </div>
-
-    <div class="note-box">
-        <strong>What it does:</strong><br>
-        {project['what_it_does']}
-    </div>
-
-    <div class="note-box">
-        <strong>Why it matters:</strong><br>
-        {project['why_it_matters']}
-    </div>
-
-    <div class="note-box">
-        <strong>Architecture:</strong><br>
-        {project.get('architecture', 'Architecture details coming soon.')}
-    </div>
-
-    <div class="note-box">
-        <strong>Key Features:</strong><br>
-        {feature_lines}
-    </div>
-
-    <div class="skill-chip-row">
-        {skill_chips}
-    </div>
-
-    <div class="hero-buttons">
-        <a class="btn-primary" href="{project['live_url']}" target="_blank">{project.get('primary_button_text', 'View Live Application')}</a>
-        <a class="btn-secondary" href="{project['github']}" target="_blank">GitHub</a>
-        <a class="btn-ghost" href="/projects">Back to Projects</a>
     </div>
     """
 
-    return render_page(f"{SITE_NAME} | {project['title']}", body)
+
+def render_project_detail_page(project):
+    return render_template(
+        "project_detail.html",
+        **portfolio_template_context(f"{SITE_NAME} | {project['title']}"),
+        project=project,
+        tech_stack_items=[skill.strip() for skill in project["tech_stack"].split(",")],
+    )
 
 
 def render_page(title, body_html):
@@ -1212,97 +1188,34 @@ def render_page(title, body_html):
 def home():
     projects = get_projects()
     featured = projects[0]
-    project_cards = "".join(render_project_card(project) for project in projects[1:])
-
-    body = f"""
-    {render_nav()}
-
-    <div class="hero">
-        <h1>{OWNER_NAME}</h1>
-        <p class="subtitle">{OWNER_TITLE}</p>
-        <p>
-            I build production-minded cloud and backend systems on AWS,
-            with a focus on reliable deployment, operational visibility,
-            workflow design, and infrastructure-backed application delivery.
-        </p>
-
-        <div class="hero-buttons">
-            <a class="btn-primary" href="/projects">View Projects</a>
-            <a class="btn-secondary" href="{GITHUB_PROFILE}" target="_blank">GitHub</a>
-            <a class="btn-secondary" href="{LINKEDIN_PROFILE}" target="_blank">LinkedIn</a>
-            <a class="btn-ghost" href="/contact">Contact</a>
-        </div>
-    </div>
-
-    <div class="note-box">
-        <strong>Portfolio Overview.</strong> This site brings together the systems, platform,
-        and infrastructure projects I use to demonstrate practical engineering ability across
-        AWS deployment, backend application design, monitoring, workflow architecture, and
-        production-style operations.
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">Featured Project</h2>
-        <div class="project-grid">
-            {render_project_card(featured)}
-        </div>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">All Projects</h2>
-        <div class="project-grid">
-            {project_cards}
-        </div>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">Core Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-box">AWS EC2</div>
-            <div class="skill-box">Load Balancing</div>
-            <div class="skill-box">Auto Scaling</div>
-            <div class="skill-box">CloudWatch</div>
-            <div class="skill-box">CI/CD</div>
-            <div class="skill-box">Python / Flask</div>
-            <div class="skill-box">Linux</div>
-            <div class="skill-box">DNS / HTTPS</div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">Contact</h2>
-        <div class="note-box">
-            Reach me at <a class="inline-link" href="mailto:{OWNER_EMAIL}">{OWNER_EMAIL}</a><br><br>
-            <a class="inline-link" href="{GITHUB_PROFILE}" target="_blank">GitHub</a> &nbsp;|&nbsp;
-            <a class="inline-link" href="{LINKEDIN_PROFILE}" target="_blank">LinkedIn</a>
-        </div>
-    </div>
-
-    <div class="footer-note">
-        Built to present hands-on systems work across AWS infrastructure, backend engineering,
-        deployment pipelines, monitoring, and operational product thinking.
-    </div>
-    """
-
-    return render_page(f"{SITE_NAME} | {OWNER_NAME}", body)
+    return render_template(
+        "home.html",
+        **portfolio_template_context(f"{SITE_NAME} | {OWNER_NAME}"),
+        featured=featured,
+        projects=projects[1:],
+        focus_items=[
+            "Designing systems, not just features",
+            "Building state-driven workflows",
+            "Deploying real infrastructure on AWS",
+            "Creating reliable, production-style applications",
+        ],
+        skill_groups=[
+            {"title": "Cloud Infrastructure", "items": "AWS EC2, Load Balancing, Auto Scaling"},
+            {"title": "Monitoring & Observability", "items": "CloudWatch"},
+            {"title": "Backend Development", "items": "Python, Flask"},
+            {"title": "Systems & Networking", "items": "Linux, DNS, HTTPS"},
+            {"title": "DevOps Practices", "items": "CI/CD, Deployment Automation"},
+        ],
+    )
 
 
 @app.route("/projects")
 def projects_page():
-    project_cards = "".join(render_project_card(project) for project in get_projects())
-
-    body = f"""
-    {render_nav()}
-
-    <h1>Projects</h1>
-    <p class="subtitle">A collection of cloud, monitoring, and automation projects organized under one domain.</p>
-
-    <div class="project-grid">
-        {project_cards}
-    </div>
-    """
-
-    return render_page(f"{SITE_NAME} | Projects", body)
+    return render_template(
+        "projects.html",
+        **portfolio_template_context(f"{SITE_NAME} | Projects"),
+        projects=get_projects(),
+    )
 
 
 @app.route("/projects/nexgen-healthcare")
@@ -1337,36 +1250,10 @@ def project_log_file_analyzer():
 
 @app.route("/contact")
 def contact_page():
-    body = f"""
-    {render_nav()}
-
-    <h1>Contact</h1>
-    <p class="subtitle">Let’s connect</p>
-
-    <div class="note-box">
-        I’m building cloud and DevOps projects focused on AWS, automation, monitoring,
-        secure deployment, and real-world infrastructure. The best way to reach me is by email.
-    </div>
-
-    <div class="project-grid">
-        <div class="project-card">
-            <h3>Email</h3>
-            <p><a class="inline-link" href="mailto:{OWNER_EMAIL}">{OWNER_EMAIL}</a></p>
-        </div>
-
-        <div class="project-card">
-            <h3>GitHub</h3>
-            <p><a class="inline-link" href="{GITHUB_PROFILE}" target="_blank">{GITHUB_PROFILE}</a></p>
-        </div>
-
-        <div class="project-card">
-            <h3>LinkedIn</h3>
-            <p><a class="inline-link" href="{LINKEDIN_PROFILE}" target="_blank">{LINKEDIN_PROFILE}</a></p>
-        </div>
-    </div>
-    """
-
-    return render_page(f"{SITE_NAME} | Contact", body)
+    return render_template(
+        "contact.html",
+        **portfolio_template_context(f"{SITE_NAME} | Contact"),
+    )
 
 
 @app.route("/app")

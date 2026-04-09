@@ -1,0 +1,5 @@
+<div class="top-nav">
+    {% for link in nav_links %}
+        <a href="{{ link.href }}"{% if link.target %} target="{{ link.target }}"{% endif %}>{{ link.label }}</a>
+    {% endfor %}
+</div>

@@ -1,0 +1,14 @@
+<html>
+<head>
+    <title>{{ page_title }}</title>
+    {{ base_styles | safe }}
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            {% include "_portfolio_nav.html" %}
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>
