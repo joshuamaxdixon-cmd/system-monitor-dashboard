@@ -1221,8 +1221,9 @@ def home():
         <h1>{OWNER_NAME}</h1>
         <p class="subtitle">{OWNER_TITLE}</p>
         <p>
-            I build cloud and DevOps projects on AWS focused on automation,
-            monitoring, secure deployment, and real-world infrastructure.
+            I build production-minded cloud and backend systems on AWS,
+            with a focus on reliable deployment, operational visibility,
+            workflow design, and infrastructure-backed application delivery.
         </p>
 
         <div class="hero-buttons">
@@ -1234,9 +1235,10 @@ def home():
     </div>
 
     <div class="note-box">
-        <strong>Welcome to my portfolio hub.</strong> This domain is where I organize my cloud,
-        DevOps, and infrastructure projects under one main brand. Each project includes a clean overview,
-        GitHub access, and live deployment links where available.
+        <strong>Portfolio Overview.</strong> This site brings together the systems, platform,
+        and infrastructure projects I use to demonstrate practical engineering ability across
+        AWS deployment, backend application design, monitoring, workflow architecture, and
+        production-style operations.
     </div>
 
     <div class="section">
@@ -1277,8 +1279,8 @@ def home():
     </div>
 
     <div class="footer-note">
-        Built to showcase hands-on AWS architecture, secure deployment, monitoring,
-        and automation projects in one organized portfolio system.
+        Built to present hands-on systems work across AWS infrastructure, backend engineering,
+        deployment pipelines, monitoring, and operational product thinking.
     </div>
     """
 
