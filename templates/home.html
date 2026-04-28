@@ -23,12 +23,11 @@
 </div>
 
 <div class="section">
-    <h2 class="section-title">Featured Project</h2>
+    <h2 class="section-title">Featured Projects</h2>
     <p class="section-lead">
-        A workflow-driven healthcare platform built to demonstrate system architecture, operational reliability,
-        and production-style deployment ownership.
+        Selected work that shows both application-level system design and production-grade cloud delivery.
     </p>
-    <div class="project-grid">
+    <div class="project-grid featured-project-grid">
         <div class="project-card featured-card">
             <span class="featured-eyebrow">Featured System</span>
             <span class="status-badge" style="background:{{ featured.status_color }};">{{ featured.status }}</span>
@@ -84,6 +83,63 @@
                 <a class="button-link btn-ghost" href="{{ featured.github }}" target="_blank">Source Code</a>
             </div>
         </div>
+
+        {% if featured_infrastructure %}
+            <div class="project-card featured-card">
+                <span class="featured-eyebrow">Featured Infrastructure Build</span>
+                <span class="status-badge" style="background:{{ featured_infrastructure.status_color }};">{{ featured_infrastructure.status }}</span>
+                <h3>{{ featured_infrastructure.title }}</h3>
+                <p>{{ featured_infrastructure.description }}</p>
+                <p class="project-support">
+                    Live frontend delivery stack built on AWS for secure distribution, custom domain routing,
+                    and real user capture without a custom backend.
+                </p>
+
+                <div class="project-meta-grid">
+                    <div class="project-meta-card">
+                        <h4>Stack</h4>
+                        <ul>
+                            <li>Amazon S3 static hosting</li>
+                            <li>Amazon CloudFront CDN</li>
+                            <li>Amazon Route 53 DNS</li>
+                            <li>AWS Certificate Manager HTTPS</li>
+                        </ul>
+                    </div>
+
+                    <div class="project-meta-card">
+                        <h4>Production Outcomes</h4>
+                        <ul>
+                            {% for outcome in featured_infrastructure.outcomes[:3] %}
+                                <li>{{ outcome }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-highlights">
+                    <strong>Key Outcomes</strong>
+                    <ul class="project-highlight-list">
+                        {% for outcome in featured_infrastructure.outcomes %}
+                            <li>{{ outcome }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="project-stack">
+                    <strong>Stack:</strong> {{ featured_infrastructure.tech_stack }}
+                </div>
+
+                <div class="project-links">
+                    <a class="button-link btn-secondary" href="{{ featured_infrastructure.project_url }}">View Project</a>
+                    {% if featured_infrastructure.live_url %}
+                        <a class="button-link btn-primary" href="{{ featured_infrastructure.live_url }}" target="_blank">Live Demo</a>
+                    {% endif %}
+                    {% if featured_infrastructure.github %}
+                        <a class="button-link btn-ghost" href="{{ featured_infrastructure.github }}" target="_blank">Source Code</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
     </div>
 </div>
 
@@ -106,7 +162,7 @@
         Portfolio projects focused on deployment, service reliability, workflow-driven backend behavior,
         and practical cloud operations.
     </p>
-    <div class="project-grid">
+    <div class="project-grid catalog-grid">
         {% for project in projects %}
             <div class="project-card">
                 <span class="status-badge" style="background:{{ project.status_color }};">{{ project.status }}</span>
@@ -115,7 +171,9 @@
                 <p><strong>Tech Stack:</strong> {{ project.tech_stack }}</p>
                 <div class="project-links">
                     <a class="button-link btn-secondary" href="{{ project.project_url }}">View Project</a>
-                    <a class="button-link btn-ghost" href="{{ project.github }}" target="_blank">Source Code</a>
+                    {% if project.github %}
+                        <a class="button-link btn-ghost" href="{{ project.github }}" target="_blank">Source Code</a>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}

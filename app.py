@@ -155,6 +155,108 @@ def get_projects():
             ]
         },
         {
+            "slug": "age-evolution",
+            "title": "Age Evolution — Production Frontend Infrastructure",
+            "subtitle": "Live AWS-hosted landing page infrastructure with secure HTTPS and integrated waitlist capture.",
+            "status": "LIVE",
+            "status_color": "#22c55e",
+            "description": "Built and deployed a production-grade frontend infrastructure on AWS for the Age Evolution platform.",
+            "tech_stack": "Amazon S3, Amazon CloudFront, Amazon Route 53, AWS Certificate Manager (ACM), Formspree",
+            "github": None,
+            "project_url": "/projects/age-evolution",
+            "live_url": "https://ageevolutionhq.com",
+            "primary_button_text": "Live Site",
+            "project_highlights": [
+                "Static Hosting on S3",
+                "CloudFront CDN Delivery",
+                "Route 53 DNS Routing",
+                "HTTPS with ACM",
+                "Waitlist Capture Flow",
+            ],
+            "overview": "Age Evolution is a production frontend infrastructure build focused on reliable content delivery, secure HTTPS, and a working waitlist capture path without a custom backend.",
+            "what_makes_it_different": "Instead of treating the landing page as a simple static upload, the project was built as a real deployment stack with custom domain routing, CDN-backed delivery, TLS configuration, and user capture wired end-to-end.",
+            "core_systems": [
+                {
+                    "title": "Static Delivery Layer",
+                    "body": "Amazon S3 serves the frontend as a production-ready static site with a clean deployment target for the landing page.",
+                },
+                {
+                    "title": "Global CDN Distribution",
+                    "body": "Amazon CloudFront distributes the site through a CDN layer so the landing page is delivered through a real edge-backed frontend path.",
+                },
+                {
+                    "title": "Domain and HTTPS Control",
+                    "body": "Amazon Route 53 and AWS Certificate Manager handle domain routing, TLS certificate management, and secure HTTPS access.",
+                },
+                {
+                    "title": "Waitlist Capture Workflow",
+                    "body": "Formspree powers a serverless waitlist flow with successful submission handling so user capture works without a custom backend service.",
+                },
+                {
+                    "title": "Production Frontend Operations",
+                    "body": "The stack was validated as a live deployment path with end-to-end checks across domain resolution, HTTPS, and form submission behavior.",
+                },
+            ],
+            "demo_flow": "Visitor → Landing Page → Waitlist Form → Submission Handling → Captured Lead",
+            "demo_flow_description": "The landing page is designed to take a visitor from first load through secure form submission with a validated waitlist capture path.",
+            "architecture_intro": "Age Evolution is structured as a production frontend delivery stack where static hosting, CDN distribution, DNS, HTTPS, and waitlist capture work together as one deployment path.",
+            "architecture_layers": [
+                {
+                    "title": "Application Layer",
+                    "items": [
+                        "Static landing page frontend",
+                        "Production-ready frontend deployment target",
+                        "Integrated waitlist submission flow",
+                        "Successful submission handling for user capture",
+                    ],
+                },
+                {
+                    "title": "Delivery Layer",
+                    "items": [
+                        "Amazon S3 static website hosting",
+                        "Amazon CloudFront global CDN delivery",
+                        "Amazon Route 53 DNS routing and domain management",
+                        "AWS Certificate Manager (ACM) for TLS/SSL and HTTPS",
+                    ],
+                },
+                {
+                    "title": "Growth Layer",
+                    "items": [
+                        "Formspree serverless form handling",
+                        "Waitlist capture for user acquisition",
+                        "End-to-end lead capture validation",
+                        "No custom backend required for submission flow",
+                    ],
+                },
+                {
+                    "title": "Operational Controls",
+                    "items": [
+                        "Custom domain configuration",
+                        "HTTPS verification",
+                        "Deployment validation across the live stack",
+                        "Production-oriented frontend infrastructure checks",
+                    ],
+                },
+            ],
+            "why_it_matters": "This project demonstrates production frontend infrastructure work across AWS delivery services, HTTPS configuration, DNS, and practical user-capture implementation. It shows real deployment ownership rather than a local-only landing page build.",
+            "architecture": "Age Evolution uses Amazon S3 for static hosting, Amazon CloudFront for CDN-backed delivery, Amazon Route 53 for domain routing, AWS Certificate Manager for HTTPS, and Formspree for serverless waitlist capture. The result is a production-grade frontend path that supports secure delivery and real user acquisition without a custom backend.",
+            "final_status": "The landing page infrastructure is live with HTTPS, custom domain routing, CDN delivery, and working waitlist capture. The deployment path was validated end-to-end for real user submissions.",
+            "key_features": [
+                "Live custom domain with HTTPS",
+                "Globally distributed frontend delivery",
+                "Production-ready static hosting architecture",
+                "Working waitlist capture flow",
+                "Validated end-to-end user submission path",
+            ],
+            "outcomes": [
+                "Configured a live custom domain with HTTPS",
+                "Deployed a globally distributed frontend through CloudFront",
+                "Implemented a production-ready static hosting architecture",
+                "Added a real waitlist capture flow with successful submission handling",
+                "Verified end-to-end user capture without needing a custom backend",
+            ],
+        },
+        {
             "slug": "cloud-monitor",
             "title": "Cloud Monitoring Platform on AWS",
             "subtitle": "Production-style AWS monitoring and infrastructure visibility platform",
@@ -512,13 +614,13 @@ def base_styles():
         }
 
         .container {
-            max-width: 1000px;
+            width: min(1380px, calc(100vw - 48px));
             margin: auto;
         }
 
         .card {
             background: #1e293b;
-            padding: 30px;
+            padding: 38px 42px 42px 42px;
             border-radius: 18px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.35);
         }
@@ -646,7 +748,7 @@ def base_styles():
         }
 
         .section {
-            margin-top: 40px;
+            margin-top: 54px;
         }
 
         .section-title {
@@ -657,8 +759,8 @@ def base_styles():
         }
 
         .section-lead {
-            max-width: 760px;
-            margin: -4px auto 0 auto;
+            max-width: 920px;
+            margin: -2px auto 0 auto;
             text-align: center;
             color: #94a3b8;
             line-height: 1.75;
@@ -666,23 +768,34 @@ def base_styles():
 
         .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 18px;
-            margin-top: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+            align-items: stretch;
+        }
+
+        .featured-project-grid {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+
+        .catalog-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         }
 
         .project-card {
             background: #0f172a;
             border: 1px solid #334155;
             border-radius: 14px;
-            padding: 20px;
+            padding: 24px;
+            height: 100%;
+            box-sizing: border-box;
         }
 
         .featured-card {
             background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.92));
             border: 1px solid #3b82f6;
             box-shadow: 0 14px 36px rgba(15, 23, 42, 0.28);
-            padding: 24px;
+            padding: 28px;
         }
 
         .featured-eyebrow {
@@ -710,6 +823,14 @@ def base_styles():
             gap: 10px;
             flex-wrap: wrap;
             margin-top: 16px;
+        }
+
+        .project-stack {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(148, 163, 184, 0.18);
+            color: #cbd5e1;
+            line-height: 1.7;
         }
 
         .project-support {
@@ -1178,6 +1299,18 @@ def base_styles():
         }
 
         @media (max-width: 900px) {
+            body {
+                padding: 22px;
+            }
+
+            .container {
+                width: min(100%, calc(100vw - 24px));
+            }
+
+            .card {
+                padding: 28px 24px 30px 24px;
+            }
+
             .summary-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1196,6 +1329,22 @@ def base_styles():
         }
 
         @media (max-width: 600px) {
+            body {
+                padding: 14px;
+            }
+
+            .container {
+                width: 100%;
+            }
+
+            .card {
+                padding: 22px 16px 24px 16px;
+            }
+
+            .section {
+                margin-top: 40px;
+            }
+
             .summary-grid {
                 grid-template-columns: 1fr;
             }
@@ -1256,12 +1405,18 @@ def render_page(title, body_html):
 @app.route("/")
 def home():
     projects = get_projects()
-    featured = projects[0]
+    featured = get_project_by_slug("nexgen-healthcare")
+    featured_infrastructure = get_project_by_slug("age-evolution")
+    additional_projects = [
+        project for project in projects
+        if project["slug"] != "nexgen-healthcare"
+    ]
     return render_template(
         "home.html",
         **portfolio_template_context(f"{SITE_NAME} | {OWNER_NAME}"),
         featured=featured,
-        projects=projects[1:],
+        featured_infrastructure=featured_infrastructure,
+        projects=additional_projects,
         focus_items=[
             "Designing systems, not just features",
             "Building state-driven workflows",
@@ -1269,6 +1424,35 @@ def home():
             "Creating reliable, production-style applications",
         ],
         skill_groups=[
+            {
+                "title": "AWS",
+                "skills": [
+                    "Amazon S3",
+                    "Amazon CloudFront",
+                    "Amazon Route 53",
+                    "AWS Certificate Manager (ACM)",
+                ],
+            },
+            {
+                "title": "Web / Deployment",
+                "skills": [
+                    "Static website hosting",
+                    "CDN delivery",
+                    "DNS routing",
+                    "HTTPS / SSL configuration",
+                    "Custom domain setup",
+                    "Production frontend deployment",
+                ],
+            },
+            {
+                "title": "Product / Growth",
+                "skills": [
+                    "Waitlist capture",
+                    "Serverless form integration",
+                    "Landing page deployment",
+                    "User acquisition flow",
+                ],
+            },
             {
                 "title": "Cloud Infrastructure",
                 "skills": [
@@ -1351,6 +1535,12 @@ def projects_page():
 @app.route("/projects/nexgen-healthcare")
 def nexgen_project():
     project = get_project_by_slug("nexgen-healthcare")
+    return render_project_detail_page(project)
+
+
+@app.route("/projects/age-evolution")
+def age_evolution_project():
+    project = get_project_by_slug("age-evolution")
     return render_project_detail_page(project)
 
 

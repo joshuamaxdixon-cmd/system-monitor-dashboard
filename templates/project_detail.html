@@ -55,7 +55,7 @@
                     <div class="architecture-card">
                         <h3>{{ layer.title }}</h3>
                         <ul>
-                            {% for item in layer.items %}
+                            {% for item in layer["items"] %}
                                 <li>{{ item }}</li>
                             {% endfor %}
                         </ul>
@@ -85,6 +85,19 @@
         <h2>Why It Matters</h2>
         <p>{{ project.why_it_matters }}</p>
     </div>
+
+    {% if project.outcomes %}
+        <div class="section-panel">
+            <h2>Key Outcomes</h2>
+            <div class="systems-grid">
+                {% for outcome in project.outcomes %}
+                    <div class="system-card">
+                        <p>{{ outcome }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
 
     <div class="section-panel">
         <h2>Final Status</h2>
@@ -131,6 +144,15 @@
             • {{ feature }}<br>
         {% endfor %}
     </div>
+
+    {% if project.outcomes %}
+        <div class="note-box">
+            <strong>Key Outcomes:</strong><br>
+            {% for outcome in project.outcomes %}
+                • {{ outcome }}<br>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endif %}
 
 <div class="skill-chip-row">
@@ -140,8 +162,12 @@
 </div>
 
 <div class="hero-buttons">
-    <a class="btn-primary" href="{{ project.live_url }}" target="_blank">{{ project.primary_button_text or 'View Live Application' }}</a>
-    <a class="btn-secondary" href="{{ project.github }}" target="_blank">GitHub</a>
+    {% if project.live_url %}
+        <a class="btn-primary" href="{{ project.live_url }}" target="_blank">{{ project.primary_button_text or 'View Live Application' }}</a>
+    {% endif %}
+    {% if project.github %}
+        <a class="btn-secondary" href="{{ project.github }}" target="_blank">Source Code</a>
+    {% endif %}
     <a class="btn-ghost" href="/projects">Back to Projects</a>
 </div>
 {% endblock %}

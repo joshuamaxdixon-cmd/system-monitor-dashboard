@@ -13,7 +13,9 @@
             <p><strong>Tech Stack:</strong> {{ project.tech_stack }}</p>
             <div class="project-links">
                 <a class="button-link btn-secondary" href="{{ project.project_url }}">View Project</a>
-                <a class="button-link btn-ghost" href="{{ project.github }}" target="_blank">GitHub</a>
+                {% if project.github %}
+                    <a class="button-link btn-ghost" href="{{ project.github }}" target="_blank">Source Code</a>
+                {% endif %}
             </div>
         </div>
     {% endfor %}
