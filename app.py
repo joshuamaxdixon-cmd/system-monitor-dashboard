@@ -1544,7 +1544,7 @@ def base_styles():
         .hero-console {
             position: relative;
             display: grid;
-            grid-template-columns: minmax(0, 1.08fr) minmax(260px, 0.82fr) minmax(280px, 0.68fr);
+            grid-template-columns: minmax(620px, 1.32fr) minmax(260px, 0.74fr) minmax(280px, 0.66fr);
             gap: 28px;
             align-items: center;
             min-height: calc(100vh - 126px);
@@ -1581,9 +1581,15 @@ def base_styles():
             margin: 0;
             color: #f8fafc;
             text-align: left;
-            font-size: clamp(48px, 6vw, 86px);
+            font-size: clamp(48px, 4.6vw, 76px);
             line-height: 0.95;
             letter-spacing: 0;
+        }
+
+        @media (min-width: 1181px) {
+            .hero h1 {
+                white-space: nowrap;
+            }
         }
 
         .card > h1,
