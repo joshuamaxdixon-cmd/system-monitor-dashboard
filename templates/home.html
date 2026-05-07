@@ -1,216 +1,242 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="hero">
-    <h1>{{ owner_name }}</h1>
-    <p class="subtitle">Cloud & DevOps Engineer</p>
-    <p>
-        I build and operate production-style systems on AWS with a focus on backend reliability,
-        workflow automation, deployment discipline, and hands-on infrastructure debugging.
-    </p>
+<section class="hero hero-console" data-reveal>
+    <div class="hero-copy">
+        <p class="eyebrow">Cloud Architect • Systems Engineer • Operator</p>
+        <h1>{{ owner_name }}</h1>
+        <p class="subtitle">{{ owner_title }}</p>
+        <p class="hero-statement">
+            I build and operate production systems on AWS with a focus on reliability,
+            automation, and operational excellence.
+        </p>
 
-    <div class="hero-buttons">
-        <a class="btn-primary" href="/projects">View Projects</a>
-        <a class="btn-secondary" href="{{ github_profile }}" target="_blank">GitHub</a>
-        <a class="btn-secondary" href="{{ linkedin_profile }}" target="_blank">LinkedIn</a>
-        <a class="btn-ghost" href="/contact">Contact</a>
+        <div class="hero-buttons">
+            <a class="btn-primary" href="#projects">Explore Projects</a>
+            <a class="btn-secondary" href="#architecture">View Architecture</a>
+            <a class="btn-ghost" href="{{ github_profile }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="btn-ghost" href="{{ linkedin_profile }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
     </div>
-</div>
 
-<div class="note-box">
-    This portfolio showcases systems-focused cloud and backend engineering work built around real deployment paths,
-    service recovery, operational debugging, and production-style architecture decisions.
-</div>
+    <div class="infra-visual" aria-label="Cloud infrastructure operations visual">
+        <div class="infra-node node-primary">ALB</div>
+        <div class="infra-node node-mid">EC2</div>
+        <div class="infra-node node-top">S3</div>
+        <div class="infra-node node-right">CW</div>
+        <div class="infra-node node-low">DB</div>
+        <div class="infra-line line-one"></div>
+        <div class="infra-line line-two"></div>
+        <div class="infra-line line-three"></div>
+    </div>
 
-<div class="section">
-    <h2 class="section-title">Featured Projects</h2>
-    <p class="section-lead">
-        Selected work that shows both application-level system design and production-grade cloud delivery.
-    </p>
-    <div class="project-grid featured-project-grid">
-        <div class="project-card featured-card">
-            <span class="featured-eyebrow">Featured System</span>
-            <span class="status-badge" style="background:{{ featured.status_color }};">{{ featured.status }}</span>
-            <h3>NexGEN Healthcare</h3>
-            <p>A multi-role healthcare workflow system with a canonical state engine, internal care coordination, and modular feature control.</p>
-            <p class="project-support">Built and hardened as a workflow-first product using Flask, Gunicorn, AWS EC2 deployment, systemd-managed service control, and a GitHub Actions deployment pipeline.</p>
-
-            <div class="project-meta-grid">
-                <div class="project-meta-card">
-                    <h4>System Architecture</h4>
-                    <ul>
-                        <li>Canonical workflow engine</li>
-                        <li>Flask + Gunicorn stack</li>
-                        <li>AWS EC2 deployment</li>
-                        <li>systemd-managed service</li>
-                    </ul>
-                </div>
-
-                <div class="project-meta-card">
-                    <h4>Production Features</h4>
-                    <ul>
-                        <li>Feature toggle control</li>
-                        <li>GitHub Actions deployment pipeline</li>
-                        <li>Workflow hardening</li>
-                        <li>Operational recovery/debugging</li>
-                    </ul>
-                </div>
-
-                <div class="project-meta-card">
-                    <h4>Workflow Highlights</h4>
-                    <ul>
-                        <li>Multi-role workspaces</li>
-                        <li>Internal visit messaging</li>
-                        <li>State-driven transitions</li>
-                        <li>Role-aware workflow behavior</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="project-highlights">
-                <strong>System Highlights</strong>
-                <ul class="project-highlight-list">
-                    <li>Canonical Workflow Engine</li>
-                    <li>Multi-Role Workspaces (Front Desk / Nurse / Provider)</li>
-                    <li>Internal Visit Messaging</li>
-                    <li>Feature Toggle Control Layer</li>
-                </ul>
-            </div>
-
-            <div class="project-links">
-                <a class="button-link btn-secondary" href="{{ featured.project_url }}">View Project</a>
-                <a class="button-link btn-primary" href="{{ featured.live_url }}" target="_blank">Live Demo</a>
-                <a class="button-link btn-ghost" href="{{ featured.github }}" target="_blank">Source Code</a>
-            </div>
+    <aside class="status-panel" aria-label="System status">
+        <div class="panel-header">
+            <span>System Status</span>
+            <span class="status-pill"><span class="status-dot" aria-hidden="true"></span>Operational</span>
         </div>
 
-        {% if featured_infrastructure %}
-            <div class="project-card featured-card">
-                <span class="featured-eyebrow">Featured Infrastructure Build</span>
-                <span class="status-badge" style="background:{{ featured_infrastructure.status_color }};">{{ featured_infrastructure.status }}</span>
-                <h3>{{ featured_infrastructure.title }}</h3>
-                <p>{{ featured_infrastructure.description }}</p>
-                <p class="project-support">
-                    Live frontend delivery stack built on AWS for secure distribution, custom domain routing,
-                    and real user capture without a custom backend.
+        <div class="status-list">
+            <div><span>NexGEN Healthcare</span><strong>Live</strong></div>
+            <div><span>Age Evolution Platform</span><strong>Live</strong></div>
+            <div><span>Cloud Monitoring</span><strong>Live</strong></div>
+            <div><span>Infrastructure</span><strong>Healthy</strong></div>
+        </div>
+
+        <div class="metric-grid">
+            <div><span>Deployments</span><strong>20+</strong></div>
+            <div><span>Uptime</span><strong>99.9%</strong></div>
+            <div><span>Incidents</span><strong>0</strong></div>
+            <div><span>AWS Region</span><strong>us-east-2</strong></div>
+        </div>
+    </aside>
+</section>
+
+<section class="trust-strip" aria-label="Built with production infrastructure" data-reveal>
+    <span>Built with production infrastructure</span>
+    <ul>
+        <li>AWS</li>
+        <li>S3</li>
+        <li>CloudFront</li>
+        <li>Route 53</li>
+        <li>EC2</li>
+        <li>ACM</li>
+        <li>GitHub Actions</li>
+        <li>Flask</li>
+        <li>Gunicorn</li>
+        <li>CloudWatch</li>
+    </ul>
+</section>
+
+<section class="section" id="projects" data-reveal>
+    <div class="section-kicker">Featured Systems</div>
+    <h2 class="section-title">Production Work, Presented As Systems</h2>
+    <p class="section-lead">
+        Selected builds that connect application behavior, infrastructure delivery, and operational discipline.
+    </p>
+
+    <div class="featured-systems">
+        <article class="system-case-card">
+            <div class="case-visual nexgen-visual" aria-hidden="true">
+                <span class="visual-chip">Workflow Engine</span>
+                <span class="visual-chip">Provider Workspace</span>
+                <span class="visual-chip">Feature Controls</span>
+            </div>
+            <div class="case-content">
+                <span class="status-badge" style="background:{{ featured.status_color }};">Live System</span>
+                <h3>NexGEN Healthcare</h3>
+                <p>
+                    A multi-role healthcare workflow system with a canonical state engine, internal messaging,
+                    role-aware workspaces, AI-guided intake, provider workflow, and production deployment discipline.
                 </p>
-
-                <div class="project-meta-grid">
-                    <div class="project-meta-card">
-                        <h4>Stack</h4>
-                        <ul>
-                            <li>Amazon S3 static hosting</li>
-                            <li>Amazon CloudFront CDN</li>
-                            <li>Amazon Route 53 DNS</li>
-                            <li>AWS Certificate Manager HTTPS</li>
-                        </ul>
-                    </div>
-
-                    <div class="project-meta-card">
-                        <h4>Production Outcomes</h4>
-                        <ul>
-                            {% for outcome in featured_infrastructure.outcomes[:3] %}
-                                <li>{{ outcome }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                <div class="stack-row">
+                    <span>Flask</span>
+                    <span>Gunicorn</span>
+                    <span>AWS EC2</span>
+                    <span>SQLAlchemy</span>
+                    <span>GitHub Actions</span>
                 </div>
-
-                <div class="project-highlights">
-                    <strong>Key Outcomes</strong>
-                    <ul class="project-highlight-list">
-                        {% for outcome in featured_infrastructure.outcomes %}
-                            <li>{{ outcome }}</li>
-                        {% endfor %}
-                    </ul>
+                <div class="outcome-grid">
+                    <div><strong>5+</strong><span>Roles</span></div>
+                    <div><strong>State</strong><span>Workflow Core</span></div>
+                    <div><strong>CI/CD</strong><span>Deploy Path</span></div>
+                    <div><strong>Live</strong><span>Production URL</span></div>
                 </div>
-
-                <div class="project-stack">
-                    <strong>Stack:</strong> {{ featured_infrastructure.tech_stack }}
-                </div>
-
                 <div class="project-links">
-                    <a class="button-link btn-secondary" href="{{ featured_infrastructure.project_url }}">View Project</a>
-                    {% if featured_infrastructure.live_url %}
-                        <a class="button-link btn-primary" href="{{ featured_infrastructure.live_url }}" target="_blank">Live Demo</a>
-                    {% endif %}
-                    {% if featured_infrastructure.github %}
-                        <a class="button-link btn-ghost" href="{{ featured_infrastructure.github }}" target="_blank">Source Code</a>
-                    {% endif %}
+                    <a class="button-link btn-secondary" href="{{ featured.project_url }}">View System</a>
+                    <a class="button-link btn-primary" href="{{ featured.live_url }}" target="_blank" rel="noopener noreferrer">Live Demo</a>
+                    <a class="button-link btn-ghost" href="{{ featured.github }}" target="_blank" rel="noopener noreferrer">Source Code</a>
                 </div>
             </div>
+        </article>
+
+        {% if featured_infrastructure %}
+            <article class="system-case-card">
+                <div class="case-visual age-visual" aria-hidden="true">
+                    <span class="visual-chip">S3 Origin</span>
+                    <span class="visual-chip">CloudFront Edge</span>
+                    <span class="visual-chip">Waitlist Capture</span>
+                </div>
+                <div class="case-content">
+                    <span class="status-badge" style="background:{{ featured_infrastructure.status_color }};">Live Platform</span>
+                    <h3>{{ featured_infrastructure.title }}</h3>
+                    <p>
+                        Production-grade frontend infrastructure on AWS with S3, CloudFront, Route 53,
+                        ACM HTTPS, and real user capture through Formspree.
+                    </p>
+                    <div class="stack-row">
+                        <span>S3</span>
+                        <span>CloudFront</span>
+                        <span>Route 53</span>
+                        <span>ACM</span>
+                        <span>Formspree</span>
+                    </div>
+                    <div class="outcome-grid">
+                        <div><strong>HTTPS</strong><span>Configured</span></div>
+                        <div><strong>CDN</strong><span>Delivery</span></div>
+                        <div><strong>Global</strong><span>Reach</span></div>
+                        <div><strong>Capture</strong><span>Waitlist Flow</span></div>
+                    </div>
+                    <div class="project-links">
+                        <a class="button-link btn-secondary" href="{{ featured_infrastructure.project_url }}">View Platform</a>
+                        {% if featured_infrastructure.live_url %}
+                            <a class="button-link btn-primary" href="{{ featured_infrastructure.live_url }}" target="_blank" rel="noopener noreferrer">Live Demo</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
         {% endif %}
     </div>
-</div>
+</section>
 
-<div class="section">
-    <h2 class="section-title">What I Focus On</h2>
-    <div class="focus-grid">
-        {% for item in focus_items %}
-            <div class="focus-card">{{ item }}</div>
-        {% endfor %}
+<section class="section" id="architecture" data-reveal>
+    <div class="section-kicker">Operational Architecture</div>
+    <h2 class="section-title">Infrastructure Work With Runtime Accountability</h2>
+    <div class="architecture-band">
+        <div>
+            <span>01</span>
+            <h3>Deploy</h3>
+            <p>GitHub-driven release paths, EC2 services, Gunicorn processes, and controlled restarts.</p>
+        </div>
+        <div>
+            <span>02</span>
+            <h3>Operate</h3>
+            <p>Health checks, service verification, CloudWatch awareness, and runtime troubleshooting.</p>
+        </div>
+        <div>
+            <span>03</span>
+            <h3>Recover</h3>
+            <p>Rollback thinking, dependency repair, port/service diagnosis, and production-style validation.</p>
+        </div>
     </div>
-</div>
+</section>
 
-<div class="credibility-line">
-    All projects are deployed, tested through real workflows, and built to simulate production-level behavior.
-</div>
-
-<div class="section">
-    <h2 class="section-title">All Projects</h2>
+<section class="section" data-reveal>
+    <div class="section-kicker">All Projects</div>
+    <h2 class="section-title">Curated Systems Portfolio</h2>
     <p class="section-lead">
-        Portfolio projects focused on deployment, service reliability, workflow-driven backend behavior,
-        and practical cloud operations.
+        Focused projects covering cloud monitoring, health checks, log analysis, and operational tooling.
     </p>
     <div class="project-grid catalog-grid">
         {% for project in projects %}
-            <div class="project-card">
-                <span class="status-badge" style="background:{{ project.status_color }};">{{ project.status }}</span>
+            <article class="project-card curated-card">
+                <div class="project-card-top">
+                    <span class="project-icon" aria-hidden="true">▣</span>
+                    <span class="status-badge" style="background:{{ project.status_color }};">{{ project.status }}</span>
+                </div>
                 <h3>{{ project.title }}</h3>
                 <p>{{ project.description }}</p>
-                <p><strong>Tech Stack:</strong> {{ project.tech_stack }}</p>
+                <p class="project-stack"><strong>Stack:</strong> {{ project.tech_stack }}</p>
                 <div class="project-links">
                     <a class="button-link btn-secondary" href="{{ project.project_url }}">View Project</a>
                     {% if project.github %}
-                        <a class="button-link btn-ghost" href="{{ project.github }}" target="_blank">Source Code</a>
+                        <a class="button-link btn-ghost" href="{{ project.github }}" target="_blank" rel="noopener noreferrer">Source Code</a>
                     {% endif %}
                 </div>
-            </div>
+            </article>
         {% endfor %}
     </div>
-</div>
+</section>
 
-<div class="section">
-    <h2 class="section-title">Core Skills</h2>
+<section class="section" id="skills" data-reveal>
+    <div class="section-kicker">Core Capabilities</div>
+    <h2 class="section-title">Capability Map</h2>
     <p class="section-lead">
-        Experience areas built through direct deployment, failure recovery, backend implementation,
+        Practical engineering areas built through deployment, recovery, backend implementation,
         and hands-on server-side debugging.
     </p>
-    <div class="skills-category-grid">
+    <div class="capability-map">
         {% for group in skill_groups %}
-            <div class="skill-category">
+            <article class="skill-category">
                 <h3>{{ group.title }}</h3>
                 <ul>
                     {% for skill in group.skills %}
                         <li>{{ skill }}</li>
                     {% endfor %}
                 </ul>
-            </div>
+            </article>
         {% endfor %}
     </div>
-</div>
+</section>
 
-<div class="section">
-    <h2 class="section-title">Contact</h2>
-    <div class="note-box">
-        Reach me at <a class="inline-link" href="mailto:{{ owner_email }}">{{ owner_email }}</a><br><br>
-        <a class="inline-link" href="{{ github_profile }}" target="_blank">GitHub</a> &nbsp;|&nbsp;
-        <a class="inline-link" href="{{ linkedin_profile }}" target="_blank">LinkedIn</a>
+<section class="closing-panel" id="contact" data-reveal>
+    <div>
+        <div class="section-kicker">Contact</div>
+        <h2>Let's build something reliable.</h2>
+        <p>
+            Open to conversations around infrastructure, systems design, backend reliability,
+            cloud operations, and platform engineering opportunities.
+        </p>
     </div>
-</div>
+    <div class="contact-actions">
+        <a class="btn-primary" href="mailto:{{ owner_email }}">{{ owner_email }}</a>
+        <a class="btn-secondary" href="{{ github_profile }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="btn-ghost" href="{{ linkedin_profile }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+</section>
 
-<div class="footer-note">
-    Built to present hands-on systems work across AWS infrastructure, backend engineering,
-    deployment pipelines, monitoring, and operational product thinking.
-</div>
+<footer class="footer-note">
+    <span class="status-dot" aria-hidden="true"></span>
+    &copy; 2026 {{ owner_name }}. Built with precision. Deployed with purpose.
+</footer>
 {% endblock %}

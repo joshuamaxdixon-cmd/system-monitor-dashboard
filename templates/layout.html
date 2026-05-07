@@ -1,14 +1,35 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ page_title }}</title>
     {{ base_styles | safe }}
 </head>
-<body>
+<body id="top">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    {% include "_portfolio_nav.html" %}
     <div class="container">
-        <div class="card">
-            {% include "_portfolio_nav.html" %}
+        <main class="card" id="main-content">
             {% block content %}{% endblock %}
-        </div>
+        </main>
     </div>
+    <script>
+        document.documentElement.classList.add("js-ready");
+        const revealItems = document.querySelectorAll("[data-reveal]");
+        if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.14 });
+            revealItems.forEach((item) => observer.observe(item));
+        } else {
+            revealItems.forEach((item) => item.classList.add("is-visible"));
+        }
+    </script>
 </body>
 </html>
