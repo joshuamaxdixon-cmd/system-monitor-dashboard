@@ -4,7 +4,10 @@
 <section class="hero hero-console" data-reveal>
     <div class="hero-copy">
         <p class="eyebrow">Cloud Architect • Systems Engineer • Operator</p>
-        <h1>{{ owner_name }}</h1>
+        <h1 class="hero-name">
+            <span>Joshua</span>
+            <span>Max-Dixon</span>
+        </h1>
         <p class="subtitle">{{ owner_title }}</p>
         <p class="hero-statement">
             I build and operate production systems on AWS with a focus on reliability,
@@ -14,12 +17,16 @@
         <div class="hero-buttons">
             <a class="btn-primary" href="#projects">Explore Projects</a>
             <a class="btn-secondary" href="#architecture">View Architecture</a>
-            <a class="btn-ghost" href="{{ github_profile }}" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a class="btn-ghost" href="{{ linkedin_profile }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
     </div>
 
     <div class="infra-visual" aria-label="Cloud infrastructure operations visual">
+        <div class="stack-core" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
         <div class="infra-node node-primary">ALB</div>
         <div class="infra-node node-mid">EC2</div>
         <div class="infra-node node-top">S3</div>
@@ -30,26 +37,39 @@
         <div class="infra-line line-three"></div>
     </div>
 
-    <aside class="status-panel" aria-label="System status">
-        <div class="panel-header">
-            <span>System Status</span>
-            <span class="status-pill"><span class="status-dot" aria-hidden="true"></span>Operational</span>
-        </div>
+    <div class="hero-side">
+        <aside class="status-panel" aria-label="System status">
+            <div class="panel-header">
+                <span>System Status</span>
+                <span class="status-pill"><span class="status-dot" aria-hidden="true"></span>All Systems Operational</span>
+            </div>
 
-        <div class="status-list">
-            <div><span>NexGEN Healthcare</span><strong>Live</strong></div>
-            <div><span>Age Evolution Platform</span><strong>Live</strong></div>
-            <div><span>Cloud Monitoring</span><strong>Live</strong></div>
-            <div><span>Infrastructure</span><strong>Healthy</strong></div>
-        </div>
+            <div class="status-list">
+                <div><span>NexGEN Healthcare</span><strong>Live &gt;</strong></div>
+                <div><span>Age Evolution Platform</span><strong>Live &gt;</strong></div>
+                <div><span>Cloud Monitoring</span><strong>Live &gt;</strong></div>
+                <div><span>Infrastructure</span><strong>Healthy &gt;</strong></div>
+            </div>
 
-        <div class="metric-grid">
-            <div><span>Deployments</span><strong>20+</strong></div>
-            <div><span>Uptime</span><strong>99.9%</strong></div>
-            <div><span>Incidents</span><strong>0</strong></div>
-            <div><span>AWS Region</span><strong>us-east-2</strong></div>
-        </div>
-    </aside>
+            <div class="metric-label">Deployment Velocity <span>This Month</span></div>
+            <div class="metric-grid">
+                <div><span>Deployments</span><strong>24</strong></div>
+                <div><span>Uptime</span><strong>99.98%</strong></div>
+                <div><span>Incidents</span><strong>0</strong></div>
+            </div>
+        </aside>
+
+        <aside class="footprint-panel" aria-label="Infrastructure footprint">
+            <div class="panel-header">
+                <span>Infrastructure Footprint</span>
+            </div>
+            <p>AWS Global</p>
+            <div class="world-map" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <strong>us-east-2 (Primary)</strong>
+        </aside>
+    </div>
 </section>
 
 <section class="trust-strip" aria-label="Built with production infrastructure" data-reveal>
@@ -78,9 +98,10 @@
     <div class="featured-systems">
         <article class="system-case-card">
             <div class="case-visual nexgen-visual" aria-hidden="true">
-                <span class="visual-chip">Workflow Engine</span>
-                <span class="visual-chip">Provider Workspace</span>
-                <span class="visual-chip">Feature Controls</span>
+                <div class="dashboard-mock">
+                    <span></span><span></span><span></span>
+                    <div></div><div></div><div></div>
+                </div>
             </div>
             <div class="case-content">
                 <span class="status-badge" style="background:{{ featured.status_color }};">Live System</span>
@@ -97,10 +118,10 @@
                     <span>GitHub Actions</span>
                 </div>
                 <div class="outcome-grid">
-                    <div><strong>5+</strong><span>Roles</span></div>
-                    <div><strong>State</strong><span>Workflow Core</span></div>
-                    <div><strong>CI/CD</strong><span>Deploy Path</span></div>
-                    <div><strong>Live</strong><span>Production URL</span></div>
+                    <div><strong>12+</strong><span>Workflows</span></div>
+                    <div><strong>3</strong><span>Roles</span></div>
+                    <div><strong>40+</strong><span>Deployments</span></div>
+                    <div><strong>99.9%</strong><span>Uptime</span></div>
                 </div>
                 <div class="project-links">
                     <a class="button-link btn-secondary" href="{{ featured.project_url }}">View System</a>
@@ -113,9 +134,14 @@
         {% if featured_infrastructure %}
             <article class="system-case-card">
                 <div class="case-visual age-visual" aria-hidden="true">
-                    <span class="visual-chip">S3 Origin</span>
-                    <span class="visual-chip">CloudFront Edge</span>
-                    <span class="visual-chip">Waitlist Capture</span>
+                    <div class="globe-mock">
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                    <div class="site-card-mock">
+                        <strong>Age Evolution</strong>
+                        <span>Welcome to</span>
+                        <span>Age Evolution</span>
+                    </div>
                 </div>
                 <div class="case-content">
                     <span class="status-badge" style="background:{{ featured_infrastructure.status_color }};">Live Platform</span>
@@ -131,11 +157,11 @@
                         <span>ACM</span>
                         <span>Formspree</span>
                     </div>
-                    <div class="outcome-grid">
-                        <div><strong>HTTPS</strong><span>Configured</span></div>
-                        <div><strong>CDN</strong><span>Delivery</span></div>
-                        <div><strong>Global</strong><span>Reach</span></div>
-                        <div><strong>Capture</strong><span>Waitlist Flow</span></div>
+                <div class="outcome-grid">
+                        <div><strong>98</strong><span>Performance</span></div>
+                        <div><strong>190+</strong><span>Global Reach</span></div>
+                        <div><strong>99.99%</strong><span>Availability</span></div>
+                        <div><strong>&lt; 600ms</strong><span>Load Time</span></div>
                     </div>
                     <div class="project-links">
                         <a class="button-link btn-secondary" href="{{ featured_infrastructure.project_url }}">View Platform</a>
@@ -169,6 +195,15 @@
             <p>Rollback thinking, dependency repair, port/service diagnosis, and production-style validation.</p>
         </div>
     </div>
+</section>
+
+<section class="section about-strip" id="about" data-reveal>
+    <div class="section-kicker">About</div>
+    <h2 class="section-title">Systems Thinking, Production Discipline</h2>
+    <p class="section-lead">
+        This portfolio is built around working infrastructure, deployed applications, monitoring surfaces,
+        and operational workflows rather than static demos.
+    </p>
 </section>
 
 <section class="section" data-reveal>
