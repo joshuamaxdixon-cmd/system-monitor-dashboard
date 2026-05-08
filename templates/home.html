@@ -15,8 +15,8 @@
         </p>
 
         <div class="hero-buttons">
-            <a class="btn-primary" href="#projects">Explore Projects</a>
-            <a class="btn-secondary" href="#architecture">View Architecture</a>
+            <a class="btn-primary" href="#projects">Explore Projects <span aria-hidden="true">→</span></a>
+            <a class="btn-secondary" href="#architecture">View Architecture <span aria-hidden="true">↗</span></a>
         </div>
     </div>
 
@@ -45,17 +45,49 @@
             </div>
 
             <div class="status-list">
-                <div><span>NexGEN Healthcare</span><strong>Live &gt;</strong></div>
-                <div><span>Age Evolution Platform</span><strong>Live &gt;</strong></div>
-                <div><span>Cloud Monitoring</span><strong>Live &gt;</strong></div>
-                <div><span>Infrastructure</span><strong>Healthy &gt;</strong></div>
+                <div>
+                    <span class="service-name">
+                        <span class="service-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/></svg>
+                        </span>
+                        NexGEN Healthcare
+                    </span>
+                    <strong>Live &gt;</strong>
+                </div>
+                <div>
+                    <span class="service-name">
+                        <span class="service-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+                        </span>
+                        Age Evolution Platform
+                    </span>
+                    <strong>Live &gt;</strong>
+                </div>
+                <div>
+                    <span class="service-name">
+                        <span class="service-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M17 18a4 4 0 0 0 0-8 6 6 0 0 0-11.5-1.5A4 4 0 0 0 6 18z"/></svg>
+                        </span>
+                        Cloud Monitoring
+                    </span>
+                    <strong>Live &gt;</strong>
+                </div>
+                <div>
+                    <span class="service-name">
+                        <span class="service-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9-9 9-9-9z"/><path d="M9 12l3 3 3-3"/></svg>
+                        </span>
+                        Infrastructure
+                    </span>
+                    <strong>Healthy &gt;</strong>
+                </div>
             </div>
 
             <div class="metric-label">Deployment Velocity <span>This Month</span></div>
             <div class="metric-grid">
-                <div><span>Deployments</span><strong>24</strong></div>
-                <div><span>Uptime</span><strong>99.98%</strong></div>
-                <div><span>Incidents</span><strong>0</strong></div>
+                <div><span>Deployments</span><strong data-count="24">24</strong></div>
+                <div><span>Uptime</span><strong data-count="99.98" data-suffix="%">99.98%</strong></div>
+                <div><span>Incidents</span><strong data-count="0">0</strong></div>
             </div>
         </aside>
 
@@ -64,9 +96,11 @@
                 <span>Infrastructure Footprint</span>
             </div>
             <p>AWS Global</p>
-            <div class="world-map" aria-hidden="true">
-                <span></span><span></span><span></span><span></span>
-            </div>
+            <svg class="world-map" id="worldMap" viewBox="0 0 400 140" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                <g id="mapDots" fill="rgba(148, 163, 184, 0.32)"></g>
+                <g id="mapArcs"></g>
+                <g id="mapPins"></g>
+            </svg>
             <strong>us-east-2 (Primary)</strong>
         </aside>
     </div>
@@ -104,7 +138,7 @@
                 </div>
             </div>
             <div class="case-content">
-                <span class="status-badge" style="background:{{ featured.status_color }};">Live System</span>
+                <span class="status-badge" style="background:{{ featured.status_color }};"><span class="status-dot" aria-hidden="true"></span>Live System</span>
                 <h3>NexGEN Healthcare</h3>
                 <p>
                     A multi-role healthcare workflow system with a canonical state engine, internal messaging,
@@ -124,8 +158,8 @@
                     <div><strong>99.9%</strong><span>Uptime</span></div>
                 </div>
                 <div class="project-links">
-                    <a class="button-link btn-secondary" href="{{ featured.project_url }}">View System</a>
-                    <a class="button-link btn-primary" href="{{ featured.live_url }}" target="_blank" rel="noopener noreferrer">Live Demo</a>
+                    <a class="button-link btn-secondary" href="{{ featured.project_url }}">View System <span aria-hidden="true">→</span></a>
+                    <a class="button-link btn-primary" href="{{ featured.live_url }}" target="_blank" rel="noopener noreferrer">Live Demo <span aria-hidden="true">↗</span></a>
                     <a class="button-link btn-ghost" href="{{ featured.github }}" target="_blank" rel="noopener noreferrer">Source Code</a>
                 </div>
             </div>
@@ -144,7 +178,7 @@
                     </div>
                 </div>
                 <div class="case-content">
-                    <span class="status-badge" style="background:{{ featured_infrastructure.status_color }};">Live Platform</span>
+                    <span class="status-badge" style="background:{{ featured_infrastructure.status_color }};"><span class="status-dot" aria-hidden="true"></span>Live Platform</span>
                     <h3>{{ featured_infrastructure.title }}</h3>
                     <p>
                         Production-grade frontend infrastructure on AWS with S3, CloudFront, Route 53,
@@ -157,16 +191,16 @@
                         <span>ACM</span>
                         <span>Formspree</span>
                     </div>
-                <div class="outcome-grid">
+                    <div class="outcome-grid">
                         <div><strong>98</strong><span>Performance</span></div>
                         <div><strong>190+</strong><span>Global Reach</span></div>
                         <div><strong>99.99%</strong><span>Availability</span></div>
                         <div><strong>&lt; 600ms</strong><span>Load Time</span></div>
                     </div>
                     <div class="project-links">
-                        <a class="button-link btn-secondary" href="{{ featured_infrastructure.project_url }}">View Platform</a>
+                        <a class="button-link btn-secondary" href="{{ featured_infrastructure.project_url }}">View Platform <span aria-hidden="true">→</span></a>
                         {% if featured_infrastructure.live_url %}
-                            <a class="button-link btn-primary" href="{{ featured_infrastructure.live_url }}" target="_blank" rel="noopener noreferrer">Live Demo</a>
+                            <a class="button-link btn-primary" href="{{ featured_infrastructure.live_url }}" target="_blank" rel="noopener noreferrer">Live Demo <span aria-hidden="true">↗</span></a>
                         {% endif %}
                     </div>
                 </div>
@@ -212,24 +246,37 @@
     <p class="section-lead">
         Focused projects covering cloud monitoring, health checks, log analysis, and operational tooling.
     </p>
-    <div class="project-grid catalog-grid">
-        {% for project in projects %}
-            <article class="project-card curated-card">
-                <div class="project-card-top">
-                    <span class="project-icon" aria-hidden="true">▣</span>
-                    <span class="status-badge" style="background:{{ project.status_color }};">{{ project.status }}</span>
-                </div>
-                <h3>{{ project.title }}</h3>
-                <p>{{ project.description }}</p>
-                <p class="project-stack"><strong>Stack:</strong> {{ project.tech_stack }}</p>
-                <div class="project-links">
-                    <a class="button-link btn-secondary" href="{{ project.project_url }}">View Project</a>
-                    {% if project.github %}
-                        <a class="button-link btn-ghost" href="{{ project.github }}" target="_blank" rel="noopener noreferrer">Source Code</a>
-                    {% endif %}
-                </div>
-            </article>
-        {% endfor %}
+    <div class="projects-carousel" data-project-carousel>
+        <div class="project-grid catalog-grid" id="projectsScroll">
+            {% for project in projects %}
+                <article class="project-card curated-card">
+                    <div class="project-card-top">
+                        <span class="project-icon" aria-hidden="true">
+                            {% if "Health" in project.title %}
+                                <svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg>
+                            {% elif "Log" in project.title %}
+                                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                            {% else %}
+                                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 10h18M8 4v14M16 4v14"/></svg>
+                            {% endif %}
+                        </span>
+                        <span class="status-badge" style="background:{{ project.status_color }};">{{ project.status }}</span>
+                    </div>
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                    <p class="project-stack"><strong>Stack:</strong> {{ project.tech_stack }}</p>
+                    <div class="project-links">
+                        <a class="button-link btn-secondary" href="{{ project.project_url }}">View Project <span aria-hidden="true">→</span></a>
+                        {% if project.github %}
+                            <a class="button-link btn-ghost" href="{{ project.github }}" target="_blank" rel="noopener noreferrer">Source Code <span aria-hidden="true">↗</span></a>
+                        {% endif %}
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+        <button class="carousel-arrow" type="button" data-carousel-next aria-label="Next projects">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
     </div>
 </section>
 

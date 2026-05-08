@@ -3001,6 +3001,154 @@ def base_styles():
                 width: 210px;
             }
         }
+
+        .service-name {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .service-icon {
+            display: inline-grid;
+            place-items: center;
+            width: 24px;
+            height: 24px;
+            flex: 0 0 24px;
+            border-radius: 6px;
+            background: rgba(47, 140, 255, 0.1);
+            color: #69a8ff;
+        }
+
+        .service-icon svg,
+        .project-icon svg,
+        .carousel-arrow svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+        }
+
+        .status-badge .status-dot {
+            width: 6px;
+            height: 6px;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.7);
+        }
+
+        .world-map {
+            display: block;
+            width: 100%;
+            min-height: 104px;
+            margin-top: 12px;
+            border-radius: 8px;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 28% 48%, rgba(148, 163, 184, 0.14) 0 16%, transparent 17%),
+                radial-gradient(ellipse at 52% 38%, rgba(148, 163, 184, 0.12) 0 18%, transparent 19%),
+                radial-gradient(ellipse at 74% 52%, rgba(148, 163, 184, 0.1) 0 15%, transparent 16%),
+                linear-gradient(135deg, rgba(47, 140, 255, 0.08), rgba(2, 8, 16, 0.7));
+        }
+
+        .map-arc {
+            fill: none;
+            stroke: rgba(96, 165, 250, 0.74);
+            stroke-width: 1;
+            stroke-linecap: round;
+            stroke-dasharray: 18 180;
+            animation: mapTrace 3.6s linear infinite;
+        }
+
+        .map-arc-base {
+            fill: none;
+            stroke: rgba(96, 165, 250, 0.18);
+            stroke-width: 0.7;
+        }
+
+        .map-pin {
+            fill: #2f8cff;
+            filter: drop-shadow(0 0 5px rgba(47, 140, 255, 0.9));
+        }
+
+        .map-pin-primary {
+            fill: #93c5fd;
+        }
+
+        @keyframes mapTrace {
+            from { stroke-dashoffset: 210; }
+            to { stroke-dashoffset: -36; }
+        }
+
+        .projects-carousel {
+            position: relative;
+            margin-top: 30px;
+        }
+
+        .projects-carousel .catalog-grid {
+            display: flex;
+            gap: 18px;
+            margin-top: 0;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x proximity;
+            padding: 0 54px 8px 0;
+            scrollbar-width: none;
+        }
+
+        .projects-carousel .catalog-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .projects-carousel .curated-card {
+            flex: 0 0 min(330px, calc(100vw - 72px));
+            scroll-snap-align: start;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 999px;
+            border: 1px solid rgba(47, 140, 255, 0.46);
+            background: rgba(5, 18, 31, 0.92);
+            color: #dceaff;
+            cursor: pointer;
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(47, 140, 255, 0.16);
+        }
+
+        @media (min-width: 1181px) {
+            .projects-carousel .curated-card {
+                flex-basis: calc((100% - 54px) / 4);
+            }
+        }
+
+        @media (max-width: 680px) {
+            .projects-carousel .catalog-grid {
+                padding-right: 0;
+            }
+
+            .carousel-arrow {
+                display: none;
+            }
+        }
     </style>
     """
 
