@@ -842,7 +842,7 @@ def base_styles():
 
       /* === ALL PROJECTS CAROUSEL === */
       .projects-wrap{position:relative;overflow:hidden}
-      .projects-scroll{display:flex;gap:16px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:6px;scrollbar-width:none}
+      .projects-scroll{display:flex;gap:16px;width:100%;max-width:100%;overflow-x:auto;scroll-behavior:smooth;padding-bottom:6px;scrollbar-width:none}
       .projects-scroll::-webkit-scrollbar{display:none}
       .project-card{flex:0 0 240px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;backdrop-filter:blur(8px);transition:border-color 0.2s,transform 0.2s}
       .project-card:hover{border-color:var(--border-strong);transform:translateY(-2px)}
@@ -953,6 +953,8 @@ def base_styles():
       }
       @media(max-width:900px){
         .top-nav{display:none}
+        .site-header{grid-template-columns:auto auto;justify-content:space-between}
+        .theme-toggle{display:none}
         .brand-copy{display:inline}
       }
       @media(max-width:700px){
