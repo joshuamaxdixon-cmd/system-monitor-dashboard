@@ -2367,6 +2367,9 @@ def base_styles():
         }
 
         .site-header {
+            position: relative;
+            top: auto;
+            z-index: 10;
             width: min(1480px, calc(100vw - 56px));
             margin-top: 22px;
             border-radius: 0;
