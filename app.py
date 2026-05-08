@@ -1426,9 +1426,9 @@ def base_styles():
         }
 
         .site-header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
+            position: relative;
+            top: auto;
+            z-index: 10;
             width: min(1380px, calc(100vw - 40px));
             margin: 18px auto 0 auto;
             display: grid;
