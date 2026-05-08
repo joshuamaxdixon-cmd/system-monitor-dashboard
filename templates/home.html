@@ -451,10 +451,21 @@ import * as THREE from 'three';
     earth.rotation.x = 0.15; earth.rotation.y = -0.6;
     scene.add(earth);
 
-    new THREE.TextureLoader().load('/static/img/earth-night.jpg', (tex) => {
-        tex.colorSpace = THREE.SRGBColorSpace;
-        earthMat.map = tex; earthMat.color.set(0xffffff); earthMat.needsUpdate = true;
-    });
+    const loader = new THREE.TextureLoader();
+    loader.crossOrigin = 'anonymous';
+    const textureUrls = [
+        '/static/img/earth-night.jpg',
+        'https://unpkg.com/three-globe@2.31.1/example/img/earth-night.jpg',
+        'https://cdn.jsdelivr.net/npm/three-globe@2.31.1/example/img/earth-night.jpg'
+    ];
+    function tryLoad(i) {
+        if (i >= textureUrls.length) return;
+        loader.load(textureUrls[i], (tex) => {
+            tex.colorSpace = THREE.SRGBColorSpace;
+            earthMat.map = tex; earthMat.color.set(0xffffff); earthMat.needsUpdate = true;
+        }, undefined, () => tryLoad(i + 1));
+    }
+    tryLoad(0);
 
     const atmMat = new THREE.ShaderMaterial({
         vertexShader: `varying vec3 vNormal; void main(){ vNormal = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
