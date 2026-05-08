@@ -518,7 +518,7 @@ import * as THREE from 'three';
 </script>
 
 <script>
-/* ===== WORLD MAP — FUTURISTIC UPGRADE ===== */
+/* ===== WORLD MAP — GEOGRAPHIC DOT CONTINENTS ===== */
 (() => {
     const SVG_NS = 'http://www.w3.org/2000/svg';
     const map       = document.getElementById('worldMap');
@@ -544,28 +544,77 @@ import * as THREE from 'three';
         gridGroup.appendChild(l);
     }
 
-    /* ── Continent dots (grid-sampled ellipses) ── */
-    const clusters = [
-        { x: 80,  y: 52,  rx: 42, ry: 24, rows: 6, cols: 11 },
-        { x: 114, y: 98,  rx: 18, ry: 25, rows: 6, cols: 5  },
-        { x: 208, y: 52,  rx: 27, ry: 15, rows: 5, cols: 7  },
-        { x: 226, y: 92,  rx: 24, ry: 26, rows: 6, cols: 6  },
-        { x: 288, y: 60,  rx: 54, ry: 25, rows: 6, cols: 12 },
-        { x: 338, y: 106, rx: 19, ry: 11, rows: 4, cols: 6  },
+    /* ── Dot pattern for continent fill ── */
+    const defs = map.querySelector('defs');
+    const pat = document.createElementNS(SVG_NS, 'pattern');
+    pat.setAttribute('id','ldots'); pat.setAttribute('width','4.5'); pat.setAttribute('height','4.5');
+    pat.setAttribute('patternUnits','userSpaceOnUse');
+    const pd = document.createElementNS(SVG_NS, 'circle');
+    pd.setAttribute('cx','1.8'); pd.setAttribute('cy','1.8'); pd.setAttribute('r','0.95');
+    pd.setAttribute('fill','rgba(148,163,184,0.44)');
+    pat.appendChild(pd); defs.appendChild(pat);
+
+    /* ── Real continent outlines [lon, lat] → SVG ── */
+    const gx = lon => ((lon + 180) / 360 * 400).toFixed(1);
+    const gy = lat => ((90 - lat)  / 180 * 160).toFixed(1);
+    const pts = arr => arr.map(([lo,la]) => `${gx(lo)},${gy(la)}`).join(' L ');
+
+    const continents = [
+        // North America
+        [[-141,70],[-167,68],[-164,55],[-150,59],[-143,60],[-130,55],[-126,50],
+         [-124,47],[-122,38],[-118,34],[-115,30],[-109,23],[-90,16],[-83,10],
+         [-77,9],[-76,18],[-81,26],[-80,25],[-80,33],[-76,38],[-71,42],
+         [-67,45],[-65,47],[-60,46],[-53,47],[-53,52],[-55,56],
+         [-64,63],[-65,66],[-93,63],[-95,59],[-110,62],[-125,60],[-138,60],[-141,70]],
+        // Greenland
+        [[-73,83],[-20,83],[-18,70],[-25,65],[-45,60],[-52,65],[-57,70],[-65,75],[-73,83]],
+        // South America
+        [[-80,10],[-78,3],[-72,-5],[-68,-10],[-63,-20],[-58,-30],[-52,-33],
+         [-48,-28],[-43,-23],[-39,-14],[-35,-5],[-37,3],[-52,5],
+         [-60,5],[-67,2],[-72,2],[-77,5],[-80,10]],
+        // Europe
+        [[-10,36],[-6,36],[3,43],[10,44],[14,46],[20,55],[25,60],
+         [28,70],[20,70],[15,69],[5,62],[0,57],[-3,58],
+         [-5,58],[-15,65],[-25,65],[-24,60],[-10,45],[-10,36]],
+        // British Isles (small)
+        [[-6,50],[-2,50],[0,52],[0,54],[-4,58],[-6,58],[-8,54],[-6,50]],
+        // Africa
+        [[-5,36],[5,36],[12,37],[20,37],[25,30],[32,30],[38,22],[43,12],
+         [50,12],[44,11],[42,2],[40,-2],[40,-10],[35,-15],[32,-20],
+         [28,-30],[25,-34],[18,-34],[12,-28],[10,-20],[8,-10],[5,-5],
+         [2,5],[-2,5],[-8,5],[-10,5],[-15,10],[-17,15],[-17,25],[-10,30],[-5,36]],
+        // Asia (main body)
+        [[28,70],[40,70],[60,72],[80,73],[100,72],[120,68],[140,60],
+         [145,44],[145,35],[140,35],[130,32],[120,30],[115,22],[105,10],
+         [100,5],[104,2],[108,2],[110,5],[115,8],[120,22],[130,32],
+         [140,35],[145,40],[150,45],[150,55],[142,55],[135,48],[128,50],
+         [122,52],[120,56],[110,55],[100,52],[90,48],[80,45],[70,42],
+         [60,40],[50,35],[42,35],[40,38],[35,36],[28,36],[25,35],
+         [20,42],[20,55],[28,70]],
+        // Japan (simplified)
+        [[131,31],[132,33],[134,35],[136,37],[138,38],[140,40],[142,43],
+         [141,44],[139,42],[137,39],[135,35],[133,33],[131,31]],
+        // Australia
+        [[114,-22],[120,-18],[130,-12],[137,-14],[140,-18],[145,-18],
+         [150,-24],[153,-28],[153,-33],[148,-38],[144,-38],[140,-36],
+         [135,-35],[130,-32],[126,-34],[122,-34],[115,-34],[112,-26],[114,-22]],
+        // New Zealand (north island)
+        [[172,-37],[175,-36],[178,-37],[178,-40],[175,-41],[172,-40],[172,-37]],
     ];
-    clusters.forEach(c => {
-        for (let row = 0; row < c.rows; row++) {
-            for (let col = 0; col < c.cols; col++) {
-                const nx = (col / Math.max(c.cols - 1, 1)) * 2 - 1;
-                const ny = (row / Math.max(c.rows - 1, 1)) * 2 - 1;
-                if (nx*nx + ny*ny > 1.05) continue;
-                const d = document.createElementNS(SVG_NS, 'circle');
-                d.setAttribute('cx', (c.x + nx * c.rx).toFixed(1));
-                d.setAttribute('cy', (c.y + ny * c.ry).toFixed(1));
-                d.setAttribute('r', '1');
-                dotsGroup.appendChild(d);
-            }
-        }
+
+    continents.forEach(coords => {
+        const d = `M ${pts(coords)} Z`;
+        // Dot-pattern fill
+        const fill = document.createElementNS(SVG_NS, 'path');
+        fill.setAttribute('d', d); fill.setAttribute('fill', 'url(#ldots)');
+        dotsGroup.appendChild(fill);
+        // Faint coastline edge
+        const edge = document.createElementNS(SVG_NS, 'path');
+        edge.setAttribute('d', d); edge.setAttribute('fill', 'none');
+        edge.setAttribute('stroke', 'rgba(148,163,184,0.22)');
+        edge.setAttribute('stroke-width', '0.4');
+        edge.setAttribute('stroke-linejoin', 'round');
+        dotsGroup.appendChild(edge);
     });
 
     /* ── AWS regions ── */
