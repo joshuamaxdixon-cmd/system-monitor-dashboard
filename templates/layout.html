@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ page_title }}</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23020713'/%3E%3Cpath d='M15 41V23h7v18c0 5-3 8-8 8-2 0-4-.4-6-1.3l1.8-5.4c1 .5 2 .7 3.1.7 1.4 0 2.1-.7 2.1-2zM27 47V17h7.2l7.8 12.8L49.8 17H57v30h-7V28.7l-7.5 12h-1.1L34 28.8V47h-7z' fill='%233b82f6'/%3E%3C/svg%3E">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}</script>
     {{ base_styles | safe }}
 </head>
 <body id="top">
@@ -24,6 +20,10 @@
         (() => {
             const reveals = document.querySelectorAll('.reveal:not(.in)');
             if (!reveals.length) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                reveals.forEach(r => r.classList.add('in'));
+                return;
+            }
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) { entry.target.classList.add('in'); observer.unobserve(entry.target); }
@@ -36,6 +36,15 @@
         (() => {
             const counters = document.querySelectorAll('[data-count]');
             if (!counters.length) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                counters.forEach((el) => {
+                    const target = parseFloat(el.dataset.count);
+                    const suffix = el.dataset.suffix || '';
+                    const isFloat = target % 1 !== 0;
+                    el.textContent = (isFloat ? target.toFixed(2) : target) + suffix;
+                });
+                return;
+            }
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (!entry.isIntersecting) return;

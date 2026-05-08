@@ -654,7 +654,7 @@ def base_styles():
 
       /* === NAV OUTER === */
       .site-header-outer{
-        position:sticky;top:0;z-index:50;
+        position:relative;top:auto;z-index:10;
         backdrop-filter:blur(12px);
         background:rgba(5,8,15,0.7);
         border-bottom:1px solid var(--border-soft);
@@ -735,7 +735,14 @@ def base_styles():
       .btn:hover .arrow{animation:arrowPop 0.2s ease forwards}
       @keyframes arrowPop{to{transform:translateX(3px)}}
       .hero-visual{position:absolute;right:-40px;top:50%;transform:translateY(-50%);width:520px;height:480px;pointer-events:none}
-      #cubeCanvas{width:100%;height:100%}
+      .cube-fallback{position:relative;width:100%;height:100%;display:grid;place-items:center;isolation:isolate}
+      .cube-fallback::before{content:"";position:absolute;inset:16%;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,0.25),transparent 62%);filter:blur(12px)}
+      .cube-grid{position:absolute;inset:12%;background-image:linear-gradient(rgba(96,165,250,0.12) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,0.12) 1px,transparent 1px);background-size:38px 38px;transform:skewY(-18deg) rotate(2deg);opacity:.72}
+      .cube-layer,.cube-core{position:absolute;display:block;border:1px solid rgba(96,165,250,.62);background:linear-gradient(135deg,rgba(59,130,246,.24),rgba(2,6,23,.72));box-shadow:0 0 38px rgba(59,130,246,.22),inset 0 0 32px rgba(96,165,250,.12);transform:rotateX(58deg) rotateZ(45deg)}
+      .cube-layer.layer-one{width:190px;height:190px}
+      .cube-layer.layer-two{width:138px;height:138px;transform:translateY(-34px) rotateX(58deg) rotateZ(45deg)}
+      .cube-layer.layer-three{width:90px;height:90px;transform:translateY(-68px) rotateX(58deg) rotateZ(45deg);background:rgba(59,130,246,.22)}
+      .cube-core{width:48px;height:48px;transform:translateY(-102px) rotateX(58deg) rotateZ(45deg);background:rgba(96,165,250,.58)}
       .hero-side{display:grid;gap:14px;align-content:start}
 
       /* === TRUSTED BY === */
@@ -821,7 +828,12 @@ def base_styles():
 
       /* === AGE EVOLUTION MOCKUP === */
       .ae-mockup{width:200px;height:260px;border-radius:8px;overflow:hidden;position:relative;background:radial-gradient(circle at 50% 50%,rgba(20,55,75,0.4),#04060a);border:1px solid var(--border-soft);box-shadow:0 8px 24px rgba(0,0,0,0.4);flex-shrink:0}
-      #aeGlobeCanvas{position:absolute;inset:0;width:100%;height:100%}
+      .ae-globe-fallback{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,rgba(59,130,246,.2),transparent 52%)}
+      .globe-shell{width:168px;height:168px;border-radius:50%;border:1px solid rgba(96,165,250,.4);background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.2),transparent 18%),radial-gradient(circle at 68% 58%,rgba(59,130,246,.45),transparent 38%),linear-gradient(135deg,rgba(3,23,50,.92),rgba(2,7,13,.92));box-shadow:0 0 56px rgba(59,130,246,.24)}
+      .globe-orbit{position:absolute;width:190px;height:70px;border:1px solid rgba(96,165,250,.24);border-radius:50%;transform:rotate(-17deg)}
+      .orbit-two{width:168px;height:58px;transform:rotate(22deg)}
+      .globe-dot{position:absolute;width:5px;height:5px;border-radius:50%;background:#fbbf24;box-shadow:0 0 12px #fbbf24}
+      .dot-one{left:36%;top:42%}.dot-two{left:52%;top:34%}.dot-three{left:66%;top:58%}.dot-four{left:44%;top:66%}
       .ae-overlay-card{position:absolute;bottom:14px;left:14px;right:14px;background:rgba(8,12,18,0.85);backdrop-filter:blur(8px);border:1px solid rgba(59,130,246,0.2);border-radius:6px;padding:8px 10px;font-size:8px;z-index:2}
       .ae-overlay-label{font-size:6px;color:var(--accent-bright);letter-spacing:0.1em;margin-bottom:3px;text-transform:uppercase}
       .ae-overlay-title{font-size:9px;color:var(--ink);font-weight:600;margin-bottom:5px}
@@ -829,7 +841,7 @@ def base_styles():
       .ae-overlay-btn{display:inline-block;background:var(--accent);color:white;font-size:6px;padding:3px 7px;border-radius:3px;font-weight:500}
 
       /* === ALL PROJECTS CAROUSEL === */
-      .projects-wrap{position:relative}
+      .projects-wrap{position:relative;overflow:hidden}
       .projects-scroll{display:flex;gap:16px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:6px;scrollbar-width:none}
       .projects-scroll::-webkit-scrollbar{display:none}
       .project-card{flex:0 0 240px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;backdrop-filter:blur(8px);transition:border-color 0.2s,transform 0.2s}
@@ -939,6 +951,10 @@ def base_styles():
         .systems-grid,.architecture-grid,.flow-panel{grid-template-columns:1fr}
         .project-grid{grid-template-columns:repeat(2,1fr)}
       }
+      @media(max-width:900px){
+        .top-nav{display:none}
+        .brand-copy{display:inline}
+      }
       @media(max-width:700px){
         .container{padding:32px 20px 40px}
         .site-header{padding:14px 20px;gap:16px}
@@ -953,6 +969,11 @@ def base_styles():
         .carousel-arrow{display:none}
         .hero-buttons{flex-direction:column}
         .footer-inner{flex-direction:column;gap:8px;text-align:center}
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html{scroll-behavior:auto}
+        *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
       }
     </style>
     """

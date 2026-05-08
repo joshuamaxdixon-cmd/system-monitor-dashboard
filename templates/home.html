@@ -52,7 +52,13 @@
         </div>
 
         <div class="hero-visual">
-            <canvas id="cubeCanvas"></canvas>
+            <div class="cube-fallback" aria-hidden="true">
+                <span class="cube-layer layer-one"></span>
+                <span class="cube-layer layer-two"></span>
+                <span class="cube-layer layer-three"></span>
+                <span class="cube-core"></span>
+                <span class="cube-grid"></span>
+            </div>
         </div>
     </div>
 
@@ -242,7 +248,15 @@
                 </div>
                 <!-- Age Evolution mini globe -->
                 <div class="ae-mockup">
-                    <canvas id="aeGlobeCanvas"></canvas>
+                    <div class="ae-globe-fallback" aria-hidden="true">
+                        <span class="globe-shell"></span>
+                        <span class="globe-orbit orbit-one"></span>
+                        <span class="globe-orbit orbit-two"></span>
+                        <span class="globe-dot dot-one"></span>
+                        <span class="globe-dot dot-two"></span>
+                        <span class="globe-dot dot-three"></span>
+                        <span class="globe-dot dot-four"></span>
+                    </div>
                     <div class="ae-overlay-card">
                         <div class="ae-overlay-label">AGE EVOLUTION</div>
                         <div class="ae-overlay-title">Welcome to Age Evolution</div>
@@ -379,109 +393,6 @@
 {% endblock %}
 
 {% block scripts %}
-<script type="module">
-import * as THREE from 'three';
-
-/* ===== HERO CUBE ===== */
-(() => {
-    const canvas = document.getElementById('cubeCanvas');
-    if (!canvas) return;
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
-    camera.position.set(0, 0, 6);
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    const group = new THREE.Group();
-    scene.add(group);
-
-    const edges = new THREE.EdgesGeometry(new THREE.BoxGeometry(1.6, 1.6, 1.6));
-    group.add(new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.9 })));
-
-    const innerMesh = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.0, 1.0), new THREE.MeshBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.15, side: THREE.DoubleSide }));
-    group.add(innerMesh);
-
-    const coreMesh = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.4, 0.4), new THREE.MeshBasicMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.6 }));
-    group.add(coreMesh);
-
-    const glowMat = new THREE.ShaderMaterial({
-        vertexShader: `varying vec3 vNormal; void main(){ vNormal = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
-        fragmentShader: `varying vec3 vNormal; void main(){ float intensity = pow(0.6 - dot(vNormal, vec3(0.0,0.0,1.0)), 2.5); gl_FragColor = vec4(0.23, 0.51, 0.96, 1.0) * intensity; }`,
-        blending: THREE.AdditiveBlending, side: THREE.BackSide, transparent: true, depthWrite: false
-    });
-    scene.add(new THREE.Mesh(new THREE.SphereGeometry(2.0, 32, 32), glowMat));
-
-    const grid = new THREE.GridHelper(6, 12, 0x3b82f6, 0x1e40af);
-    grid.material.transparent = true; grid.material.opacity = 0.15; grid.position.y = -1.4;
-    scene.add(grid);
-
-    group.rotation.x = 0.4; group.rotation.y = 0.3;
-
-    function resize() {
-        const r = canvas.getBoundingClientRect();
-        renderer.setSize(r.width, r.height, false);
-        camera.aspect = r.width / r.height;
-        camera.updateProjectionMatrix();
-    }
-    window.addEventListener('resize', resize); resize();
-
-    function animate(t) {
-        group.rotation.y += 0.003;
-        group.rotation.x = 0.4 + Math.sin(t * 0.0005) * 0.05;
-        coreMesh.rotation.y -= 0.005; coreMesh.rotation.x += 0.003;
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
-    }
-    requestAnimationFrame(animate);
-})();
-
-/* ===== AGE EVOLUTION MINI GLOBE ===== */
-(() => {
-    const canvas = document.getElementById('aeGlobeCanvas');
-    if (!canvas) return;
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-    camera.position.set(0, 0, 5);
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    const earthRadius = 0.85;
-    const earthMat = new THREE.MeshBasicMaterial({ color: 0x0a1828 });
-    const earth = new THREE.Mesh(new THREE.SphereGeometry(earthRadius, 48, 48), earthMat);
-    earth.rotation.x = 0.15; earth.rotation.y = -0.6;
-    scene.add(earth);
-
-    const loader = new THREE.TextureLoader();
-    const urls = [
-        'https://unpkg.com/three-globe@2.31.1/example/img/earth-night.jpg',
-        'https://cdn.jsdelivr.net/npm/three-globe@2.31.1/example/img/earth-night.jpg',
-        'https://threejs.org/examples/textures/planets/earth_lights_2048.png'
-    ];
-    function tryLoad(i) {
-        if (i >= urls.length) return;
-        loader.load(urls[i], (tex) => { tex.colorSpace = THREE.SRGBColorSpace; earthMat.map = tex; earthMat.color.set(0xffffff); earthMat.needsUpdate = true; }, undefined, () => tryLoad(i + 1));
-    }
-    tryLoad(0);
-
-    const atmMat = new THREE.ShaderMaterial({
-        vertexShader: `varying vec3 vNormal; void main(){ vNormal = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
-        fragmentShader: `varying vec3 vNormal; void main(){ float intensity = pow(0.7 - dot(vNormal, vec3(0.0,0.0,1.0)), 2.0); gl_FragColor = vec4(0.3,0.6,1.0,1.0) * intensity; }`,
-        blending: THREE.AdditiveBlending, side: THREE.BackSide, transparent: true, depthWrite: false
-    });
-    scene.add(new THREE.Mesh(new THREE.SphereGeometry(earthRadius * 1.1, 32, 32), atmMat));
-
-    function resize() {
-        const r = canvas.getBoundingClientRect();
-        renderer.setSize(r.width, r.height, false);
-        camera.aspect = r.width / r.height; camera.updateProjectionMatrix();
-    }
-    window.addEventListener('resize', resize); resize();
-
-    function animate() { earth.rotation.y += 0.0012; renderer.render(scene, camera); requestAnimationFrame(animate); }
-    requestAnimationFrame(animate);
-})();
-</script>
-
 <script>
 /* ===== WORLD MAP ===== */
 (() => {
