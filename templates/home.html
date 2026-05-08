@@ -130,15 +130,46 @@
         </div>
 
         <div class="infra-card reveal in">
-            <div class="infra-card-header">INFRASTRUCTURE FOOTPRINT</div>
-            <div class="infra-region">AWS Global</div>
-            <div class="infra-primary">us-east-2 (Primary)</div>
+            <div class="infra-card-header">
+                INFRASTRUCTURE FOOTPRINT
+                <span class="infra-live-badge"><span class="pulse-dot"></span>LIVE</span>
+            </div>
+            <div class="infra-meta">
+                <div class="infra-region-row">
+                    <span class="infra-region">AWS Global</span>
+                    <span class="infra-region-count">5 regions</span>
+                </div>
+                <div class="infra-primary">us-east-2 (Primary)</div>
+            </div>
             <div class="map-container">
-                <svg id="worldMap" viewBox="0 0 400 140" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-                    <g id="mapDots" fill="rgba(148,163,184,0.3)"></g>
-                    <g id="regionPins"></g>
+                <svg id="worldMap" viewBox="0 0 400 160" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                    <defs>
+                        <filter id="nodeGlow" x="-80%" y="-80%" width="260%" height="260%">
+                            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                        </filter>
+                        <filter id="arcGlow" x="-20%" y="-80%" width="140%" height="260%">
+                            <feGaussianBlur stdDeviation="1.8" result="blur"/>
+                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                        </filter>
+                        <radialGradient id="mapBg" cx="25%" cy="40%" r="60%">
+                            <stop offset="0%" stop-color="rgba(59,130,246,0.06)"/>
+                            <stop offset="100%" stop-color="rgba(2,6,14,0)"/>
+                        </radialGradient>
+                    </defs>
+                    <rect width="400" height="160" fill="url(#mapBg)"/>
+                    <g id="mapGrid" stroke="rgba(59,130,246,0.07)" stroke-width="0.5" fill="none"></g>
+                    <g id="mapDots" fill="rgba(148,163,184,0.32)"></g>
                     <g id="arcs"></g>
+                    <g id="regionPins"></g>
+                    <g id="regionLabels" fill="rgba(148,163,184,0.65)" font-size="4.5" font-family="monospace" letter-spacing="0.04em"></g>
+                    <line id="scanLine" x1="0" y1="0" x2="0" y2="160" stroke="rgba(96,165,250,0.35)" stroke-width="0.8" opacity="0"/>
                 </svg>
+            </div>
+            <div class="infra-stats">
+                <div><span class="infra-stat-val">5</span><span class="infra-stat-lbl">Regions</span></div>
+                <div><span class="infra-stat-val">190+</span><span class="infra-stat-lbl">Countries</span></div>
+                <div><span class="infra-stat-val">&lt;20ms</span><span class="infra-stat-lbl">Avg Latency</span></div>
             </div>
         </div>
     </div>
@@ -487,84 +518,180 @@ import * as THREE from 'three';
 </script>
 
 <script>
-/* ===== WORLD MAP ===== */
+/* ===== WORLD MAP — FUTURISTIC UPGRADE ===== */
 (() => {
-    const map = document.getElementById('worldMap');
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const map       = document.getElementById('worldMap');
     const dotsGroup = document.getElementById('mapDots');
     const pinsGroup = document.getElementById('regionPins');
     const arcsGroup = document.getElementById('arcs');
+    const gridGroup = document.getElementById('mapGrid');
+    const labelsGroup = document.getElementById('regionLabels');
+    const scanLine  = document.getElementById('scanLine');
     if (!map) return;
-    const SVG_NS = 'http://www.w3.org/2000/svg';
 
+    /* ── Graticule grid ── */
+    for (let x = 40; x < 400; x += 40) {
+        const l = document.createElementNS(SVG_NS, 'line');
+        l.setAttribute('x1', x); l.setAttribute('y1', 0);
+        l.setAttribute('x2', x); l.setAttribute('y2', 160);
+        gridGroup.appendChild(l);
+    }
+    for (let y = 32; y < 160; y += 32) {
+        const l = document.createElementNS(SVG_NS, 'line');
+        l.setAttribute('x1', 0); l.setAttribute('y1', y);
+        l.setAttribute('x2', 400); l.setAttribute('y2', y);
+        gridGroup.appendChild(l);
+    }
+
+    /* ── Continent dots (grid-sampled ellipses) ── */
     const clusters = [
-        { x: 80,  y: 50,  rx: 42, ry: 24, rows: 5, cols: 10 },
-        { x: 112, y: 96,  rx: 18, ry: 24, rows: 5, cols: 5  },
-        { x: 206, y: 50,  rx: 26, ry: 14, rows: 4, cols: 7  },
-        { x: 224, y: 88,  rx: 24, ry: 24, rows: 5, cols: 6  },
-        { x: 286, y: 58,  rx: 52, ry: 24, rows: 5, cols: 11 },
-        { x: 336, y: 104, rx: 18, ry: 10, rows: 3, cols: 5  },
+        { x: 80,  y: 52,  rx: 42, ry: 24, rows: 6, cols: 11 },
+        { x: 114, y: 98,  rx: 18, ry: 25, rows: 6, cols: 5  },
+        { x: 208, y: 52,  rx: 27, ry: 15, rows: 5, cols: 7  },
+        { x: 226, y: 92,  rx: 24, ry: 26, rows: 6, cols: 6  },
+        { x: 288, y: 60,  rx: 54, ry: 25, rows: 6, cols: 12 },
+        { x: 338, y: 106, rx: 19, ry: 11, rows: 4, cols: 6  },
     ];
-    for (const c of clusters) {
+    clusters.forEach(c => {
         for (let row = 0; row < c.rows; row++) {
             for (let col = 0; col < c.cols; col++) {
                 const nx = (col / Math.max(c.cols - 1, 1)) * 2 - 1;
                 const ny = (row / Math.max(c.rows - 1, 1)) * 2 - 1;
-                if ((nx * nx + ny * ny) > 1.05) continue;
-                const dot = document.createElementNS(SVG_NS, 'circle');
-                dot.setAttribute('cx', (c.x + nx * c.rx).toFixed(1));
-                dot.setAttribute('cy', (c.y + ny * c.ry).toFixed(1));
-                dot.setAttribute('r', '1');
-                dotsGroup.appendChild(dot);
+                if (nx*nx + ny*ny > 1.05) continue;
+                const d = document.createElementNS(SVG_NS, 'circle');
+                d.setAttribute('cx', (c.x + nx * c.rx).toFixed(1));
+                d.setAttribute('cy', (c.y + ny * c.ry).toFixed(1));
+                d.setAttribute('r', '1');
+                dotsGroup.appendChild(d);
             }
         }
-    }
-
-    const pins = [
-        { x: 80, y: 55, primary: true },
-        { x: 200, y: 50 }, { x: 290, y: 60 }, { x: 332, y: 105 }, { x: 110, y: 95 }
-    ];
-    for (const p of pins) {
-        if (p.primary) {
-            const ring = document.createElementNS(SVG_NS, 'circle');
-            ring.setAttribute('cx', p.x); ring.setAttribute('cy', p.y); ring.setAttribute('r', '3');
-            ring.setAttribute('fill', 'none'); ring.setAttribute('stroke', '#3b82f6');
-            ring.setAttribute('stroke-width', '0.8'); ring.setAttribute('opacity', '0.6');
-            const a1 = document.createElementNS(SVG_NS, 'animate');
-            a1.setAttribute('attributeName', 'r'); a1.setAttribute('values', '3;9;3'); a1.setAttribute('dur', '2.5s'); a1.setAttribute('repeatCount', 'indefinite'); ring.appendChild(a1);
-            const a2 = document.createElementNS(SVG_NS, 'animate');
-            a2.setAttribute('attributeName', 'opacity'); a2.setAttribute('values', '0.6;0;0.6'); a2.setAttribute('dur', '2.5s'); a2.setAttribute('repeatCount', 'indefinite'); ring.appendChild(a2);
-            pinsGroup.appendChild(ring);
-        }
-        const pin = document.createElementNS(SVG_NS, 'circle');
-        pin.setAttribute('cx', p.x); pin.setAttribute('cy', p.y); pin.setAttribute('r', p.primary ? '2.5' : '1.5');
-        pin.setAttribute('fill', p.primary ? '#60a5fa' : '#3b82f6');
-        if (p.primary) pin.setAttribute('filter', 'drop-shadow(0 0 4px #60a5fa)');
-        pinsGroup.appendChild(pin);
-    }
-
-    const primary = pins[0];
-    pins.slice(1).forEach((dest, i) => {
-        const midX = (primary.x + dest.x) / 2;
-        const midY = (primary.y + dest.y) / 2;
-        const arcH = Math.min(Math.abs(dest.x - primary.x) * 0.4, 50);
-        const path = `M ${primary.x} ${primary.y} Q ${midX} ${midY - arcH} ${dest.x} ${dest.y}`;
-        const base = document.createElementNS(SVG_NS, 'path');
-        base.setAttribute('d', path); base.setAttribute('fill', 'none');
-        base.setAttribute('stroke', 'rgba(59,130,246,0.18)'); base.setAttribute('stroke-width', '0.5');
-        arcsGroup.appendChild(base);
-        const arc = document.createElementNS(SVG_NS, 'path');
-        arc.setAttribute('d', path); arc.setAttribute('fill', 'none');
-        arc.setAttribute('stroke', '#60a5fa'); arc.setAttribute('stroke-width', '1');
-        arc.setAttribute('stroke-linecap', 'round');
-        const len = Math.sqrt((dest.x - primary.x) ** 2 + (dest.y - primary.y) ** 2) + arcH;
-        arc.setAttribute('stroke-dasharray', `${len * 0.15} ${len}`);
-        arc.setAttribute('stroke-dashoffset', len); arc.setAttribute('opacity', '0.9');
-        const anim = document.createElementNS(SVG_NS, 'animate');
-        anim.setAttribute('attributeName', 'stroke-dashoffset');
-        anim.setAttribute('from', len); anim.setAttribute('to', -len * 0.15);
-        anim.setAttribute('dur', '3s'); anim.setAttribute('begin', `${i * 0.7}s`); anim.setAttribute('repeatCount', 'indefinite');
-        arc.appendChild(anim); arcsGroup.appendChild(arc);
     });
+
+    /* ── AWS regions ── */
+    const regions = [
+        { x: 80,  y: 56,  label: 'us-east-2',         primary: true },
+        { x: 202, y: 50,  label: 'eu-west-1' },
+        { x: 308, y: 74,  label: 'ap-se-1' },
+        { x: 344, y: 108, label: 'ap-se-2' },
+        { x: 114, y: 100, label: 'sa-east-1' },
+    ];
+    const primary = regions[0];
+
+    /* ── Arcs ── */
+    regions.slice(1).forEach((dest, i) => {
+        const mx = (primary.x + dest.x) / 2;
+        const my = (primary.y + dest.y) / 2;
+        const lift = Math.min(Math.abs(dest.x - primary.x) * 0.38, 54);
+        const d = `M ${primary.x} ${primary.y} Q ${mx} ${my - lift} ${dest.x} ${dest.y}`;
+        const len = Math.hypot(dest.x - primary.x, dest.y - primary.y) * 1.25 + lift;
+        const dur = (3.0 + i * 0.55).toFixed(2);
+        const begin = (i * 0.48).toFixed(2);
+
+        // ghost base
+        const base = document.createElementNS(SVG_NS, 'path');
+        base.setAttribute('d', d); base.setAttribute('fill', 'none');
+        base.setAttribute('stroke', 'rgba(59,130,246,0.13)');
+        base.setAttribute('stroke-width', '0.7');
+        arcsGroup.appendChild(base);
+
+        // glow halo
+        const glow = document.createElementNS(SVG_NS, 'path');
+        glow.setAttribute('d', d); glow.setAttribute('fill', 'none');
+        glow.setAttribute('stroke', 'rgba(96,165,250,0.18)');
+        glow.setAttribute('stroke-width', '4');
+        glow.setAttribute('filter', 'url(#arcGlow)');
+        arcsGroup.appendChild(glow);
+
+        // bright packet
+        const pkt = document.createElementNS(SVG_NS, 'path');
+        pkt.setAttribute('d', d); pkt.setAttribute('fill', 'none');
+        pkt.setAttribute('stroke', '#60a5fa');
+        pkt.setAttribute('stroke-width', '1.6');
+        pkt.setAttribute('stroke-linecap', 'round');
+        pkt.setAttribute('stroke-dasharray', `${(len * 0.13).toFixed(1)} ${len.toFixed(1)}`);
+        pkt.setAttribute('stroke-dashoffset', len.toFixed(1));
+        const a1 = document.createElementNS(SVG_NS, 'animate');
+        a1.setAttribute('attributeName','stroke-dashoffset');
+        a1.setAttribute('from', len.toFixed(1)); a1.setAttribute('to', (-(len*0.13)).toFixed(1));
+        a1.setAttribute('dur', `${dur}s`); a1.setAttribute('begin', `${begin}s`);
+        a1.setAttribute('repeatCount','indefinite');
+        pkt.appendChild(a1); arcsGroup.appendChild(pkt);
+
+        // echo trail (slower, fainter)
+        const trail = document.createElementNS(SVG_NS, 'path');
+        trail.setAttribute('d', d); trail.setAttribute('fill', 'none');
+        trail.setAttribute('stroke', 'rgba(147,197,253,0.55)');
+        trail.setAttribute('stroke-width', '0.9');
+        trail.setAttribute('stroke-linecap', 'round');
+        trail.setAttribute('stroke-dasharray', `${(len * 0.07).toFixed(1)} ${len.toFixed(1)}`);
+        trail.setAttribute('stroke-dashoffset', (len * 0.85).toFixed(1));
+        const a2 = document.createElementNS(SVG_NS, 'animate');
+        a2.setAttribute('attributeName','stroke-dashoffset');
+        a2.setAttribute('from', (len * 0.85).toFixed(1)); a2.setAttribute('to', (-(len*0.07)).toFixed(1));
+        a2.setAttribute('dur', `${dur}s`); a2.setAttribute('begin', `${begin}s`);
+        a2.setAttribute('repeatCount','indefinite');
+        trail.appendChild(a2); arcsGroup.appendChild(trail);
+    });
+
+    /* ── Region pins ── */
+    regions.forEach(r => {
+        if (r.primary) {
+            // Three expanding rings at different phases
+            [[2.5,'2.0s','0s','3;11;3'],['1.8s','0.7s','2.5;9;2.5'],['1.2s','1.4s','2;7;2']].forEach(([_,dur,begin,vals]) => {
+                const ring = document.createElementNS(SVG_NS, 'circle');
+                ring.setAttribute('cx', r.x); ring.setAttribute('cy', r.y); ring.setAttribute('r', '3');
+                ring.setAttribute('fill', 'none'); ring.setAttribute('stroke', '#3b82f6');
+                ring.setAttribute('stroke-width', '0.7');
+                const ar = document.createElementNS(SVG_NS, 'animate');
+                ar.setAttribute('attributeName', 'r'); ar.setAttribute('values', vals);
+                ar.setAttribute('dur', dur); ar.setAttribute('begin', begin); ar.setAttribute('repeatCount','indefinite');
+                const ao = document.createElementNS(SVG_NS, 'animate');
+                ao.setAttribute('attributeName', 'opacity'); ao.setAttribute('values', '0.9;0;0.9');
+                ao.setAttribute('dur', dur); ao.setAttribute('begin', begin); ao.setAttribute('repeatCount','indefinite');
+                ring.appendChild(ar); ring.appendChild(ao); pinsGroup.appendChild(ring);
+            });
+            // Core dot
+            const core = document.createElementNS(SVG_NS, 'circle');
+            core.setAttribute('cx', r.x); core.setAttribute('cy', r.y);
+            core.setAttribute('r', '3'); core.setAttribute('fill', '#93c5fd');
+            core.setAttribute('filter', 'url(#nodeGlow)');
+            pinsGroup.appendChild(core);
+        } else {
+            // Secondary: outer ring + inner dot
+            const ring = document.createElementNS(SVG_NS, 'circle');
+            ring.setAttribute('cx', r.x); ring.setAttribute('cy', r.y);
+            ring.setAttribute('r', '4.5'); ring.setAttribute('fill', 'none');
+            ring.setAttribute('stroke', 'rgba(59,130,246,0.45)'); ring.setAttribute('stroke-width', '0.6');
+            pinsGroup.appendChild(ring);
+            const dot = document.createElementNS(SVG_NS, 'circle');
+            dot.setAttribute('cx', r.x); dot.setAttribute('cy', r.y);
+            dot.setAttribute('r', '2'); dot.setAttribute('fill', '#3b82f6');
+            dot.setAttribute('filter', 'url(#nodeGlow)');
+            pinsGroup.appendChild(dot);
+        }
+
+        // Label
+        const lbl = document.createElementNS(SVG_NS, 'text');
+        lbl.setAttribute('x', r.x + (r.primary ? 0 : 5));
+        lbl.setAttribute('y', r.y - (r.primary ? 7 : 4));
+        lbl.setAttribute('text-anchor', r.primary ? 'middle' : 'start');
+        lbl.textContent = r.label;
+        labelsGroup.appendChild(lbl);
+    });
+
+    /* ── Scan line ── */
+    if (scanLine) {
+        const at = document.createElementNS(SVG_NS, 'animateTransform');
+        at.setAttribute('attributeName', 'transform'); at.setAttribute('type', 'translate');
+        at.setAttribute('values', '-2 0;402 0;-2 0'); at.setAttribute('dur', '5s');
+        at.setAttribute('repeatCount', 'indefinite');
+        const ao = document.createElementNS(SVG_NS, 'animate');
+        ao.setAttribute('attributeName', 'opacity'); ao.setAttribute('values', '0;0.7;0.7;0');
+        ao.setAttribute('keyTimes', '0;0.05;0.95;1'); ao.setAttribute('dur', '5s');
+        ao.setAttribute('repeatCount', 'indefinite');
+        scanLine.appendChild(at); scanLine.appendChild(ao);
+    }
 })();
 </script>
 {% endblock %}

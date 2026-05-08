@@ -766,12 +766,21 @@ def base_styles():
 
       /* === INFRA CARD === */
       .infra-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;backdrop-filter:blur(8px)}
-      .infra-card-header{font-size:11px;letter-spacing:0.18em;color:var(--muted-bright);margin-bottom:14px;text-transform:uppercase}
-      .infra-region{font-size:14px;color:var(--ink-soft);margin-bottom:4px}
-      .infra-primary{font-size:12px;color:var(--accent-bright);display:flex;align-items:center;gap:6px}
-      .infra-primary::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent-bright);flex-shrink:0}
-      .map-container{position:relative;height:140px;margin-top:14px}
-      #worldMap{width:100%;height:100%}
+      .infra-card-header{font-size:11px;letter-spacing:0.18em;color:var(--muted-bright);text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+      .infra-live-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:var(--success-bright);letter-spacing:0.1em;font-weight:500}
+      .infra-meta{margin-bottom:8px}
+      .infra-region-row{display:flex;justify-content:space-between;align-items:center}
+      .infra-region{font-size:13px;color:var(--ink-soft);font-weight:500}
+      .infra-region-count{font-size:10px;color:var(--muted);letter-spacing:0.06em}
+      .infra-primary{font-size:11px;color:var(--accent-bright);display:flex;align-items:center;gap:5px;margin-top:3px}
+      .infra-primary::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent-bright);flex-shrink:0}
+      .map-container{position:relative;height:160px;margin:8px 0;border-radius:6px;overflow:hidden;background:rgba(2,6,14,0.6);border:1px solid rgba(59,130,246,0.08)}
+      #worldMap{width:100%;height:100%;display:block}
+      .infra-stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--border-soft);margin-top:4px}
+      .infra-stats>div{padding:8px 4px;text-align:center;border-right:1px solid var(--border-soft)}
+      .infra-stats>div:last-child{border-right:none}
+      .infra-stat-val{display:block;font-size:13px;font-weight:600;color:var(--ink);line-height:1.2}
+      .infra-stat-lbl{display:block;font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px}
 
       /* === SECTIONS === */
       section{margin-top:64px}
