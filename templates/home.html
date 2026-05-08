@@ -1,324 +1,566 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<section class="hero hero-console" data-reveal>
-    <div class="hero-copy">
-        <p class="eyebrow">Cloud Architect • Systems Engineer • Operator</p>
-        <h1 class="hero-name">
-            <span>Joshua</span>
-            <span>Max-Dixon</span>
-        </h1>
-        <p class="subtitle">{{ owner_title }}</p>
-        <p class="hero-statement">
-            I build and operate production systems on AWS with a focus on reliability,
-            automation, and operational excellence.
-        </p>
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <div class="hero-main">
+        <div class="hero-content reveal in">
+            <div class="hero-tagline">CLOUD ARCHITECT<span class="dot">·</span>SYSTEMS ENGINEER<span class="dot">·</span>OPERATOR</div>
+            <h1 class="hero-name">
+                <span class="first">Joshua</span>
+                <span class="last">Max-Dixon</span>
+            </h1>
+            <p class="hero-desc">
+                I build and operate production systems on AWS with a focus on reliability, automation, and operational excellence.
+            </p>
+            <div class="hero-ctas">
+                <a href="#projects" class="btn btn-primary">Explore Projects <span class="arrow">→</span></a>
+                <a href="#capabilities" class="btn btn-ghost">View Architecture <span class="arrow">→</span></a>
+            </div>
 
-        <div class="hero-buttons">
-            <a class="btn-primary" href="#projects">Explore Projects <span aria-hidden="true">→</span></a>
-            <a class="btn-secondary" href="#architecture">View Architecture <span aria-hidden="true">↗</span></a>
+            <div class="trusted">
+                <span class="trusted-label">TRUSTED BY PRODUCTION</span>
+                <span class="trusted-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 11.7c0 .3 0 .6.1.8.1.2.2.5.3.7 0 .1.1.1.1.2 0 .1 0 .2-.1.2l-.5.3-.1.1c-.1 0-.2 0-.2-.1l-.4-.4c-.1-.1-.2-.3-.3-.5-.5.6-1.1.9-1.9.9-.5 0-1-.2-1.3-.5-.3-.3-.5-.7-.5-1.3 0-.5.2-1 .6-1.3.4-.3 1-.5 1.7-.5.2 0 .5 0 .7.1.2 0 .5.1.7.1v-.5c0-.5-.1-.9-.3-1.1-.2-.2-.6-.3-1.1-.3-.2 0-.5 0-.7.1-.2.1-.5.1-.7.2h-.2s-.1 0-.1-.1v-.4c0-.1 0-.1.1-.2.1 0 .1-.1.2-.1.2-.1.4-.2.7-.3.3-.1.5-.1.8-.1.7 0 1.1.1 1.4.4.3.3.5.8.5 1.4v1.7zm-2.4.9c.2 0 .4 0 .7-.1s.4-.2.6-.3c.1-.1.2-.2.2-.3 0-.1.1-.2.1-.4v-.2c-.2 0-.4-.1-.6-.1h-.6c-.4 0-.7.1-.9.2-.2.1-.3.4-.3.6 0 .2.1.4.2.5.1.1.4.1.6.1zm4.8.6c-.1 0-.1 0-.2-.1 0 0-.1-.1-.1-.2L7.5 8.6c0-.1-.1-.2-.1-.2 0-.1 0-.1.1-.2h.6c.1 0 .2 0 .2.1 0 0 .1.1.1.2l.9 3.7.9-3.7c0-.1.1-.2.1-.2.1 0 .1-.1.2-.1h.5c.1 0 .2 0 .2.1 0 0 .1.1.1.2l.9 3.7.9-3.7c0-.1.1-.2.1-.2.1 0 .1-.1.2-.1h.5c.1 0 .1 0 .2.1 0 0 .1.1 0 .2 0 0 0 .1-.1.2L13.2 13c0 .1-.1.2-.1.2-.1 0-.1.1-.2.1h-.5c-.1 0-.2 0-.2-.1 0 0-.1-.1-.1-.2l-.9-3.6-.9 3.6c0 .1-.1.2-.1.2-.1 0-.1.1-.2.1H9.5zm7.6.2c-.3 0-.5 0-.8-.1-.3-.1-.5-.2-.6-.2-.1-.1-.2-.1-.2-.2v-.1V13c0-.1.1-.2.2-.2 0 0 .1 0 .1.1.1 0 .1.1.2.1.2.1.4.2.7.2.3.1.5.1.7.1.4 0 .7-.1.9-.2.2-.1.3-.3.3-.6 0-.2-.1-.3-.2-.5-.1-.1-.4-.2-.7-.4l-1-.3c-.5-.2-.9-.4-1.1-.7-.2-.3-.4-.6-.4-.9 0-.3.1-.5.2-.8.1-.2.3-.4.5-.6.2-.2.5-.3.7-.4.3-.1.6-.1 1-.1.2 0 .3 0 .5.1.1 0 .3.1.4.1.1 0 .3.1.4.1l.3.1c.1 0 .1.1.2.1 0 0 .1.1.1.2v.4c0 .1-.1.2-.2.2-.1 0-.2 0-.4-.1-.5-.2-1-.3-1.5-.3-.3 0-.6.1-.8.2-.2.1-.3.3-.3.5 0 .2.1.4.2.5.2.1.4.3.8.4l1 .3c.5.2.9.4 1.1.6.2.3.3.6.3.9 0 .3-.1.6-.2.8-.1.2-.3.4-.5.6-.2.2-.5.3-.8.4-.4.1-.7.2-1.1.2zM21 17c-2.5 1.9-6.2 2.9-9.4 2.9-4.5 0-8.5-1.7-11.6-4.4-.2-.2 0-.6.3-.4 3.3 1.9 7.4 3.1 11.6 3.1 2.8 0 5.9-.6 8.7-1.8.4-.1.8.3.4.6zm1-1.2c-.3-.4-2.1-.2-2.9-.1-.2 0-.3-.2-.1-.3 1.4-1 3.7-.7 4-.4.3.4-.1 2.7-1.4 3.8-.2.2-.4.1-.3-.1.3-.8 1-2.6.7-2.9z"/></svg>
+                    aws
+                </span>
+                <span class="trusted-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6" rx="8" ry="2.5"/><path d="M4 6v6c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5V6M4 12v6c0 1.4 3.6 2.5 8 2.5s8-1.1 8-2.5v-6"/></svg>
+                    S3
+                </span>
+                <span class="trusted-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9z"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg>
+                    CloudFront
+                </span>
+                <span class="trusted-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 6h6M6 9v6M18 9v6M9 18h6"/></svg>
+                    Route 53
+                </span>
+                <span class="trusted-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+                    EC2
+                </span>
+                <span class="trusted-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+                    ACM
+                </span>
+                <span class="trusted-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.7.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2.9-.3 2-.4 3-.4s2.1.1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.5 4.5-1.5 7.8-5.8 7.8-10.9 0-6.3-5.2-11.5-11.5-11.5z"/></svg>
+                    GitHub Actions
+                </span>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <canvas id="cubeCanvas"></canvas>
         </div>
     </div>
 
-    <div class="infra-visual" aria-label="Cloud infrastructure operations visual">
-        <div class="stack-core" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="infra-node node-primary">ALB</div>
-        <div class="infra-node node-mid">EC2</div>
-        <div class="infra-node node-top">S3</div>
-        <div class="infra-node node-right">CW</div>
-        <div class="infra-node node-low">DB</div>
-        <div class="infra-line line-one"></div>
-        <div class="infra-line line-two"></div>
-        <div class="infra-line line-three"></div>
-    </div>
-
+    <!-- Status panel + Infra footprint -->
     <div class="hero-side">
-        <aside class="status-panel" aria-label="System status">
-            <div class="panel-header">
-                <span>System Status</span>
-                <span class="status-pill"><span class="status-dot" aria-hidden="true"></span>All Systems Operational</span>
+        <div class="status-panel reveal in">
+            <div class="status-header">
+                <span class="status-title">SYSTEM STATUS</span>
+                <span class="status-badge-pill">
+                    <span class="pulse-dot"></span>
+                    All Systems Operational
+                </span>
             </div>
 
-            <div class="status-list">
-                <div>
-                    <span class="service-name">
-                        <span class="service-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/></svg>
-                        </span>
-                        NexGEN Healthcare
-                    </span>
-                    <strong>Live &gt;</strong>
-                </div>
-                <div>
-                    <span class="service-name">
-                        <span class="service-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
-                        </span>
-                        Age Evolution Platform
-                    </span>
-                    <strong>Live &gt;</strong>
-                </div>
-                <div>
-                    <span class="service-name">
-                        <span class="service-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24"><path d="M17 18a4 4 0 0 0 0-8 6 6 0 0 0-11.5-1.5A4 4 0 0 0 6 18z"/></svg>
-                        </span>
-                        Cloud Monitoring
-                    </span>
-                    <strong>Live &gt;</strong>
-                </div>
-                <div>
-                    <span class="service-name">
-                        <span class="service-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9-9 9-9-9z"/><path d="M9 12l3 3 3-3"/></svg>
-                        </span>
-                        Infrastructure
-                    </span>
-                    <strong>Healthy &gt;</strong>
-                </div>
-            </div>
-
-            <div class="metric-label">Deployment Velocity <span>This Month</span></div>
-            <div class="metric-grid">
-                <div><span>Deployments</span><strong data-count="24">24</strong></div>
-                <div><span>Uptime</span><strong data-count="99.98" data-suffix="%">99.98%</strong></div>
-                <div><span>Incidents</span><strong data-count="0">0</strong></div>
-            </div>
-        </aside>
-
-        <aside class="footprint-panel" aria-label="Infrastructure footprint">
-            <div class="panel-header">
-                <span>Infrastructure Footprint</span>
-            </div>
-            <p>AWS Global</p>
-            <svg class="world-map" id="worldMap" viewBox="0 0 400 140" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-                <g id="mapDots" fill="rgba(148, 163, 184, 0.32)"></g>
-                <g id="mapArcs"></g>
-                <g id="mapPins"></g>
-            </svg>
-            <strong>us-east-2 (Primary)</strong>
-        </aside>
-    </div>
-</section>
-
-<section class="trust-strip" aria-label="Built with production infrastructure" data-reveal>
-    <span>Built with production infrastructure</span>
-    <ul>
-        <li>AWS</li>
-        <li>S3</li>
-        <li>CloudFront</li>
-        <li>Route 53</li>
-        <li>EC2</li>
-        <li>ACM</li>
-        <li>GitHub Actions</li>
-        <li>Flask</li>
-        <li>Gunicorn</li>
-        <li>CloudWatch</li>
-    </ul>
-</section>
-
-<section class="section" id="projects" data-reveal>
-    <div class="section-kicker">Featured Systems</div>
-    <h2 class="section-title">Production Work, Presented As Systems</h2>
-    <p class="section-lead">
-        Selected builds that connect application behavior, infrastructure delivery, and operational discipline.
-    </p>
-
-    <div class="featured-systems">
-        <article class="system-case-card">
-            <div class="case-visual nexgen-visual" aria-hidden="true">
-                <div class="dashboard-mock">
-                    <span></span><span></span><span></span>
-                    <div></div><div></div><div></div>
-                </div>
-            </div>
-            <div class="case-content">
-                <span class="status-badge" style="background:{{ featured.status_color }};"><span class="status-dot" aria-hidden="true"></span>Live System</span>
-                <h3>NexGEN Healthcare</h3>
-                <p>
-                    A multi-role healthcare workflow system with a canonical state engine, internal messaging,
-                    role-aware workspaces, AI-guided intake, provider workflow, and production deployment discipline.
-                </p>
-                <div class="stack-row">
-                    <span>Flask</span>
-                    <span>Gunicorn</span>
-                    <span>AWS EC2</span>
-                    <span>SQLAlchemy</span>
-                    <span>GitHub Actions</span>
-                </div>
-                <div class="outcome-grid">
-                    <div><strong>12+</strong><span>Workflows</span></div>
-                    <div><strong>3</strong><span>Roles</span></div>
-                    <div><strong>40+</strong><span>Deployments</span></div>
-                    <div><strong>99.9%</strong><span>Uptime</span></div>
-                </div>
-                <div class="project-links">
-                    <a class="button-link btn-secondary" href="{{ featured.project_url }}">View System <span aria-hidden="true">→</span></a>
-                    <a class="button-link btn-primary" href="{{ featured.live_url }}" target="_blank" rel="noopener noreferrer">Live Demo <span aria-hidden="true">↗</span></a>
-                    <a class="button-link btn-ghost" href="{{ featured.github }}" target="_blank" rel="noopener noreferrer">Source Code</a>
-                </div>
-            </div>
-        </article>
-
-        {% if featured_infrastructure %}
-            <article class="system-case-card">
-                <div class="case-visual age-visual" aria-hidden="true">
-                    <div class="globe-mock">
-                        <span></span><span></span><span></span><span></span>
+            <div class="service-row">
+                <div class="service-name-wrap">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/></svg>
                     </div>
-                    <div class="site-card-mock">
-                        <strong>Age Evolution</strong>
-                        <span>Welcome to</span>
-                        <span>Age Evolution</span>
+                    NexGEN Healthcare
+                </div>
+                <span class="service-status">Live ›</span>
+            </div>
+
+            <div class="service-row">
+                <div class="service-name-wrap">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18"/></svg>
+                    </div>
+                    Age Evolution Platform
+                </div>
+                <span class="service-status">Live ›</span>
+            </div>
+
+            <div class="service-row">
+                <div class="service-name-wrap">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a4 4 0 000-8 6 6 0 00-11.5-1.5A4 4 0 006 18z"/></svg>
+                    </div>
+                    Cloud Monitoring
+                </div>
+                <span class="service-status">Live ›</span>
+            </div>
+
+            <div class="service-row">
+                <div class="service-name-wrap">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9-9 9-9-9z"/><path d="M9 12l3 3 3-3"/></svg>
+                    </div>
+                    Infrastructure
+                </div>
+                <span class="service-status">Healthy ›</span>
+            </div>
+
+            <div class="deployment-velocity">
+                <div class="dv-header">
+                    <span>DEPLOYMENT VELOCITY</span>
+                    <span class="dv-period">This Month ▾</span>
+                </div>
+                <div class="dv-grid">
+                    <div class="dv-stat">
+                        <div class="dv-label">Deployments</div>
+                        <div class="dv-value" data-count="24">0</div>
+                    </div>
+                    <div class="dv-stat">
+                        <div class="dv-label">Uptime</div>
+                        <div class="dv-value" data-count="99.98" data-suffix="%">0%</div>
+                    </div>
+                    <div class="dv-stat">
+                        <div class="dv-label">Incidents</div>
+                        <div class="dv-value" data-count="0">0</div>
                     </div>
                 </div>
-                <div class="case-content">
-                    <span class="status-badge" style="background:{{ featured_infrastructure.status_color }};"><span class="status-dot" aria-hidden="true"></span>Live Platform</span>
-                    <h3>{{ featured_infrastructure.title }}</h3>
-                    <p>
-                        Production-grade frontend infrastructure on AWS with S3, CloudFront, Route 53,
-                        ACM HTTPS, and real user capture through Formspree.
-                    </p>
-                    <div class="stack-row">
-                        <span>S3</span>
-                        <span>CloudFront</span>
-                        <span>Route 53</span>
-                        <span>ACM</span>
-                        <span>Formspree</span>
-                    </div>
-                    <div class="outcome-grid">
-                        <div><strong>98</strong><span>Performance</span></div>
-                        <div><strong>190+</strong><span>Global Reach</span></div>
-                        <div><strong>99.99%</strong><span>Availability</span></div>
-                        <div><strong>&lt; 600ms</strong><span>Load Time</span></div>
-                    </div>
-                    <div class="project-links">
-                        <a class="button-link btn-secondary" href="{{ featured_infrastructure.project_url }}">View Platform <span aria-hidden="true">→</span></a>
-                        {% if featured_infrastructure.live_url %}
-                            <a class="button-link btn-primary" href="{{ featured_infrastructure.live_url }}" target="_blank" rel="noopener noreferrer">Live Demo <span aria-hidden="true">↗</span></a>
-                        {% endif %}
-                    </div>
-                </div>
-            </article>
-        {% endif %}
-    </div>
-</section>
-
-<section class="section" id="architecture" data-reveal>
-    <div class="section-kicker">Operational Architecture</div>
-    <h2 class="section-title">Infrastructure Work With Runtime Accountability</h2>
-    <div class="architecture-band">
-        <div>
-            <span>01</span>
-            <h3>Deploy</h3>
-            <p>GitHub-driven release paths, EC2 services, Gunicorn processes, and controlled restarts.</p>
+            </div>
         </div>
-        <div>
-            <span>02</span>
-            <h3>Operate</h3>
-            <p>Health checks, service verification, CloudWatch awareness, and runtime troubleshooting.</p>
-        </div>
-        <div>
-            <span>03</span>
-            <h3>Recover</h3>
-            <p>Rollback thinking, dependency repair, port/service diagnosis, and production-style validation.</p>
+
+        <div class="infra-card reveal in">
+            <div class="infra-card-header">INFRASTRUCTURE FOOTPRINT</div>
+            <div class="infra-region">AWS Global</div>
+            <div class="infra-primary">us-east-2 (Primary)</div>
+            <div class="map-container">
+                <svg id="worldMap" viewBox="0 0 400 140" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                    <g id="mapDots" fill="rgba(148,163,184,0.3)"></g>
+                    <g id="regionPins"></g>
+                    <g id="arcs"></g>
+                </svg>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="section about-strip" id="about" data-reveal>
-    <div class="section-kicker">About</div>
-    <h2 class="section-title">Systems Thinking, Production Discipline</h2>
-    <p class="section-lead">
-        This portfolio is built around working infrastructure, deployed applications, monitoring surfaces,
-        and operational workflows rather than static demos.
-    </p>
+<!-- ===== FEATURED SYSTEMS ===== -->
+<section id="projects">
+    <div class="section-head">
+        <div>
+            <div class="section-label">FEATURED SYSTEMS</div>
+            <div class="section-desc">Production systems engineered for scale, reliability, and real-world impact.</div>
+        </div>
+        <a href="/projects" class="section-link">View all projects →</a>
+    </div>
+
+    <div class="featured-grid">
+        <!-- NexGEN Healthcare -->
+        <div class="feature-card reveal">
+            <div class="feature-inner">
+                <div class="feature-content">
+                    <span class="live-badge"><span class="pulse-dot"></span>LIVE SYSTEM</span>
+                    <h3 class="feature-title">NexGEN Healthcare</h3>
+                    <p class="feature-desc">A multi-role healthcare workflow system with a canonical state engine, internal messaging, and role-aware operational workflows.</p>
+                    <div class="stack-label">TECH STACK</div>
+                    <div class="stack-pills">
+                        <span class="pill">Flask</span>
+                        <span class="pill">Gunicorn</span>
+                        <span class="pill">AWS EC2</span>
+                        <span class="pill">Systemd</span>
+                        <span class="pill">GitHub Actions</span>
+                    </div>
+                    <div class="stat-grid">
+                        <div class="stat-item"><div class="stat-label">Workflows</div><div class="stat-value">12+</div></div>
+                        <div class="stat-item"><div class="stat-label">Roles</div><div class="stat-value">3</div></div>
+                        <div class="stat-item"><div class="stat-label">Deployments</div><div class="stat-value">40+</div></div>
+                        <div class="stat-item"><div class="stat-label">Uptime</div><div class="stat-value">99.9%</div></div>
+                    </div>
+                    <a href="{{ featured.project_url }}" class="feature-cta">View System
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+                <!-- NexGEN UI mockup -->
+                <div class="nexgen-mockup">
+                    <div class="nm-header">
+                        <div class="nm-logo"></div>
+                        <div class="nm-title">NexGEN</div>
+                    </div>
+                    <div class="nm-body">
+                        <div class="nm-sidebar">
+                            <div class="nm-nav-item active">Dashboard</div>
+                            <div class="nm-nav-item">Visits</div>
+                            <div class="nm-nav-item">Messages</div>
+                            <div class="nm-nav-item">Patients</div>
+                            <div class="nm-nav-item">Reports</div>
+                            <div class="nm-nav-item">Settings</div>
+                        </div>
+                        <div class="nm-main">
+                            <div class="nm-section-title">SYSTEM OVERVIEW</div>
+                            <div class="nm-cards">
+                                <div class="nm-card"><div class="nm-card-label">Visits</div><div class="nm-card-value">22</div></div>
+                                <div class="nm-card"><div class="nm-card-label">Active</div><div class="nm-card-value">12</div></div>
+                                <div class="nm-card"><div class="nm-card-label">Pending</div><div class="nm-card-value">3</div></div>
+                            </div>
+                            <div class="nm-section-title">ACTIVE VISITS</div>
+                            <div class="nm-list-item"><span>Patient #1024</span><span class="nm-list-status">Active</span></div>
+                            <div class="nm-list-item"><span>Patient #1025</span><span class="nm-list-status">Active</span></div>
+                            <div class="nm-list-item"><span>Patient #1026</span><span class="nm-list-status">Active</span></div>
+                            <div class="nm-section-title" style="margin-top:5px">RECENT ACTIVITY</div>
+                            <div class="nm-list-item" style="background:transparent;font-size:5px;color:var(--muted)"><span>Visit completed</span><span>2m ago</span></div>
+                            <div class="nm-list-item" style="background:transparent;font-size:5px;color:var(--muted)"><span>Provider login</span><span>5m ago</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Age Evolution Platform -->
+        <div class="feature-card reveal">
+            <div class="feature-inner">
+                <div class="feature-content">
+                    <span class="live-badge"><span class="pulse-dot"></span>LIVE PLATFORM</span>
+                    <h3 class="feature-title">Age Evolution Platform</h3>
+                    <p class="feature-desc">Production-grade frontend infrastructure deployed on AWS with global CDN delivery, custom domain, and real user capture.</p>
+                    <div class="stack-label">TECH STACK</div>
+                    <div class="stack-pills">
+                        <span class="pill">S3</span>
+                        <span class="pill">CloudFront</span>
+                        <span class="pill">Route 53</span>
+                        <span class="pill">ACM</span>
+                        <span class="pill">Formspree</span>
+                    </div>
+                    <div class="stat-grid">
+                        <div class="stat-item"><div class="stat-label">Performance</div><div class="stat-value">98</div></div>
+                        <div class="stat-item"><div class="stat-label">Global Reach</div><div class="stat-value">190+</div></div>
+                        <div class="stat-item"><div class="stat-label">Availability</div><div class="stat-value">99.99%</div></div>
+                        <div class="stat-item"><div class="stat-label">Load Time</div><div class="stat-value">&lt;600ms</div></div>
+                    </div>
+                    <a href="{{ featured_infrastructure.project_url }}" class="feature-cta">View Platform
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+                <!-- Age Evolution mini globe -->
+                <div class="ae-mockup">
+                    <canvas id="aeGlobeCanvas"></canvas>
+                    <div class="ae-overlay-card">
+                        <div class="ae-overlay-label">AGE EVOLUTION</div>
+                        <div class="ae-overlay-title">Welcome to Age Evolution</div>
+                        <div class="ae-overlay-desc">Operational software for real-world business processes.</div>
+                        <div class="ae-overlay-btn">Get Started</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
-<section class="section" data-reveal>
-    <div class="section-kicker">All Projects</div>
-    <h2 class="section-title">Curated Systems Portfolio</h2>
-    <p class="section-lead">
-        Focused projects covering cloud monitoring, health checks, log analysis, and operational tooling.
-    </p>
-    <div class="projects-carousel" data-project-carousel>
-        <div class="project-grid catalog-grid" id="projectsScroll">
+<!-- ===== ALL PROJECTS CAROUSEL ===== -->
+<section>
+    <div class="section-head">
+        <div>
+            <div class="section-label">ALL PROJECTS</div>
+            <div class="section-desc">Systems and tools built to solve real problems and scale in production.</div>
+        </div>
+        <a href="/projects" class="section-link">Browse all →</a>
+    </div>
+
+    <div class="projects-wrap reveal">
+        <div class="projects-scroll" id="projectsScroll">
             {% for project in projects %}
-                <article class="project-card curated-card">
-                    <div class="project-card-top">
-                        <span class="project-icon" aria-hidden="true">
-                            {% if "Health" in project.title %}
-                                <svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg>
-                            {% elif "Log" in project.title %}
-                                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-                            {% else %}
-                                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 10h18M8 4v14M16 4v14"/></svg>
-                            {% endif %}
-                        </span>
-                        <span class="status-badge" style="background:{{ project.status_color }};">{{ project.status }}</span>
-                    </div>
-                    <h3>{{ project.title }}</h3>
-                    <p>{{ project.description }}</p>
-                    <p class="project-stack"><strong>Stack:</strong> {{ project.tech_stack }}</p>
-                    <div class="project-links">
-                        <a class="button-link btn-secondary" href="{{ project.project_url }}">View Project <span aria-hidden="true">→</span></a>
-                        {% if project.github %}
-                            <a class="button-link btn-ghost" href="{{ project.github }}" target="_blank" rel="noopener noreferrer">Source Code <span aria-hidden="true">↗</span></a>
-                        {% endif %}
-                    </div>
-                </article>
+            <div class="project-card">
+                <div class="project-icon">
+                    {% if "Health" in project.title %}
+                        <svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg>
+                    {% elif "Log" in project.title %}
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6M9 9h2"/></svg>
+                    {% elif "Monitoring" in project.title %}
+                        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 10h18M8 4v14M16 4v14"/></svg>
+                    {% elif "Pipeline" in project.title %}
+                        <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="4"/></svg>
+                    {% else %}
+                        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                    {% endif %}
+                </div>
+                <div class="project-title">{{ project.title }}</div>
+                <div class="project-desc">{{ project.description | truncate(80) }}</div>
+                <span class="project-status"><span class="pulse-dot"></span>Live</span>
+            </div>
             {% endfor %}
+            <!-- extra static cards to match reference -->
+            <div class="project-card">
+                <div class="project-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="4"/></svg>
+                </div>
+                <div class="project-title">Deployment Pipeline</div>
+                <div class="project-desc">GitHub Actions CI/CD with environment promotion.</div>
+                <span class="project-status"><span class="pulse-dot"></span>Live</span>
+            </div>
         </div>
-        <button class="carousel-arrow" type="button" data-carousel-next aria-label="Next projects">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        <button class="carousel-arrow" id="carouselNext" aria-label="Next projects">
+            <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
         </button>
     </div>
 </section>
 
-<section class="section" id="skills" data-reveal>
-    <div class="section-kicker">Core Capabilities</div>
-    <h2 class="section-title">Capability Map</h2>
-    <p class="section-lead">
-        Practical engineering areas built through deployment, recovery, backend implementation,
-        and hands-on server-side debugging.
-    </p>
-    <div class="capability-map">
-        {% for group in skill_groups %}
-            <article class="skill-category">
-                <h3>{{ group.title }}</h3>
-                <ul>
+<!-- ===== CORE CAPABILITIES ===== -->
+<section id="capabilities">
+    <div class="section-head">
+        <div>
+            <div class="section-label">CORE CAPABILITIES</div>
+            <div class="section-desc">Areas of engineering expertise and operational excellence.</div>
+        </div>
+    </div>
+
+    <div class="capabilities reveal">
+        <div class="cap-grid">
+            {% for group in skill_groups[:5] %}
+            <div class="cap-col">
+                <div class="cap-icon">
+                    {% if loop.index == 1 %}
+                        <svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg>
+                    {% elif loop.index == 2 %}
+                        <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><circle cx="12" cy="12" r="2"/><path d="M8 6h8M6 8v8M18 8v8M8 18h8"/></svg>
+                    {% elif loop.index == 3 %}
+                        <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 21V9a3 3 0 016 0v6a3 3 0 006 0"/></svg>
+                    {% elif loop.index == 4 %}
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33h0a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51h0a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82v0a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                    {% else %}
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0114 0"/></svg>
+                    {% endif %}
+                </div>
+                <div class="cap-title">{{ group.title }}</div>
+                <ul class="cap-list">
                     {% for skill in group.skills %}
                         <li>{{ skill }}</li>
                     {% endfor %}
                 </ul>
-            </article>
-        {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </section>
 
-<section class="closing-panel" id="contact" data-reveal>
-    <div>
-        <div class="section-kicker">Contact</div>
-        <h2>Let's build something reliable.</h2>
-        <p>
-            Open to conversations around infrastructure, systems design, backend reliability,
-            cloud operations, and platform engineering opportunities.
-        </p>
-    </div>
-    <div class="contact-actions">
-        <a class="btn-primary" href="mailto:{{ owner_email }}">{{ owner_email }}</a>
-        <a class="btn-secondary" href="{{ github_profile }}" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a class="btn-ghost" href="{{ linkedin_profile }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+    <div class="contact-card reveal">
+        <div>
+            <h3 class="contact-heading">Let's Build Something Reliable</h3>
+            <p class="contact-sub">I'm always open to discussing infrastructure, systems design, and challenging engineering problems.</p>
+        </div>
+        <div>
+            <div class="contact-block-label">GET IN TOUCH</div>
+            <a href="mailto:{{ owner_email }}" class="contact-email">{{ owner_email }}</a>
+        </div>
+        <div>
+            <div class="contact-block-label">CONNECT</div>
+            <div class="social-row">
+                <a href="{{ github_profile }}" class="social-btn" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.7.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2.9-.3 2-.4 3-.4s2.1.1 3 .4c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.5 4.5-1.5 7.8-5.8 7.8-10.9 0-6.3-5.2-11.5-11.5-11.5z"/></svg>
+                </a>
+                <a href="{{ linkedin_profile }}" class="social-btn" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                </a>
+                <a href="mailto:{{ owner_email }}" class="social-btn" aria-label="Email">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+                </a>
+            </div>
+        </div>
     </div>
 </section>
 
-<footer class="footer-note">
-    <span class="status-dot" aria-hidden="true"></span>
-    &copy; 2026 {{ owner_name }}. Built with precision. Deployed with purpose.
+<footer class="portfolio-footer">
+    <div class="footer-inner">
+        <div>&copy; 2026 {{ owner_name }}. All rights reserved.</div>
+        <div style="font-style:italic">Built with precision. Deployed with purpose.</div>
+        <div>Last updated: May 2026</div>
+    </div>
 </footer>
+{% endblock %}
+
+{% block scripts %}
+<script type="module">
+import * as THREE from 'three';
+
+/* ===== HERO CUBE ===== */
+(() => {
+    const canvas = document.getElementById('cubeCanvas');
+    if (!canvas) return;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+    camera.position.set(0, 0, 6);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const group = new THREE.Group();
+    scene.add(group);
+
+    const edges = new THREE.EdgesGeometry(new THREE.BoxGeometry(1.6, 1.6, 1.6));
+    group.add(new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.9 })));
+
+    const innerMesh = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.0, 1.0), new THREE.MeshBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: 0.15, side: THREE.DoubleSide }));
+    group.add(innerMesh);
+
+    const coreMesh = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.4, 0.4), new THREE.MeshBasicMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.6 }));
+    group.add(coreMesh);
+
+    const glowMat = new THREE.ShaderMaterial({
+        vertexShader: `varying vec3 vNormal; void main(){ vNormal = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+        fragmentShader: `varying vec3 vNormal; void main(){ float intensity = pow(0.6 - dot(vNormal, vec3(0.0,0.0,1.0)), 2.5); gl_FragColor = vec4(0.23, 0.51, 0.96, 1.0) * intensity; }`,
+        blending: THREE.AdditiveBlending, side: THREE.BackSide, transparent: true, depthWrite: false
+    });
+    scene.add(new THREE.Mesh(new THREE.SphereGeometry(2.0, 32, 32), glowMat));
+
+    const grid = new THREE.GridHelper(6, 12, 0x3b82f6, 0x1e40af);
+    grid.material.transparent = true; grid.material.opacity = 0.15; grid.position.y = -1.4;
+    scene.add(grid);
+
+    group.rotation.x = 0.4; group.rotation.y = 0.3;
+
+    function resize() {
+        const r = canvas.getBoundingClientRect();
+        renderer.setSize(r.width, r.height, false);
+        camera.aspect = r.width / r.height;
+        camera.updateProjectionMatrix();
+    }
+    window.addEventListener('resize', resize); resize();
+
+    function animate(t) {
+        group.rotation.y += 0.003;
+        group.rotation.x = 0.4 + Math.sin(t * 0.0005) * 0.05;
+        coreMesh.rotation.y -= 0.005; coreMesh.rotation.x += 0.003;
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+})();
+
+/* ===== AGE EVOLUTION MINI GLOBE ===== */
+(() => {
+    const canvas = document.getElementById('aeGlobeCanvas');
+    if (!canvas) return;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+    camera.position.set(0, 0, 5);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const earthRadius = 0.85;
+    const earthMat = new THREE.MeshBasicMaterial({ color: 0x0a1828 });
+    const earth = new THREE.Mesh(new THREE.SphereGeometry(earthRadius, 48, 48), earthMat);
+    earth.rotation.x = 0.15; earth.rotation.y = -0.6;
+    scene.add(earth);
+
+    const loader = new THREE.TextureLoader();
+    const urls = [
+        'https://unpkg.com/three-globe@2.31.1/example/img/earth-night.jpg',
+        'https://cdn.jsdelivr.net/npm/three-globe@2.31.1/example/img/earth-night.jpg',
+        'https://threejs.org/examples/textures/planets/earth_lights_2048.png'
+    ];
+    function tryLoad(i) {
+        if (i >= urls.length) return;
+        loader.load(urls[i], (tex) => { tex.colorSpace = THREE.SRGBColorSpace; earthMat.map = tex; earthMat.color.set(0xffffff); earthMat.needsUpdate = true; }, undefined, () => tryLoad(i + 1));
+    }
+    tryLoad(0);
+
+    const atmMat = new THREE.ShaderMaterial({
+        vertexShader: `varying vec3 vNormal; void main(){ vNormal = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+        fragmentShader: `varying vec3 vNormal; void main(){ float intensity = pow(0.7 - dot(vNormal, vec3(0.0,0.0,1.0)), 2.0); gl_FragColor = vec4(0.3,0.6,1.0,1.0) * intensity; }`,
+        blending: THREE.AdditiveBlending, side: THREE.BackSide, transparent: true, depthWrite: false
+    });
+    scene.add(new THREE.Mesh(new THREE.SphereGeometry(earthRadius * 1.1, 32, 32), atmMat));
+
+    function resize() {
+        const r = canvas.getBoundingClientRect();
+        renderer.setSize(r.width, r.height, false);
+        camera.aspect = r.width / r.height; camera.updateProjectionMatrix();
+    }
+    window.addEventListener('resize', resize); resize();
+
+    function animate() { earth.rotation.y += 0.0012; renderer.render(scene, camera); requestAnimationFrame(animate); }
+    requestAnimationFrame(animate);
+})();
+</script>
+
+<script>
+/* ===== WORLD MAP ===== */
+(() => {
+    const map = document.getElementById('worldMap');
+    const dotsGroup = document.getElementById('mapDots');
+    const pinsGroup = document.getElementById('regionPins');
+    const arcsGroup = document.getElementById('arcs');
+    if (!map) return;
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+
+    const clusters = [
+        { x: 80, y: 50, rx: 40, ry: 28, density: 0.4 },
+        { x: 110, y: 100, rx: 18, ry: 25, density: 0.45 },
+        { x: 200, y: 50, rx: 22, ry: 14, density: 0.5 },
+        { x: 215, y: 90, rx: 22, ry: 25, density: 0.45 },
+        { x: 280, y: 55, rx: 50, ry: 22, density: 0.4 },
+        { x: 330, y: 105, rx: 18, ry: 12, density: 0.45 },
+    ];
+    for (const c of clusters) {
+        const n = Math.floor(c.rx * c.ry * c.density / 4);
+        for (let i = 0; i < n; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const r = Math.sqrt(Math.random());
+            const px = c.x + Math.cos(angle) * r * c.rx;
+            const py = c.y + Math.sin(angle) * r * c.ry;
+            if (px < 5 || px > 395 || py < 5 || py > 135) continue;
+            const dot = document.createElementNS(SVG_NS, 'circle');
+            dot.setAttribute('cx', px.toFixed(1)); dot.setAttribute('cy', py.toFixed(1));
+            dot.setAttribute('r', (Math.random() * 0.6 + 0.4).toFixed(1));
+            dotsGroup.appendChild(dot);
+        }
+    }
+
+    const pins = [
+        { x: 80, y: 55, primary: true },
+        { x: 200, y: 50 }, { x: 290, y: 60 }, { x: 332, y: 105 }, { x: 110, y: 95 }
+    ];
+    for (const p of pins) {
+        if (p.primary) {
+            const ring = document.createElementNS(SVG_NS, 'circle');
+            ring.setAttribute('cx', p.x); ring.setAttribute('cy', p.y); ring.setAttribute('r', '3');
+            ring.setAttribute('fill', 'none'); ring.setAttribute('stroke', '#3b82f6');
+            ring.setAttribute('stroke-width', '0.8'); ring.setAttribute('opacity', '0.6');
+            const a1 = document.createElementNS(SVG_NS, 'animate');
+            a1.setAttribute('attributeName', 'r'); a1.setAttribute('values', '3;9;3'); a1.setAttribute('dur', '2.5s'); a1.setAttribute('repeatCount', 'indefinite'); ring.appendChild(a1);
+            const a2 = document.createElementNS(SVG_NS, 'animate');
+            a2.setAttribute('attributeName', 'opacity'); a2.setAttribute('values', '0.6;0;0.6'); a2.setAttribute('dur', '2.5s'); a2.setAttribute('repeatCount', 'indefinite'); ring.appendChild(a2);
+            pinsGroup.appendChild(ring);
+        }
+        const pin = document.createElementNS(SVG_NS, 'circle');
+        pin.setAttribute('cx', p.x); pin.setAttribute('cy', p.y); pin.setAttribute('r', p.primary ? '2.5' : '1.5');
+        pin.setAttribute('fill', p.primary ? '#60a5fa' : '#3b82f6');
+        if (p.primary) pin.setAttribute('filter', 'drop-shadow(0 0 4px #60a5fa)');
+        pinsGroup.appendChild(pin);
+    }
+
+    const primary = pins[0];
+    pins.slice(1).forEach((dest, i) => {
+        const midX = (primary.x + dest.x) / 2;
+        const midY = (primary.y + dest.y) / 2;
+        const arcH = Math.min(Math.abs(dest.x - primary.x) * 0.4, 50);
+        const path = `M ${primary.x} ${primary.y} Q ${midX} ${midY - arcH} ${dest.x} ${dest.y}`;
+        const base = document.createElementNS(SVG_NS, 'path');
+        base.setAttribute('d', path); base.setAttribute('fill', 'none');
+        base.setAttribute('stroke', 'rgba(59,130,246,0.18)'); base.setAttribute('stroke-width', '0.5');
+        arcsGroup.appendChild(base);
+        const arc = document.createElementNS(SVG_NS, 'path');
+        arc.setAttribute('d', path); arc.setAttribute('fill', 'none');
+        arc.setAttribute('stroke', '#60a5fa'); arc.setAttribute('stroke-width', '1');
+        arc.setAttribute('stroke-linecap', 'round');
+        const len = Math.sqrt((dest.x - primary.x) ** 2 + (dest.y - primary.y) ** 2) + arcH;
+        arc.setAttribute('stroke-dasharray', `${len * 0.15} ${len}`);
+        arc.setAttribute('stroke-dashoffset', len); arc.setAttribute('opacity', '0.9');
+        const anim = document.createElementNS(SVG_NS, 'animate');
+        anim.setAttribute('attributeName', 'stroke-dashoffset');
+        anim.setAttribute('from', len); anim.setAttribute('to', -len * 0.15);
+        anim.setAttribute('dur', '3s'); anim.setAttribute('begin', `${i * 0.7}s`); anim.setAttribute('repeatCount', 'indefinite');
+        arc.appendChild(anim); arcsGroup.appendChild(arc);
+    });
+})();
+</script>
 {% endblock %}

@@ -5,138 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ page_title }}</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23020713'/%3E%3Cpath d='M15 41V23h7v18c0 5-3 8-8 8-2 0-4-.4-6-1.3l1.8-5.4c1 .5 2 .7 3.1.7 1.4 0 2.1-.7 2.1-2zM27 47V17h7.2l7.8 12.8L49.8 17H57v30h-7V28.7l-7.5 12h-1.1L34 28.8V47h-7z' fill='%233b82f6'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}</script>
     {{ base_styles | safe }}
 </head>
 <body id="top">
     <a class="skip-link" href="#main-content">Skip to content</a>
     {% include "_portfolio_nav.html" %}
     <div class="container">
-        <main class="card" id="main-content">
+        <main id="main-content">
             {% block content %}{% endblock %}
         </main>
     </div>
     <script>
-        document.documentElement.classList.add("js-ready");
-        const revealItems = document.querySelectorAll("[data-reveal]");
-        if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        /* Reveal on scroll */
+        (() => {
+            const reveals = document.querySelectorAll('.reveal:not(.in)');
+            if (!reveals.length) return;
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("is-visible");
-                        observer.unobserve(entry.target);
-                    }
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) { entry.target.classList.add('in'); observer.unobserve(entry.target); }
                 });
-            }, { threshold: 0.14 });
-            revealItems.forEach((item) => observer.observe(item));
-        } else {
-            revealItems.forEach((item) => item.classList.add("is-visible"));
-        }
+            }, { threshold: 0.1 });
+            reveals.forEach(r => observer.observe(r));
+        })();
 
-        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-        const counters = document.querySelectorAll("[data-count]");
-        if (counters.length && "IntersectionObserver" in window && !reducedMotion) {
-            const counterObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
+        /* Counter-up */
+        (() => {
+            const counters = document.querySelectorAll('[data-count]');
+            if (!counters.length) return;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
                     if (!entry.isIntersecting) return;
-                    const target = entry.target;
-                    const finalValue = Number.parseFloat(target.dataset.count || "0");
-                    const suffix = target.dataset.suffix || "";
-                    const hasDecimal = !Number.isInteger(finalValue);
+                    const el = entry.target;
+                    const target = parseFloat(el.dataset.count);
+                    const suffix = el.dataset.suffix || '';
+                    const isFloat = target % 1 !== 0;
+                    const duration = 1200;
                     const start = performance.now();
-                    const duration = 900;
-
                     function tick(now) {
-                        const progress = Math.min((now - start) / duration, 1);
-                        const eased = 1 - Math.pow(1 - progress, 3);
-                        const value = finalValue * eased;
-                        target.textContent = `${hasDecimal ? value.toFixed(2) : Math.floor(value)}${suffix}`;
-                        if (progress < 1) {
-                            requestAnimationFrame(tick);
-                        } else {
-                            target.textContent = `${hasDecimal ? finalValue.toFixed(2) : finalValue}${suffix}`;
-                        }
+                        const eased = 1 - Math.pow(1 - Math.min((now - start) / duration, 1), 3);
+                        const value = target * eased;
+                        el.textContent = (isFloat ? value.toFixed(2) : Math.floor(value)) + suffix;
+                        if (eased < 1) requestAnimationFrame(tick);
+                        else el.textContent = (isFloat ? target.toFixed(2) : target) + suffix;
                     }
-
                     requestAnimationFrame(tick);
-                    counterObserver.unobserve(target);
+                    observer.unobserve(el);
                 });
-            }, { threshold: 0.5 });
-            counters.forEach((counter) => counterObserver.observe(counter));
-        }
+            }, { threshold: 0.4 });
+            counters.forEach(c => observer.observe(c));
+        })();
 
-        const map = document.getElementById("worldMap");
-        if (map) {
-            const svgNS = "http://www.w3.org/2000/svg";
-            const dots = document.getElementById("mapDots");
-            const arcs = document.getElementById("mapArcs");
-            const pins = document.getElementById("mapPins");
-            const clusters = [
-                { x: 82, y: 52, rx: 42, ry: 24, rows: 5, cols: 10 },
-                { x: 112, y: 96, rx: 18, ry: 24, rows: 5, cols: 5 },
-                { x: 206, y: 50, rx: 26, ry: 14, rows: 4, cols: 7 },
-                { x: 224, y: 88, rx: 24, ry: 24, rows: 5, cols: 6 },
-                { x: 286, y: 58, rx: 52, ry: 24, rows: 5, cols: 11 },
-                { x: 336, y: 104, rx: 18, ry: 10, rows: 3, cols: 5 },
-            ];
-
-            clusters.forEach((cluster) => {
-                for (let row = 0; row < cluster.rows; row += 1) {
-                    for (let col = 0; col < cluster.cols; col += 1) {
-                        const nx = (col / Math.max(cluster.cols - 1, 1)) * 2 - 1;
-                        const ny = (row / Math.max(cluster.rows - 1, 1)) * 2 - 1;
-                        if ((nx * nx + ny * ny) > 1.05) continue;
-                        const dot = document.createElementNS(svgNS, "circle");
-                        dot.setAttribute("cx", (cluster.x + nx * cluster.rx).toFixed(1));
-                        dot.setAttribute("cy", (cluster.y + ny * cluster.ry).toFixed(1));
-                        dot.setAttribute("r", "1");
-                        dots.appendChild(dot);
-                    }
-                }
+        /* Projects carousel */
+        (() => {
+            const scroll = document.getElementById('projectsScroll');
+            const next = document.getElementById('carouselNext');
+            if (!scroll || !next) return;
+            next.addEventListener('click', () => {
+                const cardWidth = (scroll.querySelector('.project-card')?.offsetWidth || 240) + 16;
+                const maxScroll = scroll.scrollWidth - scroll.clientWidth;
+                if (scroll.scrollLeft >= maxScroll - 5) scroll.scrollTo({ left: 0, behavior: 'smooth' });
+                else scroll.scrollTo({ left: Math.min(scroll.scrollLeft + cardWidth * 2, maxScroll), behavior: 'smooth' });
             });
+        })();
 
-            const primary = { x: 82, y: 54 };
-            const destinations = [{ x: 206, y: 50 }, { x: 292, y: 62 }, { x: 336, y: 104 }];
-            destinations.forEach((destination, index) => {
-                const midX = (primary.x + destination.x) / 2;
-                const midY = (primary.y + destination.y) / 2;
-                const lift = Math.min(Math.abs(destination.x - primary.x) * 0.36, 44);
-                const pathData = `M ${primary.x} ${primary.y} Q ${midX} ${midY - lift} ${destination.x} ${destination.y}`;
-                ["map-arc-base", "map-arc"].forEach((className) => {
-                    const path = document.createElementNS(svgNS, "path");
-                    path.setAttribute("d", pathData);
-                    path.setAttribute("class", className);
-                    if (className === "map-arc") path.style.animationDelay = `${index * 0.45}s`;
-                    arcs.appendChild(path);
-                });
+        /* Theme toggle (decorative) */
+        (() => {
+            const toggle = document.querySelector('.theme-toggle');
+            if (!toggle) return;
+            toggle.addEventListener('click', () => {
+                toggle.style.transform = 'rotate(180deg)';
+                setTimeout(() => { toggle.style.transform = ''; }, 300);
             });
-
-            [primary, ...destinations].forEach((pin, index) => {
-                const circle = document.createElementNS(svgNS, "circle");
-                circle.setAttribute("cx", pin.x);
-                circle.setAttribute("cy", pin.y);
-                circle.setAttribute("r", index === 0 ? "3" : "2");
-                circle.setAttribute("class", index === 0 ? "map-pin map-pin-primary" : "map-pin");
-                pins.appendChild(circle);
-            });
-        }
-
-        const carousel = document.querySelector("[data-project-carousel]");
-        const carouselTrack = document.getElementById("projectsScroll");
-        const carouselNext = carousel?.querySelector("[data-carousel-next]");
-        if (carouselTrack && carouselNext) {
-            carouselNext.addEventListener("click", () => {
-                const card = carouselTrack.querySelector(".project-card");
-                const gap = 18;
-                const distance = card ? (card.getBoundingClientRect().width + gap) * 2 : 360;
-                const maxScroll = carouselTrack.scrollWidth - carouselTrack.clientWidth;
-                if (carouselTrack.scrollLeft >= maxScroll - 4) {
-                    carouselTrack.scrollTo({ left: 0, behavior: "smooth" });
-                } else {
-                    carouselTrack.scrollTo({ left: Math.min(carouselTrack.scrollLeft + distance, maxScroll), behavior: "smooth" });
-                }
-            });
-        }
+        })();
     </script>
+    {% block scripts %}{% endblock %}
 </body>
 </html>
