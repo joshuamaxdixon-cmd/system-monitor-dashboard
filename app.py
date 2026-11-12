@@ -837,6 +837,14 @@ def base_styles():
       .ae-overlay-desc{font-size:6.5px;color:var(--muted-bright);line-height:1.4;margin-bottom:6px}
       .ae-overlay-btn{display:inline-block;background:var(--accent);color:white;font-size:6px;padding:3px 7px;border-radius:3px;font-weight:500}
 
+      .resume-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;border-top:1px solid var(--border);padding-top:24px}
+      .resume-grid h3{font-size:18px;margin:0 0 10px;color:var(--ink)}
+      .resume-grid p,.resume-grid li{font-size:14px;line-height:1.7;color:var(--muted-bright);overflow-wrap:anywhere}
+      .resume-grid p,.resume-grid ul{margin-bottom:24px}
+      .resume-grid ul{padding-left:20px}
+      .resume-grid .resume-meta{color:var(--accent-bright);margin-bottom:10px}
+      @media(max-width:700px){.resume-grid{grid-template-columns:minmax(0,1fr);gap:20px}}
+
       /* === ALL PROJECTS CAROUSEL === */
       .projects-wrap{position:relative;overflow:hidden}
       .projects-scroll{display:flex;gap:16px;width:100%;max-width:100%;overflow-x:auto;scroll-behavior:smooth;padding-bottom:6px;scrollbar-width:none}
